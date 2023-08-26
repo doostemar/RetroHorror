@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class HeroMovement : MonoBehaviour
 {
-  public float m_MaxSpeed    = 1f;
-  public float m_Accel       = 1f;
-  public float m_Friction    = 0.5f;
+  public float m_MaxSpeed     = 1f;
+  public float m_Accel        = 1f;
+  public float m_Friction     = 0.5f;
+  public bool  m_DebugDisplay = false;
 
-  private Animator      m_Anim;
-  private Vector2       m_Movement;
+  private Animator          m_Anim;
+  private Vector2           m_Movement;
+  private DebugHeroMovement m_DebugDisplayObj;
+  private bool              m_PrevDebugDisp;
 
   const string kIdleAnimLeftName       = "Stalin";
   const string kIdleAnimRightName      = "StalinRight";
@@ -25,6 +28,12 @@ public class HeroMovement : MonoBehaviour
     m_Movement = Vector2.zero;
     m_Anim = GetComponent<Animator>();
     m_Anim.Play( "Stalin" );
+
+    m_PrevDebugDisp = false;
+    if ( m_DebugDisplay )
+    {
+      ToggleDebug( true );
+    }
   }
 
   // Update is called once per frame
@@ -42,8 +51,8 @@ public class HeroMovement : MonoBehaviour
     
     if (h_control == 0f && v_control == 0f)
     {
-      bool x_positive = Mathf.Sign( m_Movement.x ) == 1f;
       bool y_positive = Mathf.Sign( m_Movement.y ) == 1f;
+      bool x_positive = Mathf.Sign( m_Movement.x ) == 1f;
 
       m_Movement -= m_Movement.normalized * m_Friction * Time.deltaTime;
 
@@ -67,5 +76,37 @@ public class HeroMovement : MonoBehaviour
     }
 
     transform.position += new Vector3( m_Movement.x, m_Movement.y, 0f ) * Time.deltaTime;
+
+    if ( m_DebugDisplay != m_PrevDebugDisp )
+    {
+      ToggleDebug( m_DebugDisplay );
+    }
+
+    if ( m_DebugDisplayObj )
+    {
+      m_DebugDisplayObj.m_MovementProperties.m_ControlDir = control_dir;
+      m_DebugDisplayObj.m_MovementProperties.m_Movement   = m_Movement;
+      m_DebugDisplayObj.m_MovementProperties.m_MaxSpeed   = m_MaxSpeed;
+    }
+  }
+
+  private void ToggleDebug( bool enable )
+  {
+    m_PrevDebugDisp = enable;
+    if ( enable )
+    { 
+      if ( m_DebugDisplayObj == null )
+      {
+        m_DebugDisplayObj = gameObject.AddComponent<DebugHeroMovement>();
+      }
+      m_DebugDisplayObj.enabled = true;
+    }
+    else
+    {
+      if (m_DebugDisplayObj != null)
+      {
+        m_DebugDisplayObj.enabled = false;
+      }
+    }
   }
 }

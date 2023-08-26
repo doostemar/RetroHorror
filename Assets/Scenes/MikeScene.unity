@@ -337,6 +337,7 @@ MonoBehaviour:
   m_MaxSpeed: 4.26
   m_Accel: 15.65
   m_Friction: 5.76
+  m_DebugDisplay: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
