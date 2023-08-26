@@ -18,7 +18,7 @@ public class DebugCircleRenderer : MonoBehaviour
       m_LineAsset = Resources.Load<LineRenderer>( "DebugLineRenderer" );
     }
 
-    m_Line = Instantiate( m_LineAsset );
+    m_Line = Instantiate( m_LineAsset, DebugCommon.GetDebugObject() );
     m_Line.positionCount = m_PointCount;
     m_Line.loop = true;
   }

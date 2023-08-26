@@ -22,9 +22,9 @@ public class DebugArrowRenderer : MonoBehaviour
       // Must have "DebugLineRenderer" set up in Resources folder
       m_LineAsset = Resources.Load<LineRenderer>( "DebugLineRenderer" );
     }
-    m_Line1 = Instantiate( m_LineAsset );
-    m_Line2 = Instantiate( m_LineAsset );
-    m_Line3 = Instantiate( m_LineAsset );
+    m_Line1 = Instantiate( m_LineAsset, DebugCommon.GetDebugObject() );
+    m_Line2 = Instantiate( m_LineAsset, DebugCommon.GetDebugObject() );
+    m_Line3 = Instantiate( m_LineAsset, DebugCommon.GetDebugObject() );
 
     m_Line1.positionCount = 2;
     m_Line2.positionCount = 2;
