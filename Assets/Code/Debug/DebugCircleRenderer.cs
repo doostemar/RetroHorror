@@ -38,6 +38,8 @@ public class DebugCircleRenderer : MonoBehaviour
       pts[i_pt ] = m_Center + Vec2Math.Rotate2D( Vector2.right, div * i_pt ) * m_Radius;
     }
 
+    m_Line.startColor = m_Color;
+    m_Line.endColor   = m_Color;
     m_Line.SetPositions( pts );
   }
 }

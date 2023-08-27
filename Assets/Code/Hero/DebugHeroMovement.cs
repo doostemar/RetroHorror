@@ -9,14 +9,22 @@ public class DebugHeroMovement : MonoBehaviour
   DebugCircleRenderer m_ControlOutline;
   DebugCircleRenderer m_MovementOutline;
 
-  // white
-  Color m_Color = new Color( 1f,
-                             1f, 
-                             1f );
+  DebugHistogramRenderer m_Histogram;
+  int                    m_SpeedHistogramId;
+  int                    m_ControlHistogramId;
+
+  Color m_Color = Color.white;
   // green
   Color m_SpeedColor = new Color( 51f  / 255f,
                                   140f / 255f,
                                   27f  / 255f );
+  // light green
+  Color m_SpeedGraphColor   = Color.green;
+
+  // light blue
+  Color m_ControlGraphColor = new Color(
+    52f / 255f , 155f / 255f, 235f / 255f
+  );
 
   Vector2 m_ScreenPosition = new Vector2( 100f, 200f );
   float   m_ArrowSizePx    = 30f;
@@ -46,8 +54,22 @@ public class DebugHeroMovement : MonoBehaviour
       m_ControlOutline  = gameObject.AddComponent<DebugCircleRenderer>();
       m_MovementOutline = gameObject.AddComponent<DebugCircleRenderer>();
 
-      m_ControlOutline.m_Color   = m_Color;
-      m_MovementRenderer.m_Color = m_Color;
+      m_ControlOutline.m_Color  = m_Color;
+      m_MovementOutline.m_Color = m_Color;
+
+      m_Histogram = gameObject.AddComponent<DebugHistogramRenderer>();
+      m_Histogram.m_MaxHistory = 500;
+      m_Histogram.m_ScreenBounds = new Rect(m_ScreenPosition.x, m_ScreenPosition.y - m_ArrowSizePx * 2.1f - 65, m_ArrowSizePx * 4.5f, 65 );
+      m_SpeedHistogramId   = m_Histogram.AddGraph( m_SpeedGraphColor );
+      m_ControlHistogramId = m_Histogram.AddGraph( m_ControlGraphColor );
+    }
+    else
+    {
+      m_ControlRenderer.enabled  = true;
+      m_MovementRenderer.enabled = true;
+      m_ControlOutline.enabled   = true;
+      m_MovementOutline.enabled  = true;
+      m_Histogram.enabled        = true;
     }
   }
 
@@ -57,8 +79,9 @@ public class DebugHeroMovement : MonoBehaviour
     {
       m_ControlRenderer.enabled  = false;
       m_MovementRenderer.enabled = false;
-      m_ControlOutline.enabled = false;
-      m_MovementOutline.enabled = false;
+      m_ControlOutline.enabled   = false;
+      m_MovementOutline.enabled  = false;
+      m_Histogram.enabled        = false;
     }
   }
 
@@ -102,6 +125,9 @@ public class DebugHeroMovement : MonoBehaviour
 
       m_MaxSpeedRenderer.m_Start = m_MovementRenderer.m_Start;
       m_MaxSpeedRenderer.m_End   = Camera.main.ScreenToWorldPoint( speed_arrow_end );
+
+      m_Histogram.PushData( m_SpeedHistogramId, movement_vec_len );
+      m_Histogram.PushData( m_ControlHistogramId, m_MovementProperties.m_ControlDir.magnitude );
     }
   }
 }

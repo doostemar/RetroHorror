@@ -334,10 +334,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6799f6e9b8a5319449fb9a85e9e2bef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_InputSmoothing: 0.903
   m_MaxSpeed: 4.26
   m_Accel: 15.65
   m_Friction: 5.76
-  m_DebugDisplay: 0
+  m_DebugDisplay: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
