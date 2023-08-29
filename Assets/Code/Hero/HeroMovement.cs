@@ -12,26 +12,26 @@ public class HeroMovement : MonoBehaviour
   public float m_Friction       = 0.5f;
   public bool  m_DebugDisplay   = false;
 
-  private Animator          m_Anim;
+  //private Animator          m_Anim;
   private Vector2           m_ControlDir;
   private Vector2           m_Movement;
   private DebugHeroMovement m_DebugDisplayObj;
   private bool              m_PrevDebugDisp;
 
-  const string kIdleAnimLeftName       = "Stalin";
-  const string kIdleAnimRightName      = "StalinRight";
-  const string kIdleAngryAnimLeftName  = "StalinIdleAngry";
-  const string kIdleAngryAnimRightName = "StalinIdleAngryRight";
-  const string kCastLeftName           = "StalinCast";
-  const string kCastRightName          = "StalinCastRight";
+  //const string kIdleAnimLeftName       = "Stalin";
+  //const string kIdleAnimRightName      = "StalinRight";
+  //const string kIdleAngryAnimLeftName  = "StalinIdleAngry";
+  //const string kIdleAngryAnimRightName = "StalinIdleAngryRight";
+  //const string kCastLeftName           = "StalinCast";
+  //const string kCastRightName          = "StalinCastRight";
 
   // Start is called before the first frame update
   void Start()
   {
     m_ControlDir = Vector2.zero;
     m_Movement = Vector2.zero;
-    m_Anim = GetComponent<Animator>();
-    m_Anim.Play( "Stalin" );
+    // m_Anim = GetComponent<Animator>();
+    // m_Anim.Play( "Stalin" );
 
     m_PrevDebugDisp = false;
     if ( m_DebugDisplay )
