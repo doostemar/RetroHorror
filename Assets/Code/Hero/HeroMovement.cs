@@ -12,26 +12,21 @@ public class HeroMovement : MonoBehaviour
   public float m_Friction       = 0.5f;
   public bool  m_DebugDisplay   = false;
 
-  //private Animator          m_Anim;
-  private Vector2           m_ControlDir;
-  private Vector2           m_Movement;
-  private DebugHeroMovement m_DebugDisplayObj;
-  private bool              m_PrevDebugDisp;
+  private HeroSelfEventSystem m_HeroEvents;
 
-  //const string kIdleAnimLeftName       = "Stalin";
-  //const string kIdleAnimRightName      = "StalinRight";
-  //const string kIdleAngryAnimLeftName  = "StalinIdleAngry";
-  //const string kIdleAngryAnimRightName = "StalinIdleAngryRight";
-  //const string kCastLeftName           = "StalinCast";
-  //const string kCastRightName          = "StalinCastRight";
+  private Vector2             m_ControlDir;
+  private Vector2             m_Movement;
+  private DebugHeroMovement   m_DebugDisplayObj;
+  private bool                m_PrevDebugDisp;
 
   // Start is called before the first frame update
   void Start()
   {
+    m_HeroEvents = GetComponent<HeroSelfEventSystem>();
+    m_HeroEvents.OnHeroSelfEvent += OnSelfEvent;
+
     m_ControlDir = Vector2.zero;
     m_Movement = Vector2.zero;
-    // m_Anim = GetComponent<Animator>();
-    // m_Anim.Play( "Stalin" );
 
     m_PrevDebugDisp = false;
     if ( m_DebugDisplay )
@@ -40,11 +35,25 @@ public class HeroMovement : MonoBehaviour
     }
   }
 
+  public void OnSelfEvent( HeroSelfEvent self_event )
+  {
+    if ( self_event.m_Type == HeroSelfEvent.EventType.HeroStateCasting )
+    {
+      enabled = false;
+    }
+    else
+    {
+      enabled = true;
+    }
+  }
+
   // Update is called once per frame
   void Update()
   {
     float h_control = Input.GetAxis( "Horizontal" );
     float v_control = Input.GetAxis( "Vertical" );
+
+    bool was_moving = m_Movement != Vector2.zero;
 
     {
       // This is a linear low-pass filter. It helps to smooth out the input for us
@@ -80,6 +89,24 @@ public class HeroMovement : MonoBehaviour
     {
       m_Movement.y = Mathf.Min( m_Movement.y, 0f );
     }
+
+    bool is_moving = m_Movement != Vector2.zero;
+
+    // Handle state stuff
+    if ( was_moving == false && is_moving )
+    {
+      HeroSelfEvent hero_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
+      hero_event.m_Type = HeroSelfEvent.EventType.HeroStateMoving;
+      m_HeroEvents.RaiseEvent( hero_event );
+    }
+
+    if ( was_moving && is_moving == false )
+    {
+      HeroSelfEvent hero_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
+      hero_event.m_Type = HeroSelfEvent.EventType.HeroStateIdle;
+      m_HeroEvents.RaiseEvent( hero_event );
+    }
+
 
     transform.position += new Vector3( m_Movement.x, m_Movement.y, 0f ) * Time.deltaTime;
 
