@@ -26,7 +26,7 @@ public class HeroMovement : MonoBehaviour
     m_HeroEvents.OnHeroSelfEvent += OnSelfEvent;
 
     m_ControlDir = Vector2.zero;
-    m_Movement = Vector2.zero;
+    m_Movement   = Vector2.zero;
 
     m_PrevDebugDisp = false;
     if ( m_DebugDisplay )
@@ -39,6 +39,8 @@ public class HeroMovement : MonoBehaviour
   {
     if ( self_event.m_Type == HeroSelfEvent.EventType.HeroStateCasting )
     {
+      m_ControlDir = Vector2.zero;
+      m_Movement   = Vector2.zero;
       enabled = false;
     }
     else

@@ -16,8 +16,7 @@ public class HeroAnimationManager : MonoBehaviour
 
   void OnHeroEvent(HeroSelfEvent hero_event)
   {
-    Debug.Log(hero_event.m_Type);
-    switch (hero_event.m_Type)
+    switch ( hero_event.m_Type )
     {
       case HeroSelfEvent.EventType.HeroStateCasting:
       {
