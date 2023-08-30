@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CorpseComponent : MonoBehaviour
@@ -34,6 +32,11 @@ public class CorpseComponent : MonoBehaviour
           m_Highlighted = true;
         }
         return;
+      }
+      else if ( res_event.m_Type == ResurrectionEvent.Type.Cast )
+      {
+        Instantiate( m_ResurrectionSpawn, transform.position, Quaternion.identity );
+        Destroy( gameObject );
       }
     }
 
