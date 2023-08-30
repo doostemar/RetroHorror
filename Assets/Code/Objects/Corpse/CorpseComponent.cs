@@ -19,6 +19,12 @@ public class CorpseComponent : MonoBehaviour
     m_Highlighted = false;
   }
 
+  private void OnDestroy()
+  {
+    ResurrectionEventChannel res_channel = Game.GetGameController().GetComponent<ResurrectionSystem>().m_ResChannel;
+    res_channel.OnResurrectionEvent -= OnResEvent;
+  }
+
   void OnResEvent( ResurrectionEvent res_event )
   {
     float dist_sq = m_Collider.bounds.SqrDistance( res_event.m_Position );
@@ -37,6 +43,7 @@ public class CorpseComponent : MonoBehaviour
       {
         Instantiate( m_ResurrectionSpawn, transform.position, Quaternion.identity );
         Destroy( gameObject );
+        return;
       }
     }
 
