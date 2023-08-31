@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class HeroMovement : MonoBehaviour
+public class HeroMovementStalin : MonoBehaviour
 {
   [Range(0.85f, 1f)]
   public float m_InputSmoothing = 0.2f;
