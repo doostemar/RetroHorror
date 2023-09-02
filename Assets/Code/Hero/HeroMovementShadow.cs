@@ -8,13 +8,15 @@ public class HeroMovementShadow : MonoBehaviour
   public float m_Velocity = 2f;
 
   private HeroSelfEventSystem m_HeroEvents;
+  private bool                m_PrevIsMoving;
 
   // Start is called before the first frame update
   void Start()
   {
     m_HeroEvents = GetComponent<HeroSelfEventSystem>();
     m_HeroEvents.OnHeroSelfEvent += OnSelfEvent;
-    Vector3 m_Position = Vector3.zero;  
+
+    m_PrevIsMoving = false;
   }
 
   public void OnSelfEvent(HeroSelfEvent self_event)
@@ -29,7 +31,6 @@ public class HeroMovementShadow : MonoBehaviour
     }
   }
 
-  // Update is called once per frame
   void Update()
   {
     Vector3 player_input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0f).normalized;
@@ -39,17 +40,19 @@ public class HeroMovementShadow : MonoBehaviour
     transform.position += player_input * m_Velocity * Time.deltaTime;
 
     // Handle state stuff
-    if (is_moving)
+    if ( is_moving && !m_PrevIsMoving )
     {
       HeroSelfEvent hero_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
       hero_event.m_Type = HeroSelfEvent.EventType.HeroStateMoving;  
       m_HeroEvents.RaiseEvent(hero_event);
     }
-    if (!is_moving)
+    else if ( !is_moving && m_PrevIsMoving )
     {
       HeroSelfEvent hero_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
       hero_event.m_Type = HeroSelfEvent.EventType.HeroStateIdle;
       m_HeroEvents.RaiseEvent(hero_event);
     }
+
+    m_PrevIsMoving = is_moving;
   }
 }

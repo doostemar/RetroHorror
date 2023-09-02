@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Game Controller
+  - Hero
   layers:
   - Default
   - TransparentFX

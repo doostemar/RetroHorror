@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 221314115}
   - component: {fileID: 221314114}
+  - component: {fileID: 221314116}
   - component: {fileID: 221314113}
   - component: {fileID: 221314108}
   - component: {fileID: 221314112}
@@ -141,7 +142,7 @@ GameObject:
   - component: {fileID: 221314109}
   m_Layer: 0
   m_Name: Shadow
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -297,6 +298,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &221314116
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221314107}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 2
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.67, y: 1}
+  m_EdgeRadius: 0
 --- !u!1001 &384941884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -509,8 +555,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 091d0a4c81c7ae246aa5057fcaa8a236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Hero: {fileID: 221314107}
-  m_MovementPadding: {x: 1.89, y: 1.51}
+  m_MovementPadding: {x: 3.75, y: 2.45}
+  m_WaitForCenterSeconds: 1.2
+  m_MovementEasing: 0.0976
 --- !u!1001 &768441582
 PrefabInstance:
   m_ObjectHideFlags: 0
