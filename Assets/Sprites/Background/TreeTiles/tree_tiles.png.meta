@@ -110,32 +110,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tree_tiles_0
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 224
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 243a782456a8368408fa6f14bb9d516c
-      internalID: 1950941100
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: tree_tiles_1
       rect:
         serializedVersion: 2
         x: 32
-        y: 192
+        y: 224
         width: 32
         height: 32
       alignment: 0
@@ -155,7 +134,7 @@ TextureImporter:
       name: tree_tiles_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 0
         y: 192
         width: 32
         height: 32
@@ -176,7 +155,7 @@ TextureImporter:
       name: tree_tiles_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 32
         y: 192
         width: 32
         height: 32
@@ -197,7 +176,7 @@ TextureImporter:
       name: tree_tiles_4
       rect:
         serializedVersion: 2
-        x: 128
+        x: 64
         y: 192
         width: 32
         height: 32
@@ -218,8 +197,8 @@ TextureImporter:
       name: tree_tiles_5
       rect:
         serializedVersion: 2
-        x: 32
-        y: 160
+        x: 96
+        y: 192
         width: 32
         height: 32
       alignment: 0
@@ -239,8 +218,8 @@ TextureImporter:
       name: tree_tiles_6
       rect:
         serializedVersion: 2
-        x: 96
-        y: 160
+        x: 128
+        y: 192
         width: 32
         height: 32
       alignment: 0
@@ -260,7 +239,7 @@ TextureImporter:
       name: tree_tiles_7
       rect:
         serializedVersion: 2
-        x: 160
+        x: 0
         y: 160
         width: 32
         height: 32
@@ -281,7 +260,7 @@ TextureImporter:
       name: tree_tiles_8
       rect:
         serializedVersion: 2
-        x: 192
+        x: 32
         y: 160
         width: 32
         height: 32
@@ -302,8 +281,8 @@ TextureImporter:
       name: tree_tiles_9
       rect:
         serializedVersion: 2
-        x: 32
-        y: 128
+        x: 96
+        y: 160
         width: 32
         height: 32
       alignment: 0
@@ -323,7 +302,7 @@ TextureImporter:
       name: tree_tiles_10
       rect:
         serializedVersion: 2
-        x: 64
+        x: 0
         y: 128
         width: 32
         height: 32
@@ -344,7 +323,7 @@ TextureImporter:
       name: tree_tiles_11
       rect:
         serializedVersion: 2
-        x: 96
+        x: 32
         y: 128
         width: 32
         height: 32
@@ -365,7 +344,7 @@ TextureImporter:
       name: tree_tiles_12
       rect:
         serializedVersion: 2
-        x: 128
+        x: 64
         y: 128
         width: 32
         height: 32
@@ -386,7 +365,7 @@ TextureImporter:
       name: tree_tiles_13
       rect:
         serializedVersion: 2
-        x: 160
+        x: 96
         y: 128
         width: 32
         height: 32
@@ -407,7 +386,7 @@ TextureImporter:
       name: tree_tiles_14
       rect:
         serializedVersion: 2
-        x: 192
+        x: 128
         y: 128
         width: 32
         height: 32
@@ -420,6 +399,321 @@ TextureImporter:
       bones: []
       spriteID: 0511d261c25abb44a8e53c13b0bb4a9e
       internalID: 1578787269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3094ffbc40196b04b88b8030a7127e54
+      internalID: 1950941100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_15
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b932c3e09f6fb534ea2548a186901828
+      internalID: 353213608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_16
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d785c8cd3ee48344e99776b5b61e6a5b
+      internalID: -302726889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_17
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a3d0ee8e0b8e2a49b79703d6cb494e2
+      internalID: 8358733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_18
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba915bca47eba5e4fbbb6fd51c24553f
+      internalID: -2027715359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_19
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eda1b08997b2fd64a88720f02405b45e
+      internalID: -2015091161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_20
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df09569646f969e4e9cbabf7afb662e2
+      internalID: -1361125343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 439e80a8c12cb0346aa5bf34964a0e3d
+      internalID: -1461680241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_22
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79bebba58d05c11459ea14e4894283ee
+      internalID: 808249794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_23
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56e1de86af7b3b44a9da20ae3ca9bb0a
+      internalID: 872972162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_24
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef8758c141a9864458acbcd393d9360d
+      internalID: -1855008710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1120737351fe7694d85cb1ecddd7a921
+      internalID: -2061535812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_26
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a717435bc0d5f0b4b8f2c30e588e51b2
+      internalID: -1816258356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_27
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36294b4b2a8787242b1bc47b99acfd47
+      internalID: 1357486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tree_tiles_28
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24e3aac3f96cc5a4faaaa219bad29283
+      internalID: -349675011
       vertices: []
       indices: 
       edges: []
@@ -442,7 +736,21 @@ TextureImporter:
       tree_tiles_12: 921646377
       tree_tiles_13: 1347873503
       tree_tiles_14: 1578787269
+      tree_tiles_15: 353213608
+      tree_tiles_16: -302726889
+      tree_tiles_17: 8358733
+      tree_tiles_18: -2027715359
+      tree_tiles_19: -2015091161
       tree_tiles_2: -693160269
+      tree_tiles_20: -1361125343
+      tree_tiles_21: -1461680241
+      tree_tiles_22: 808249794
+      tree_tiles_23: 872972162
+      tree_tiles_24: -1855008710
+      tree_tiles_25: -2061535812
+      tree_tiles_26: -1816258356
+      tree_tiles_27: 1357486
+      tree_tiles_28: -349675011
       tree_tiles_3: 672717898
       tree_tiles_4: -1902438938
       tree_tiles_5: -2028807356

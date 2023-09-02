@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: tree_tiles_0
+  m_Script: {fileID: 11500000, guid: acf9c848217ba4c4d95441b87d2f5087, type: 3}
+  m_Name: Single Tree Tile
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 1950941100, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
+  m_Sprite: {fileID: 641151581, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -33,4 +33,9 @@ MonoBehaviour:
     e33: 1
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
-  m_ColliderType: 1
+  m_ColliderType: 0
+  m_Type: 1
+  m_TopSprite: {fileID: 393837519, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
+  m_BaseSpriteContinue: {fileID: -1931472635, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
+  m_BaseSprite: {fileID: 1448468140, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
+  m_MidSprite: {fileID: 398452421, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
