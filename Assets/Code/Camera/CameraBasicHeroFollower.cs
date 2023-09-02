@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraBasicHeroFollower : MonoBehaviour
 {
-  const float kEasingMax = 0.1f;
+  const float kEasingMax = 0.05f;
 
   public Vector2    m_MovementPadding;
   public float      m_WaitForCenterSeconds;
@@ -86,7 +86,7 @@ public class CameraBasicHeroFollower : MonoBehaviour
       total_catchup.x += hero_bounds.min.x - movement_bounds.min.x;
     }
 
-    if ( total_catchup.sqrMagnitude > 0f )
+    if ( total_catchup.sqrMagnitude > 0.000001f )
     {
       m_TargetPosition = transform.position + new Vector3( total_catchup.x, total_catchup.y );
       m_State = State.MovingToBoundaryTarget;
@@ -122,8 +122,9 @@ public class CameraBasicHeroFollower : MonoBehaviour
 
       Vector2 transform_2d = transform.position;
 
-      const float kEpsilon = 0.0001f;
-      if ( ( transform_2d - m_TargetPosition ).sqrMagnitude < kEpsilon )
+      const float kEpsilon       = 0.0001f;
+      const float kMoveToEpsilon = 0.000000001f;
+      if ( move_vec.sqrMagnitude < kMoveToEpsilon || ( transform_2d - m_TargetPosition ).sqrMagnitude < kEpsilon )
       {
         transform.position = new Vector3( m_TargetPosition.x, m_TargetPosition.y, transform.position.z );
 
