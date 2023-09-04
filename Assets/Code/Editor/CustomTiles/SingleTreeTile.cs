@@ -12,19 +12,22 @@ public class SingleTreeTile : CustomTile
   public Sprite m_BaseSprite;
   public Sprite m_MidSprite;
 
+  public Matrix4x4 m_LowerLayerTransform = Matrix4x4.identity;
+
   public override void RefreshTile(Vector3Int pos, ITilemap tilemap)
   {
     // check up
-    Vector3Int up_pos = new Vector3Int( pos.x, pos.y + 1, pos.z );
+    Vector3Int up_pos  = new Vector3Int( pos.x, pos.y + 1, pos.z );
+    CustomTile up_tile = tilemap.GetTile<CustomTile>( up_pos );
     
-    if ( ( GetTileType( tilemap, up_pos ) & Type.SingleTree ) == Type.SingleTree )
+    if ( up_tile != null && up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) )
     {
       tilemap.RefreshTile( up_pos );
     }
 
-    Vector3Int down_pos = new Vector3Int(pos.x, pos.y - 1, pos.z);
-    Type down_type = GetTileType( tilemap, down_pos );
-    if ( ( down_type & Type.SingleTree ) == Type.SingleTree )
+    Vector3Int down_pos  = new Vector3Int(pos.x, pos.y - 1, pos.z);
+    CustomTile down_tile = tilemap.GetTile<CustomTile>( down_pos );
+    if ( down_tile != null && down_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) )
     {
       tilemap.RefreshTile( down_pos );
     }
@@ -34,23 +37,41 @@ public class SingleTreeTile : CustomTile
 
   public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tile_data)
   {
-    Type up_type   = GetTileType( tilemap, position + new Vector3Int( 0,  1, 0 ) );
-    Type down_type = GetTileType( tilemap, position + new Vector3Int( 0, -1, 0 ) );
+    CustomTile up_tile   = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0,  1, 0 ) );
+    CustomTile down_tile = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0, -1, 0 ) );
 
-    ColliderType collider_type = ColliderType.None;
-    Sprite       sprite        = ( up_type == Type.SingleTree ) ? m_BaseSpriteContinue : m_BaseSprite;
-
-    if ( ( down_type & Type.SingleTree ) == Type.SingleTree )
+    ColliderType collider_type  = ColliderType.None;
+    Sprite       sprite         = m_BaseSprite;
+    Matrix4x4    calc_transform = m_LowerLayerTransform;
+    
+    if ( up_tile != null )
     {
-      sprite = ( up_type == 0 || ( up_type & Type.SingleTreeBase ) == Type.SingleTreeBase ) ? m_TopSprite : m_MidSprite;
+      if ( up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) )
+      {
+        sprite = m_BaseSpriteContinue;
+      }
     }
-    else if ( down_type == 0 )
+
+    if ( down_tile != null && down_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) )
+    {
+      calc_transform = transform;
+      sprite = m_TopSprite;
+      if ( up_tile != null )
+      {
+        if ( up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) && up_tile.IsType( Type.SingleTreeBase ) == false )
+        {
+          sprite = m_MidSprite;
+        }
+      }
+    }
+    else if ( down_tile == null || down_tile.IsType( Type.SingleTree ) == false )
     {
       collider_type = ColliderType.Grid;
     }
 
-    tile_data.color        = Color.white;
-    tile_data.flags        = TileFlags.LockTransform;
+    tile_data.color        = color;
+    tile_data.flags        = TileFlags.LockTransform | flags;
+    tile_data.transform    = calc_transform;
     tile_data.colliderType = collider_type;
     tile_data.sprite       = sprite;
   }

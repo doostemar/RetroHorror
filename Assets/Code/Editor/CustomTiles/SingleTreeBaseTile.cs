@@ -34,8 +34,9 @@ public class SingleTreeBaseTile : CustomTile
   {
     Type up_type   = GetTileType( tilemap, position + new Vector3Int( 0,  1, 0 ) );
 
-    tile_data.color        = Color.white;
-    tile_data.flags        = TileFlags.LockTransform;
+    tile_data.color        = color;
+    tile_data.flags        = flags;
+    tile_data.transform    = transform;
     tile_data.colliderType = ColliderType.Grid;
     tile_data.sprite       = ( up_type & Type.SingleTree ) == Type.SingleTree ? m_SpriteContinue : m_SingleSprite;
   }

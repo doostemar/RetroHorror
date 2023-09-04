@@ -15,6 +15,7 @@ public class Game : MonoBehaviour
       if ( game_controllers.Length != 1 )
       { 
         Debug.LogError( "Require exactly one GameController in the scene!" );
+        return null;
       }
 
       s_GameController = game_controllers[0];

@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51eab136acd41a409144a5f22a51a29, type: 3}
+  m_Name: MultiTreeBrush
+  m_EditorClassIdentifier: 
+  m_Cells:
+  - m_Tile: {fileID: 0}
+    m_Matrix:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Pivot: {x: 0, y: 0, z: 0}
+  m_CanChangeZPosition: 0
+  m_FloodFillContiguousOnly: 1
+  m_MidTile: {fileID: 11400000, guid: 8abface254b45ad4789db4efec39d581, type: 2}
+  m_BaseTile: {fileID: 11400000, guid: 3e4bd46bf29538b469848d5b5f40c429, type: 2}
+  m_TopTile: {fileID: 11400000, guid: 94f5825141f4bed45b3b8043e1c1cee5, type: 2}
+  m_BaseLeftPeripheryTile: {fileID: 11400000, guid: b300434a32ec3f040bd5bc2b71ef4e22, type: 2}
+  m_BaseRightPeripheryTile: {fileID: 11400000, guid: 90d56969b3aaaef4b9129e69923b4fe7, type: 2}
+  m_BaseComboPeripheryTile: {fileID: 11400000, guid: 5758d7f50a5df2f47bb010620a6a7531, type: 2}
+  m_TopLeftPeripheryTile: {fileID: 11400000, guid: db87b9f503ea7084e8a90defad96f7e3, type: 2}
+  m_TopRightPerirpheryTile: {fileID: 11400000, guid: 1e504e6481146db4ca100c6c4064b2da, type: 2}
+  m_TopComboPeripheryTile: {fileID: 11400000, guid: 35eddd868903b60448d6ddfbf21bb61a, type: 2}
+  m_SingleComboBaseLeftPeripheryTile: {fileID: 11400000, guid: 5bcecc99f38dee3458f32a34d96cbb31, type: 2}
+  m_SingleComboBaseRightPeripheryTile: {fileID: 11400000, guid: 31387feff8824444bb53e642162724c0, type: 2}
+  m_SingleComboBaseComboPeripheryTile: {fileID: 11400000, guid: 47345b66b0684494cbbae374de0f46c6, type: 2}
+  m_SingleBaseComboBaseLeftPeripheryTile: {fileID: 11400000, guid: d8c151ad9263b9542bc8554d279c97f9, type: 2}
+  m_SingleBaseComboBaseRightPeripheryTile: {fileID: 11400000, guid: 1684ad5ac17bbcd4f8f791d9729fb503, type: 2}
+  m_SingleBaseComboBaseComboPeripheryTile: {fileID: 11400000, guid: 985d999dbd920284a9608b9a5c126228, type: 2}
+  m_SingleTopComboBaseLeftPeripheryTile: {fileID: 11400000, guid: 425c5d4b1059c0a45a622966842361ed, type: 2}
+  m_SingleTopComboBaseRightPeripheryTile: {fileID: 11400000, guid: 68627240b2a09b4478c4a6c87df6144d, type: 2}
+  m_SingleTopComboBaseComboPeripheryTile: {fileID: 11400000, guid: 3a7ec95b8ba65af4a80de47ce559886d, type: 2}
+  m_SingleComboTopLeftPeripheryTile: {fileID: 11400000, guid: a410163a891e9d94dbb3ff2a9dfbd8a6, type: 2}
+  m_SingleComboTopRightPeripheryTile: {fileID: 11400000, guid: 5843c3671a4c9144aad7469cf302a36b, type: 2}
+  m_SingleComboTopComboPeripheryTile: {fileID: 11400000, guid: d16d59eb7a598e4499e04c39bf699965, type: 2}
+  m_SingleBaseComboTopLeftPeripheryTile: {fileID: 11400000, guid: b5836b40ecc7bf24c8f834783e04b947, type: 2}
+  m_SingleBaseComboTopRightPeripheryTile: {fileID: 11400000, guid: fc0ddc417283092419d00658ecdb553d, type: 2}
+  m_SingleBaseComboTopComboPeripheryTile: {fileID: 11400000, guid: c2cc7decc60eaf4449aba11217a562ab, type: 2}
+  m_SingleTopComboTopLeftPeripheryTile: {fileID: 11400000, guid: d135327a2f2a0a240bac0f9db4263b0f, type: 2}
+  m_SingleTopComboTopRightPeripheryTile: {fileID: 11400000, guid: cabfd233bae8f7845a10cd9d434d8813, type: 2}
+  m_SingleTopComboTopComboPeripheryTile: {fileID: 11400000, guid: 62d3624504c273b418b1624cbcb3ae71, type: 2}
+  m_SingleTreeTile: {fileID: 11400000, guid: d69270a446ce6874fb753273b9d82f06, type: 2}
+  m_SingleTreeBaseTile: {fileID: 11400000, guid: f32ea0d09cef11d4ca32cdaac5dee757, type: 2}
+  m_SingleTreeTopTile: {fileID: 11400000, guid: d0869b5c07364cb4f93653cef8e9ee0e, type: 2}
