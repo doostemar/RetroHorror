@@ -11,6 +11,8 @@ public class MultiTreeBaseTile : CustomTile
   public Sprite m_SoloSprite;
   public Sprite m_ContinueFromSingleSprite;
 
+  public Matrix4x4 m_UpperLayerTransform = Matrix4x4.identity;
+
   public override void RefreshTile(Vector3Int pos, ITilemap tilemap)
   {
     Vector3Int down_pos = new Vector3Int(pos.x, pos.y - 1, pos.z);
@@ -28,20 +30,23 @@ public class MultiTreeBaseTile : CustomTile
     CustomTile up_tile   = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0, 1, 0 ) );
     CustomTile down_tile = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0, -1, 0 ) );
 
-    Sprite sprite = m_SoloSprite;
+    Sprite    sprite    = m_SoloSprite;
+    Matrix4x4 calc_transform = transform;
     if ( up_tile != null && up_tile.IsType( Type.MultiTree ) )
     {
       sprite = m_ContinueSprite;
       if ( down_tile != null && down_tile.IsType( Type.SingleTree ) )
       {
+        calc_transform = m_UpperLayerTransform;
         sprite = m_ContinueFromSingleSprite;
       }
     }
 
-    tile_data.color = Color.white;
-    tile_data.flags = TileFlags.LockTransform;
+    tile_data.color        = color;
+    tile_data.flags        = TileFlags.LockTransform | flags;
+    tile_data.transform    = calc_transform;
     tile_data.colliderType = ColliderType.Grid;
-    tile_data.sprite = sprite;
+    tile_data.sprite       = sprite;
   }
 
 #if UNITY_EDITOR

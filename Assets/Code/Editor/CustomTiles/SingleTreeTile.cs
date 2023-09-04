@@ -12,6 +12,8 @@ public class SingleTreeTile : CustomTile
   public Sprite m_BaseSprite;
   public Sprite m_MidSprite;
 
+  public Matrix4x4 m_LowerLayerTransform = Matrix4x4.identity;
+
   public override void RefreshTile(Vector3Int pos, ITilemap tilemap)
   {
     // check up
@@ -38,8 +40,9 @@ public class SingleTreeTile : CustomTile
     CustomTile up_tile   = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0,  1, 0 ) );
     CustomTile down_tile = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0, -1, 0 ) );
 
-    ColliderType collider_type = ColliderType.None;
-    Sprite       sprite        = m_BaseSprite;
+    ColliderType collider_type  = ColliderType.None;
+    Sprite       sprite         = m_BaseSprite;
+    Matrix4x4    calc_transform = m_LowerLayerTransform;
     
     if ( up_tile != null )
     {
@@ -51,6 +54,7 @@ public class SingleTreeTile : CustomTile
 
     if ( down_tile != null && down_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) )
     {
+      calc_transform = transform;
       sprite = m_TopSprite;
       if ( up_tile != null )
       {
@@ -59,15 +63,15 @@ public class SingleTreeTile : CustomTile
           sprite = m_MidSprite;
         }
       }
-      //sprite = ( up_tile == null || up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) == false  || up_tile.IsType( Type.SingleTreeBase ) ) ? m_TopSprite : m_MidSprite;
     }
     else if ( down_tile == null || down_tile.IsType( Type.SingleTree ) == false )
     {
       collider_type = ColliderType.Grid;
     }
 
-    tile_data.color        = Color.white;
-    tile_data.flags        = TileFlags.LockTransform;
+    tile_data.color        = color;
+    tile_data.flags        = TileFlags.LockTransform | flags;
+    tile_data.transform    = calc_transform;
     tile_data.colliderType = collider_type;
     tile_data.sprite       = sprite;
   }

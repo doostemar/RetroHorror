@@ -40,8 +40,9 @@ public class MultiTreeTopTile : CustomTile
       sprite = m_ContinueToSingleSprite;
     }
 
-    tile_data.color        = Color.white;
-    tile_data.flags        = TileFlags.LockTransform;
+    tile_data.color        = color;
+    tile_data.flags        = flags;
+    tile_data.transform    = transform;
     tile_data.colliderType = ColliderType.None;
     tile_data.sprite       = sprite;
   }

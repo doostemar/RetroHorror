@@ -22,9 +22,10 @@ public class MultiTreeTile : CustomTile
 
   public override void GetTileData( Vector3Int position, ITilemap tilemap, ref TileData tile_data )
   {
-    tile_data.color        = Color.white;
-    tile_data.flags        = TileFlags.LockTransform;
+    tile_data.color        = color;
+    tile_data.flags        = flags;
     tile_data.colliderType = colliderType;
+    tile_data.transform    = transform;
     tile_data.sprite       = sprite;
   }
 

@@ -22,7 +22,7 @@ MonoBehaviour:
     e10: 0
     e11: 1
     e12: 0
-    e13: 0
+    e13: -1.5
     e20: 0
     e21: 0
     e22: 1
@@ -32,10 +32,27 @@ MonoBehaviour:
     e32: 0
     e33: 1
   m_InstancedGameObject: {fileID: 0}
-  m_Flags: 1
+  m_Flags: 3
   m_ColliderType: 0
   m_Type: 513
   m_TopSprite: {fileID: -1841396970, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
   m_BaseSpriteContinue: {fileID: -1288709651, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
   m_BaseSprite: {fileID: -1230493788, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
   m_MidSprite: {fileID: -1816258356, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
+  m_LowerLayerTransform:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: -0.5
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
