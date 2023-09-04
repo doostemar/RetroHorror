@@ -160,7 +160,7 @@ namespace UnityEditor.Tilemaps
       }
       else if ( right_tile.IsType( CustomTile.Type.MultiTreeBaseLeftPeriphery ) )
       {
-        tilemap.SetTile( left_pos, m_BaseComboPeripheryTile );
+        tilemap.SetTile( right_pos, m_BaseComboPeripheryTile );
       }
     }
 
@@ -250,7 +250,7 @@ namespace UnityEditor.Tilemaps
       }
       else if ( right_tile.IsType( CustomTile.Type.MultiTreeTopLeftPeriphery ) )
       {
-        tilemap.SetTile( left_pos, m_TopComboPeripheryTile );
+        tilemap.SetTile( right_pos, m_TopComboPeripheryTile );
       }
     }
 

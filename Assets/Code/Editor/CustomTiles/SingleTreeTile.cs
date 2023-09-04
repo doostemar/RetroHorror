@@ -18,14 +18,14 @@ public class SingleTreeTile : CustomTile
     Vector3Int up_pos  = new Vector3Int( pos.x, pos.y + 1, pos.z );
     CustomTile up_tile = tilemap.GetTile<CustomTile>( up_pos );
     
-    if ( up_tile != null && up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) ) //( GetTileType( tilemap, up_pos ) & Type.SingleTree ) == Type.SingleTree )
+    if ( up_tile != null && up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) )
     {
       tilemap.RefreshTile( up_pos );
     }
 
-    Vector3Int down_pos = new Vector3Int(pos.x, pos.y - 1, pos.z);
-    Type down_type = GetTileType( tilemap, down_pos );
-    if ( ( down_type & Type.SingleTree ) == Type.SingleTree )
+    Vector3Int down_pos  = new Vector3Int(pos.x, pos.y - 1, pos.z);
+    CustomTile down_tile = tilemap.GetTile<CustomTile>( down_pos );
+    if ( down_tile != null && down_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) )
     {
       tilemap.RefreshTile( down_pos );
     }
@@ -39,11 +39,27 @@ public class SingleTreeTile : CustomTile
     CustomTile down_tile = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0, -1, 0 ) );
 
     ColliderType collider_type = ColliderType.None;
-    Sprite       sprite        = up_tile != null && up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) ? m_BaseSpriteContinue : m_BaseSprite;
-
-    if ( down_tile != null && down_tile.IsType( Type.SingleTree ) )
+    Sprite       sprite        = m_BaseSprite;
+    
+    if ( up_tile != null )
     {
-      sprite = ( up_tile == null || up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) == false  || up_tile.IsType( Type.SingleTreeBase ) ) ? m_TopSprite : m_MidSprite;
+      if ( up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) )
+      {
+        sprite = m_BaseSpriteContinue;
+      }
+    }
+
+    if ( down_tile != null && down_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) )
+    {
+      sprite = m_TopSprite;
+      if ( up_tile != null )
+      {
+        if ( up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) && up_tile.IsType( Type.SingleTreeBase ) == false )
+        {
+          sprite = m_MidSprite;
+        }
+      }
+      //sprite = ( up_tile == null || up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) == false  || up_tile.IsType( Type.SingleTreeBase ) ) ? m_TopSprite : m_MidSprite;
     }
     else if ( down_tile == null || down_tile.IsType( Type.SingleTree ) == false )
     {

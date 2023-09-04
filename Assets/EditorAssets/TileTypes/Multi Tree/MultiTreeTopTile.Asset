@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dad608799cd933141a7e86cc70fd8175, type: 3}
+  m_Script: {fileID: 11500000, guid: 75b1c7110f88a51438cf53fce4e44b4e, type: 3}
   m_Name: MultiTreeTopTile
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -2028807356, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -33,5 +33,7 @@ MonoBehaviour:
     e33: 1
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
-  m_ColliderType: 0
+  m_ColliderType: 1
   m_Type: 40
+  m_TopSprite: {fileID: -2028807356, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
+  m_ContinueToSingleSprite: {fileID: 353213608, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}

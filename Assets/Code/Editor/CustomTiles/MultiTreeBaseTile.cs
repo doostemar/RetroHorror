@@ -11,6 +11,18 @@ public class MultiTreeBaseTile : CustomTile
   public Sprite m_SoloSprite;
   public Sprite m_ContinueFromSingleSprite;
 
+  public override void RefreshTile(Vector3Int pos, ITilemap tilemap)
+  {
+    Vector3Int down_pos = new Vector3Int(pos.x, pos.y - 1, pos.z);
+    Type down_type = GetTileType( tilemap, down_pos );
+    if ( ( down_type & Type.SingleTree ) == Type.SingleTree )
+    {
+      tilemap.RefreshTile( down_pos );
+    }
+
+    tilemap.RefreshTile( pos );
+  }
+
   public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tile_data)
   {
     CustomTile up_tile   = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0, 1, 0 ) );
