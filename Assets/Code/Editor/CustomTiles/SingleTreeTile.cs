@@ -34,17 +34,17 @@ public class SingleTreeTile : CustomTile
 
   public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tile_data)
   {
-    Type up_type   = GetTileType( tilemap, position + new Vector3Int( 0,  1, 0 ) );
-    Type down_type = GetTileType( tilemap, position + new Vector3Int( 0, -1, 0 ) );
+    CustomTile up_tile   = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0,  1, 0 ) );
+    CustomTile down_tile = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0, -1, 0 ) );
 
     ColliderType collider_type = ColliderType.None;
-    Sprite       sprite        = ( up_type == Type.SingleTree ) ? m_BaseSpriteContinue : m_BaseSprite;
+    Sprite       sprite        = up_tile != null && up_tile.IsType( Type.SingleTree ) ? m_BaseSpriteContinue : m_BaseSprite;
 
-    if ( ( down_type & Type.SingleTree ) == Type.SingleTree )
+    if ( down_tile != null && down_tile.IsType( Type.SingleTree ) )
     {
-      sprite = ( up_type == 0 || ( up_type & Type.SingleTreeBase ) == Type.SingleTreeBase ) ? m_TopSprite : m_MidSprite;
+      sprite = ( up_tile == null || up_tile.IsType( Type.SingleTree ) == false  || up_tile.IsType( Type.SingleTreeBase ) ) ? m_TopSprite : m_MidSprite;
     }
-    else if ( down_type == 0 )
+    else if ( down_tile == null || down_tile.IsType( Type.SingleTree ) == false )
     {
       collider_type = ColliderType.Grid;
     }
