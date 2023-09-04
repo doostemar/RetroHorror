@@ -37,3 +37,4 @@ MonoBehaviour:
   m_Type: 24
   m_ContinueSprite: {fileID: 1347873503, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
   m_SoloSprite: {fileID: -1361125343, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}
+  m_ContinueFromSingleSprite: {fileID: -2027715359, guid: 0fd0352e20100e54a94aa460463fc8ba, type: 3}

@@ -15,9 +15,10 @@ public class SingleTreeTile : CustomTile
   public override void RefreshTile(Vector3Int pos, ITilemap tilemap)
   {
     // check up
-    Vector3Int up_pos = new Vector3Int( pos.x, pos.y + 1, pos.z );
+    Vector3Int up_pos  = new Vector3Int( pos.x, pos.y + 1, pos.z );
+    CustomTile up_tile = tilemap.GetTile<CustomTile>( up_pos );
     
-    if ( ( GetTileType( tilemap, up_pos ) & Type.SingleTree ) == Type.SingleTree )
+    if ( up_tile != null && up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) ) //( GetTileType( tilemap, up_pos ) & Type.SingleTree ) == Type.SingleTree )
     {
       tilemap.RefreshTile( up_pos );
     }
@@ -38,11 +39,11 @@ public class SingleTreeTile : CustomTile
     CustomTile down_tile = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0, -1, 0 ) );
 
     ColliderType collider_type = ColliderType.None;
-    Sprite       sprite        = up_tile != null && up_tile.IsType( Type.SingleTree ) ? m_BaseSpriteContinue : m_BaseSprite;
+    Sprite       sprite        = up_tile != null && up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) ? m_BaseSpriteContinue : m_BaseSprite;
 
     if ( down_tile != null && down_tile.IsType( Type.SingleTree ) )
     {
-      sprite = ( up_tile == null || up_tile.IsType( Type.SingleTree ) == false  || up_tile.IsType( Type.SingleTreeBase ) ) ? m_TopSprite : m_MidSprite;
+      sprite = ( up_tile == null || up_tile.IsAnyType( Type.SingleTree | Type.MultiTree ) == false  || up_tile.IsType( Type.SingleTreeBase ) ) ? m_TopSprite : m_MidSprite;
     }
     else if ( down_tile == null || down_tile.IsType( Type.SingleTree ) == false )
     {

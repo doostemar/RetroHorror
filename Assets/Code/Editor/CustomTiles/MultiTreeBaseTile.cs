@@ -9,15 +9,27 @@ public class MultiTreeBaseTile : CustomTile
 {
   public Sprite m_ContinueSprite;
   public Sprite m_SoloSprite;
+  public Sprite m_ContinueFromSingleSprite;
 
   public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tile_data)
   {
-    Type up_type = GetTileType( tilemap, position + new Vector3Int( 0, 1, 0 ) );
+    CustomTile up_tile   = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0, 1, 0 ) );
+    CustomTile down_tile = tilemap.GetTile<CustomTile>( position + new Vector3Int( 0, -1, 0 ) );
+
+    Sprite sprite = m_SoloSprite;
+    if ( up_tile != null && up_tile.IsType( Type.MultiTree ) )
+    {
+      sprite = m_ContinueSprite;
+      if ( down_tile != null && down_tile.IsType( Type.SingleTree ) )
+      {
+        sprite = m_ContinueFromSingleSprite;
+      }
+    }
 
     tile_data.color = Color.white;
     tile_data.flags = TileFlags.LockTransform;
     tile_data.colliderType = ColliderType.Grid;
-    tile_data.sprite = ( up_type & Type.MultiTree ) == Type.MultiTree ? m_ContinueSprite : m_SoloSprite;
+    tile_data.sprite = sprite;
   }
 
 #if UNITY_EDITOR
