@@ -46,43 +46,72 @@ public class HeroMovementShadow : MonoBehaviour
 
   void Update()
   {
-    Vector3 player_input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0f).normalized;
-    Vector3 next_pos = transform.position + ( player_input * m_Velocity * Time.deltaTime );
+    Vector3 player_input = new Vector3( Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0f).normalized;
+    Vector3 next_pos = GetNextPosFromInput( player_input );
 
     // check collision
-    bool has_collision = false;
-    bool is_moving = false;
-    foreach ( var tilemap in m_CollisionTilemaps )
+    if ( CheckForCollisionAt( next_pos ) )
     {
-      Vector3Int        tile_pos = tilemap.WorldToCell( next_pos );
-      Tile.ColliderType collider = tilemap.GetColliderType( tile_pos );
+      // allow player to slide past
+      Vector3 no_vertical = player_input;
+      no_vertical.y = 0f;
+      Vector3 next_pos_no_vert = GetNextPosFromInput( no_vertical );
 
-      if ( collider != Tile.ColliderType.None )
+      Vector3 no_horizontal = player_input;
+      no_horizontal.x = 0f;
+      Vector3 next_pos_no_hor = GetNextPosFromInput( no_horizontal );
+
+      if ( CheckForCollisionAt( next_pos_no_vert ) == false )
       {
-        has_collision = true;
+        next_pos = next_pos_no_vert;
+      }
+      else if ( CheckForCollisionAt( next_pos_no_hor ) == false )
+      {
+        next_pos = next_pos_no_hor;
+      }
+      else
+      {
+        next_pos = transform.position;
       }
     }
-    
-    if ( has_collision == false )
-    {
-      is_moving = player_input != Vector3.zero;
-      transform.position = next_pos;
 
-      // Handle state stuff
-      if ( is_moving && !m_PrevIsMoving )
-      {
-        HeroSelfEvent hero_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
-        hero_event.m_Type = HeroSelfEvent.EventType.HeroStateMoving;  
-        m_HeroEvents.RaiseEvent(hero_event);
-      }
-      else if ( !is_moving && m_PrevIsMoving )
-      {
-        HeroSelfEvent hero_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
-        hero_event.m_Type = HeroSelfEvent.EventType.HeroStateIdle;
-        m_HeroEvents.RaiseEvent(hero_event);
-      }
+    bool is_moving = next_pos != transform.position;
+    transform.position = next_pos;
+
+    // Handle state stuff
+    if ( is_moving && !m_PrevIsMoving )
+    {
+      HeroSelfEvent hero_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
+      hero_event.m_Type = HeroSelfEvent.EventType.HeroStateMoving;  
+      m_HeroEvents.RaiseEvent(hero_event);
+    }
+    else if ( !is_moving && m_PrevIsMoving )
+    {
+      HeroSelfEvent hero_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
+      hero_event.m_Type = HeroSelfEvent.EventType.HeroStateIdle;
+      m_HeroEvents.RaiseEvent(hero_event);
     }
 
     m_PrevIsMoving = is_moving;
+  }
+
+  Vector3 GetNextPosFromInput( Vector3 input )
+  {
+    return transform.position + (input * m_Velocity * Time.deltaTime);
+  }
+
+  bool CheckForCollisionAt( Vector3 pos )
+  {
+    foreach ( var tilemap in m_CollisionTilemaps )
+    {
+      Vector3Int        tile_pos = tilemap.WorldToCell( pos );
+      Tile.ColliderType collider = tilemap.GetColliderType( tile_pos );
+
+      if ( collider != Tile.ColliderType.None )
+      { 
+        return true;
+      }
+    }
+    return false;
   }
 }
