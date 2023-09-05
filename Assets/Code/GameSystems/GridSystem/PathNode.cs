@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PathNode
 {
-  private Grid<PathNode>  grid;
   private int             m_XPos;
   private int             m_YPos;
   
@@ -17,13 +16,12 @@ public class PathNode
 
   public PathNode(Grid<PathNode> grid, int x_pos, int y_pos)
   {
-    this.grid = grid;
     m_XPos = x_pos;
     m_YPos = y_pos;
     m_IsWalkable = true;
   }
 
-  public void SetWalkable(int x_pos, int y_pos, bool walkable)
+  public void SetWalkable(bool walkable)
   {
     m_IsWalkable = walkable;
   }

@@ -45,12 +45,12 @@ public class GridTest : MonoBehaviour
       PathNode node = grid.GetGridObject(x, y);
       if (node.m_IsWalkable)
       {
-        node.SetWalkable(x, y, false);
+        node.SetWalkable(false);
         grid.SetGridObject(x, y, node);
       }
       else
       {
-        node.SetWalkable(x, y, true);
+        node.SetWalkable(true);
         grid.SetGridObject(x, y, node);
       }
     }
