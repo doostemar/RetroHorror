@@ -10,6 +10,7 @@ public class HeroMovementShadow : MonoBehaviour
   public float m_SlideScaler = 0.5f;
 
   private HeroSelfEventSystem m_HeroEvents;
+  private BoxCollider2D       m_BoxCollider;
   private List<Tilemap>       m_CollisionTilemaps;
   private bool                m_PrevIsMoving;
   private Vector3             m_LastOffAxisMovementDirection;
@@ -19,6 +20,8 @@ public class HeroMovementShadow : MonoBehaviour
   {
     m_HeroEvents = GetComponent<HeroSelfEventSystem>();
     m_HeroEvents.OnHeroSelfEvent += OnSelfEvent;
+    
+    m_BoxCollider = GetComponent<BoxCollider2D>();
 
     m_PrevIsMoving = false;
     m_LastOffAxisMovementDirection = new Vector3( 1, 1, 0 ).normalized;
@@ -130,12 +133,25 @@ public class HeroMovementShadow : MonoBehaviour
   {
     foreach ( var tilemap in m_CollisionTilemaps )
     {
-      Vector3Int        tile_pos = tilemap.WorldToCell( pos );
-      Tile.ColliderType collider = tilemap.GetColliderType( tile_pos );
+      // check each edge of bounding rect
+      Vector3[] box_corners = {
+        m_BoxCollider.offset + m_BoxCollider.size / 2f,
+        m_BoxCollider.offset - m_BoxCollider.size / 2f,
+        m_BoxCollider.offset + new Vector2(  m_BoxCollider.size.x, -m_BoxCollider.size.y ) / 2f,
+        m_BoxCollider.offset + new Vector2( -m_BoxCollider.size.x,  m_BoxCollider.size.y ) / 2f
+      };
 
-      if ( collider != Tile.ColliderType.None )
-      { 
-        return true;
+      for ( int i_corner = 0; i_corner < box_corners.Length; ++i_corner )
+      {
+        Vector3 corner = pos + box_corners[i_corner ];
+
+        Vector3Int        tile_pos = tilemap.WorldToCell( corner );
+        Tile.ColliderType collider = tilemap.GetColliderType( tile_pos );
+
+        if ( collider != Tile.ColliderType.None )
+        {
+          return true;
+        }
       }
     }
     return false;

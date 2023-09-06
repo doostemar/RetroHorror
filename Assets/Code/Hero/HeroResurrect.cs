@@ -32,7 +32,6 @@ public class HeroResurrect : MonoBehaviour
   void Update()
   {
     const string kButtonName = "Resurrect";
-    Vector3 mouse_world_pos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
 
     bool pressed_button  = Input.GetButtonDown( kButtonName );
     bool released_button = Input.GetButtonUp( kButtonName );
@@ -53,7 +52,7 @@ public class HeroResurrect : MonoBehaviour
         ResurrectionEvent res_event = ScriptableObject.CreateInstance<ResurrectionEvent>();
         res_event.m_Type          = released_button ? ResurrectionEvent.Type.Cast : ResurrectionEvent.Type.Display;
         res_event.m_Radius        = m_ResRadius;
-        res_event.m_Position      = mouse_world_pos;
+        res_event.m_Position      = transform.position;
         res_event.m_TimeToDisplay = m_CooldownTimeS;
         m_ResEvents.RaiseEvent( res_event );
 
