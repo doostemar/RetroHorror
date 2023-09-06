@@ -6,11 +6,13 @@ using UnityEngine.Tilemaps;
 
 public class HeroMovementShadow : MonoBehaviour
 {
-  public float m_Velocity = 2f;
+  public float m_Velocity    = 2f;
+  public float m_SlideScaler = 0.5f;
 
   private HeroSelfEventSystem m_HeroEvents;
   private List<Tilemap>       m_CollisionTilemaps;
   private bool                m_PrevIsMoving;
+  private Vector3             m_LastOffAxisMovementDirection;
 
   // Start is called before the first frame update
   void Start()
@@ -19,6 +21,7 @@ public class HeroMovementShadow : MonoBehaviour
     m_HeroEvents.OnHeroSelfEvent += OnSelfEvent;
 
     m_PrevIsMoving = false;
+    m_LastOffAxisMovementDirection = new Vector3( 1, 1, 0 ).normalized;
 
     GameObject[] tilemap_objects = GameObject.FindGameObjectsWithTag( "CollisionGrid" );
     m_CollisionTilemaps = new List<Tilemap>();
@@ -47,31 +50,54 @@ public class HeroMovementShadow : MonoBehaviour
   void Update()
   {
     Vector3 player_input = new Vector3( Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0f).normalized;
-    Vector3 next_pos = GetNextPosFromInput( player_input );
+    Vector3 next_pos = transform.position + GetNextPosFromInput( player_input );
+
+    if ( Mathf.Abs( player_input.x ) != 1f 
+      && Mathf.Abs( player_input.y ) != 1f 
+      && player_input != Vector3.zero )
+    {
+      m_LastOffAxisMovementDirection = player_input;
+    }
 
     // check collision
     if ( CheckForCollisionAt( next_pos ) )
     {
       // allow player to slide past
-      Vector3 no_vertical = player_input;
-      no_vertical.y = 0f;
-      Vector3 next_pos_no_vert = GetNextPosFromInput( no_vertical );
+      Vector3 h_movement = new Vector3( player_input.x, 0f, 0f );
+      Vector3 next_pos_h_only = transform.position + GetNextPosFromInput( h_movement );
 
-      Vector3 no_horizontal = player_input;
-      no_horizontal.x = 0f;
-      Vector3 next_pos_no_hor = GetNextPosFromInput( no_horizontal );
+      Vector3 v_movement = new Vector3( 0f, player_input.y, 0f );
+      Vector3 next_pos_v_only = transform.position + GetNextPosFromInput( v_movement );      
 
-      if ( CheckForCollisionAt( next_pos_no_vert ) == false )
+      if ( h_movement != Vector3.zero && CheckForCollisionAt( next_pos_h_only ) == false )
       {
-        next_pos = next_pos_no_vert;
+        next_pos = next_pos_h_only;
       }
-      else if ( CheckForCollisionAt( next_pos_no_hor ) == false )
+      else if ( v_movement != Vector3.zero && CheckForCollisionAt( next_pos_v_only ) == false )
       {
-        next_pos = next_pos_no_hor;
+        next_pos = next_pos_v_only;
       }
       else
       {
-        next_pos = transform.position;
+        // use stored value for slower sliding sliding
+        Vector3 mem_h_movment = new Vector3( m_LastOffAxisMovementDirection.x, 0f, 0f );
+        Vector3 next_pos_h_mem = transform.position + GetNextPosFromInput( mem_h_movment ) * m_SlideScaler;
+
+        Vector3 mem_v_movement = new Vector3( 0f, m_LastOffAxisMovementDirection.y, 0f );
+        Vector3 next_pos_v_mem = transform.position + GetNextPosFromInput( mem_v_movement ) * m_SlideScaler;
+
+        if ( next_pos_h_mem != Vector3.zero && CheckForCollisionAt( next_pos_h_mem ) == false )
+        {
+          next_pos = next_pos_h_mem;
+        }
+        else if ( next_pos_v_mem != Vector3.zero && CheckForCollisionAt( next_pos_v_mem ) == false )
+        {
+          next_pos = next_pos_v_mem;
+        }
+        else
+        {
+          next_pos = transform.position;
+        }
       }
     }
 
@@ -97,7 +123,7 @@ public class HeroMovementShadow : MonoBehaviour
 
   Vector3 GetNextPosFromInput( Vector3 input )
   {
-    return transform.position + (input * m_Velocity * Time.deltaTime);
+    return input * m_Velocity * Time.deltaTime;
   }
 
   bool CheckForCollisionAt( Vector3 pos )

@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Velocity: 3
+  m_SlideScaler: 0.25
 --- !u!114 &221314109
 MonoBehaviour:
   m_ObjectHideFlags: 0
