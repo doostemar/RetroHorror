@@ -1,7 +1,5 @@
-#define PRINT_TRANSITIONS
+//#define PRINT_TRANSITIONS
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraBasicHeroFollower : MonoBehaviour
