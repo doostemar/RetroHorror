@@ -565,7 +565,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovementPadding: {x: 4.15, y: 2.45}
-  m_WaitForCenterSeconds: 0.48
+  m_MovementPaddingScaleWhenMoving: 1.2
+  m_WaitForCenterSeconds: 0.2
+  m_AnchorFactor: 0.827
   m_MovementEasing: 0.0464
 --- !u!1001 &768441582
 PrefabInstance:
