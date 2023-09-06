@@ -1,45 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 
 public class Pathfinding
 {
-
   private const int kStraightCost = 10;
   private const int kDiagonalCost = 14;
 
-  private Grid<PathNode> m_Grid;
   private List<PathNode> m_OpenList;
   private List<PathNode> m_ClosedList;
 
-  public Pathfinding(int width, int height)
-  {
-    m_Grid = new Grid<PathNode>(width, height, 1f, Vector3.zero, (Grid<PathNode> node, int x_pos, int y_pos) => new PathNode(node, x_pos, y_pos));
-  }
 
-  public Grid<PathNode> GetGrid()
+  public List<PathNode> FindPath( Vector2Int start, Vector2Int end)
   {
-    return m_Grid;
-  }
+    PathfindingGrid grid = new PathfindingGrid();
 
-  public List<PathNode> FindPath( int x_start, int y_start, int x_end, int y_end)
-  {
-    PathNode start_node = m_Grid.GetGridObject(x_start, y_start);
-    PathNode end_node = m_Grid.GetGridObject(x_end, y_end);
+    PathNode start_node = grid.GetGridObject(new Vector2Int(start.x, start.y));
+    PathNode end_node = grid.GetGridObject(new Vector2Int(end.x, end.y));
 
     m_OpenList = new List<PathNode> { start_node };
     m_ClosedList = new List<PathNode>();
-
-    for (int x = 0; x < m_Grid.GetWidth(); x++)
-    {
-      for (int y = 0; y < m_Grid.GetHeight(); y++)
-      {
-        PathNode node = m_Grid.GetGridObject(x, y);
-        node.m_GCost = int.MaxValue;
-        node.CalculateFCost();
-        node.m_PreviousNode = null;
-      }
-    }
 
     start_node.m_GCost = 0;
     start_node.m_HCost = CalculateDistanceCost(start_node, end_node);
@@ -58,11 +39,11 @@ public class Pathfinding
       m_OpenList.Remove(current_node);
       m_ClosedList.Add(current_node);
 
-      foreach (PathNode neighbor in GetNeighbors(current_node))
+      foreach (PathNode neighbor in GetNeighbors(grid, current_node))
       {
         if (m_ClosedList.Contains(neighbor)) continue;
 
-        if (!neighbor.m_IsWalkable)
+        if (grid.IsWalkable(neighbor) == false)
         {
           m_ClosedList.Add(neighbor);
           continue;
@@ -85,35 +66,26 @@ public class Pathfinding
     return null;
   }
 
-  private List<PathNode> GetNeighbors(PathNode current_node)
+  private List<PathNode> GetNeighbors(PathfindingGrid grid, PathNode current_node)
   {
     List<PathNode> neighbor_nodes = new List<PathNode>();
 
-    if (current_node.GetX() - 1 >= 0) 
-    { // left neighbor
-      neighbor_nodes.Add(GetNode(current_node.GetX() - 1, current_node.GetY()));
-      // bottom left
-      if (current_node.GetY() - 1 >= 0) neighbor_nodes.Add(GetNode(current_node.GetX() - 1, current_node.GetY() - 1));
-      // upper left
-      if (current_node.GetY() + 1 < m_Grid.GetHeight()) neighbor_nodes.Add(GetNode(current_node.GetX() - 1, current_node.GetY() + 1));
+    for (int dx = -1; dx <= 1; ++dx)
+    {
+      for (int dy = -1; dy <= 1; ++dy)
+      {
+        Vector2Int node_pos = current_node.GetPos() + new Vector2Int(dx, dy);
+        PathNode node = grid.GetGridObject(node_pos);
+        if (node != null)
+        {
+          neighbor_nodes.Add(node);
+        }
+      }
     }
-    if (current_node.GetX() + 1 < m_Grid.GetWidth())
-    { // right neighbor
-      neighbor_nodes.Add(GetNode(current_node.GetX() + 1, current_node.GetY()));
-      // bottom right
-      if (current_node.GetY() - 1 >= 0) neighbor_nodes.Add(GetNode(current_node.GetX() + 1, current_node.GetY() - 1));
-      // upper right
-      if (current_node.GetY() + 1 < m_Grid.GetHeight()) neighbor_nodes.Add(GetNode(current_node.GetX() + 1, current_node.GetY() + 1));
-    }
-    // bottom
-    if (current_node.GetY() - 1 >= 0) neighbor_nodes.Add(GetNode(current_node.GetX(), current_node.GetY() - 1));
-    // up
-    if (current_node.GetY() + 1 < m_Grid.GetHeight()) neighbor_nodes.Add(GetNode(current_node.GetX(), current_node.GetY() + 1));
-
     return neighbor_nodes;
   }
 
-  private List<PathNode> CalculatePath(PathNode end_node)
+    private List<PathNode> CalculatePath(PathNode end_node)
   {
     List<PathNode> path = new List<PathNode>();
     path.Add(end_node);
@@ -128,15 +100,10 @@ public class Pathfinding
     return path;
   }
 
-  private PathNode GetNode(int x_pos, int y_pos)
-  {
-    return m_Grid.GetGridObject(x_pos, y_pos);
-  }
-
   private int CalculateDistanceCost(PathNode start, PathNode end)
   {
-    int x_distance = Mathf.Abs(start.GetX() - end.GetX());
-    int y_distance = Mathf.Abs(start.GetY() - end.GetY());
+    int x_distance = Mathf.Abs(start.GetPos().x - end.GetPos().x);
+    int y_distance = Mathf.Abs(start.GetPos().y - end.GetPos().y);
     int remaining = Mathf.Abs(x_distance - y_distance);
 
     return kDiagonalCost * Mathf.Min(x_distance, y_distance) + kStraightCost * remaining;

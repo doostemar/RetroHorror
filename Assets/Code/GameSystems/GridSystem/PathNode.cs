@@ -4,43 +4,36 @@ using UnityEngine;
 
 public class PathNode
 {
-  private int             m_XPos;
-  private int             m_YPos;
+
+  private Vector2Int m_Pos;
   
   public int      m_GCost;
   public int      m_HCost;
   public int      m_FCost;
   public PathNode m_PreviousNode;
 
-  public bool m_IsWalkable;
 
-  public PathNode(Grid<PathNode> grid, int x_pos, int y_pos)
+  public PathNode(Vector2Int position)
   {
-    m_XPos = x_pos;
-    m_YPos = y_pos;
-    m_IsWalkable = true;
+    m_Pos = position;
   }
 
-  public void SetWalkable(bool walkable)
+  public Vector2Int GetPos()
   {
-    m_IsWalkable = walkable;
+    return m_Pos;
   }
-
-  public int GetX() { return m_XPos; }
-
-  public int GetY() { return m_YPos; }
 
   public void CalculateFCost()
   {
     m_FCost = m_GCost + m_HCost;
   }
 
-  public override string ToString()
-  {
-    if (!m_IsWalkable)
-    {
-      return "NO!";
-    }
-    return m_XPos + ", " + m_YPos;
-  }
+  //public override string ToString()
+  //{
+  //  if (!m_IsWalkable)
+  //  {
+  //    return "NO!";
+  //  }
+  //  return m_XPos + ", " + m_YPos;
+  //}
 }
