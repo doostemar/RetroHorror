@@ -12,12 +12,14 @@ public class PathfindingSystem : MonoBehaviour
   private List<PathNode> m_ClosedList;
 
 
-  public List<PathNode> FindPath( Vector2Int start, Vector2Int end )
+  public List<PathNode> FindPath( Vector2 start, Vector2 end )
   {
     PathfindingGrid grid = new PathfindingGrid();
+    Vector2Int grid_start = grid.WorldToGrid( start );
+    Vector2Int grid_end   = grid.WorldToGrid( end );
 
-    PathNode start_node = grid.GetGridObject(new Vector2Int(start.x, start.y));
-    PathNode end_node = grid.GetGridObject(new Vector2Int(end.x, end.y));
+    PathNode start_node = grid.GetGridObject( grid_start );
+    PathNode end_node   = grid.GetGridObject( grid_end );
 
     m_OpenList = new List<PathNode> { start_node };
     m_ClosedList = new List<PathNode>();
@@ -78,7 +80,7 @@ public class PathfindingSystem : MonoBehaviour
     {
       for (int dy = -1; dy <= 1; ++dy)
       {
-        Vector2Int node_pos = current_node.GetPos() + new Vector2Int(dx, dy);
+        Vector2Int node_pos = current_node.GridPos + new Vector2Int(dx, dy);
         PathNode node = grid.GetGridObject(node_pos);
         if (node != null)
         {
@@ -108,8 +110,8 @@ public class PathfindingSystem : MonoBehaviour
 
   private int CalculateDistanceCost(PathNode start, PathNode end)
   {
-    int x_distance = Mathf.Abs(start.GetPos().x - end.GetPos().x);
-    int y_distance = Mathf.Abs(start.GetPos().y - end.GetPos().y);
+    int x_distance = Mathf.Abs(start.GridPos.x - end.GridPos.x);
+    int y_distance = Mathf.Abs(start.GridPos.y - end.GridPos.y);
     int remaining = Mathf.Abs(x_distance - y_distance);
 
     return kDiagonalCost * Mathf.Min(x_distance, y_distance) + kStraightCost * remaining;

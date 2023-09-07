@@ -7,17 +7,9 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class PathfindingGrid
 {
-
-  //public event EventHandler<OnGridValueChangedEventArgs> OnGridValueChanged;
-  //public class OnGridValueChangedEventArgs : EventArgs
-  //{
-  //  public int x;
-  //  public int y;
-  //}
-
   private Dictionary<Vector2Int, PathNode> m_Nodes;
   private List<Tilemap> m_CollisionTilemaps; 
-  private TextMesh[,]    m_DebugGrid;
+  // private TextMesh[,]   m_DebugGrid;
 
   public PathfindingGrid()
   {
@@ -40,20 +32,41 @@ public class PathfindingGrid
     
   }
 
-  public void InitGridObject(Vector2Int position)
+  public Vector2Int WorldToGrid( Vector2 pos )
   {
-    PathNode node = new PathNode(position);
+    if ( m_CollisionTilemaps.Count > 0 )
+    {
+      Vector3Int cell_pos = m_CollisionTilemaps[0].WorldToCell( pos );
+      return new Vector2Int( cell_pos.x, cell_pos.y );
+    }
+    return Vector2Int.zero;
+  }
+
+  public void InitGridObject( Vector2Int position )
+  {
+    Vector2 world_pos = Vector2.zero;
+    if ( m_CollisionTilemaps.Count > 0 )
+    {
+      world_pos = m_CollisionTilemaps[0].CellToWorld( new Vector3Int( position.x, position.y ) );
+    }
+    else
+    {
+      Debug.LogError( "No CollisionGrid tags in scene. Pathfinding will not work correctly" );
+    }
+
+    PathNode node = new PathNode( position, world_pos );
     node.m_GCost = int.MaxValue;
     node.CalculateFCost();
     node.m_PreviousNode = null;
     m_Nodes[position] = node;
+
   }
 
   public bool IsWalkable(PathNode node)
   {
     for (int i = 0; i < m_CollisionTilemaps.Count; i++)
     {
-      if (m_CollisionTilemaps[i].GetColliderType(new Vector3Int(node.GetPos().x, node.GetPos().y))  == Tile.ColliderType.Grid)
+      if (m_CollisionTilemaps[i].GetColliderType(new Vector3Int(node.GridPos.x, node.GridPos.y))  == Tile.ColliderType.Grid)
       {
         return false;
       }
@@ -65,11 +78,6 @@ public class PathfindingGrid
   {
     m_Nodes[new Vector2Int(x, y)] = value;
   }
-
-  //public void TriggerGridObjectChanged(int x, int y)
-  //{
-  //  if (OnGridValueChanged != null) OnGridValueChanged(this, new OnGridValueChangedEventArgs { x = x, y = y });
-  //}
 
   public PathNode GetGridObject(Vector2Int position)
   {

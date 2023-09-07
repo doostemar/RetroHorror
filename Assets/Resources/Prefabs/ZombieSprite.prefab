@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8617242186327384004}
   - component: {fileID: 8019895731741237039}
+  - component: {fileID: -7365931121995651039}
+  - component: {fileID: -8003670616978890543}
   m_Layer: 0
   m_Name: ZombieSprite
   m_TagString: Untagged
@@ -71,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1352441733
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 1830707445, guid: fbcb4c55bb37147478970f128a961141, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -84,3 +86,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-7365931121995651039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5989785676371567735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d615cf0acbd224842b3b62464d3c7f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MoveSpeed: 3
+--- !u!114 &-8003670616978890543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5989785676371567735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 885a1b7954a18b14cae67c370644bd99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
