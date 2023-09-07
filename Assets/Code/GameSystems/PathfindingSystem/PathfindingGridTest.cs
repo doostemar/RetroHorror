@@ -1,18 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+
 public class PathfindingGridTest : MonoBehaviour
 {
 
   public Tilemap map;
-  private Pathfinding pathfinding;
+  private PathfindingSystem pathfinding;
 
     // Start is called before the first frame update
   private void Start()
   {
 
-    pathfinding = new Pathfinding();
+    pathfinding = new PathfindingSystem();
     //grid = pathfinding.GetGrid();
   }
 

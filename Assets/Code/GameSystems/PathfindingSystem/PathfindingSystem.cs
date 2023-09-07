@@ -1,9 +1,9 @@
-using System.Collections;
+//#define PATHFINDING_LOGGING
+
 using System.Collections.Generic;
-using System.Xml;
 using UnityEngine;
 
-public class Pathfinding
+public class PathfindingSystem : MonoBehaviour
 {
   private const int kStraightCost = 10;
   private const int kDiagonalCost = 14;
@@ -12,7 +12,7 @@ public class Pathfinding
   private List<PathNode> m_ClosedList;
 
 
-  public List<PathNode> FindPath( Vector2Int start, Vector2Int end)
+  public List<PathNode> FindPath( Vector2Int start, Vector2Int end )
   {
     PathfindingGrid grid = new PathfindingGrid();
 
@@ -24,7 +24,11 @@ public class Pathfinding
 
     start_node.m_GCost = 0;
     start_node.m_HCost = CalculateDistanceCost(start_node, end_node);
+
+    #if PATHFINDING_LOGGING
     Debug.Log("hcost: " + start_node.m_HCost);
+    #endif
+
     start_node.CalculateFCost();
 
     while (m_OpenList.Count > 0)
@@ -85,18 +89,20 @@ public class Pathfinding
     return neighbor_nodes;
   }
 
-    private List<PathNode> CalculatePath(PathNode end_node)
+  private List<PathNode> CalculatePath(PathNode end_node)
   {
     List<PathNode> path = new List<PathNode>();
-    path.Add(end_node);
-    PathNode current_node = end_node;
-    while (current_node.m_PreviousNode != null)
+    for ( PathNode node = end_node; node != null; node = node.m_PreviousNode )
     { 
-      path.Add(current_node.m_PreviousNode);
-      current_node = current_node.m_PreviousNode;
+      path.Add( node );
     }
+
     path.Reverse();
+
+    #if PATHFINDING_LOGGING
     Debug.Log("nodes in path: " + path.Count);
+    #endif
+    
     return path;
   }
 
