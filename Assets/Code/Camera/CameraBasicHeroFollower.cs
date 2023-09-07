@@ -17,9 +17,6 @@ public class CameraBasicHeroFollower : MonoBehaviour
   [ Range( 0f, kEasingMax ) ]
   public float      m_MovementEasing;
 
-  //[ Range( 0f, kEasingMax ) ]
-  //public float      m_AnchorMovementEasing;
-
   enum State
   {
     AtRest,                 // nothing happening, no movement
@@ -27,12 +24,7 @@ public class CameraBasicHeroFollower : MonoBehaviour
     Anchored,               // The hero is moving, but has not left the boundary region.
                             // The camera should have an elastic feel around the "center", which is wherever the camera sits when easing begins
 
-    CoolingDown,            // No movement from hero, we have a small delay before we move the camera to focus on the hero
-
     MovingToBoundaryTarget, // Hero is outside of the screen boundaries and is still moving. We are moving the camera to catch up
-
-    MovingToHeroTarget,     // Hero has been still for a certain amount of time (according to cooldown).
-                            // At this point we move the camera to focus on the hero
   }
 
   private GameObject m_Hero;
@@ -85,14 +77,8 @@ public class CameraBasicHeroFollower : MonoBehaviour
       case State.Anchored:
         HandleAnchored();
         break;
-      case State.CoolingDown:
-        HandleCooldown();
-        break;
       case State.MovingToBoundaryTarget:
         HandleOutsideBoundary();
-        break;
-      case State.MovingToHeroTarget:
-        HandleMoveToHero();
         break;
     }
   }
@@ -115,26 +101,6 @@ public class CameraBasicHeroFollower : MonoBehaviour
     m_State          = State.Anchored;
     m_AnchorPosition = transform.position;
   }
-
-  //-------------------------------------------------------------------------------------
-  //void TransitionToCoolingDown()
-  //{
-  //  #if PRINT_TRANSITIONS
-  //    Debug.Log("Camera Transition To Cooldown" );
-  //  #endif
-  //  m_State = State.CoolingDown;
-  //  m_TimeSinceMoved = 0f;
-  //}
-
-  //-------------------------------------------------------------------------------------
-  //void TransitionToMoveToHero()
-  //{
-  //  #if PRINT_TRANSITIONS
-  //    Debug.Log("Camera Transition To MoveToHero");
-  //  #endif
-  //  m_State = State.MovingToHeroTarget;
-  //  m_TargetPosition = m_Hero.transform.position;
-  //}
 
   //-------------------------------------------------------------------------------------
   void TransitionToMovingToBoundary()
@@ -201,12 +167,6 @@ public class CameraBasicHeroFollower : MonoBehaviour
   //-------------------------------------------------------------------------------------
   void HandleAnchored()
   {
-    //if ( m_IsHeroMoving == false )
-    //{
-    //  TransitionToCoolingDown();
-    //  return;
-    //}
-
     if ( IsOutsideAnchoredBounds() )
     {
       TransitionToMovingToBoundary();
@@ -232,37 +192,8 @@ public class CameraBasicHeroFollower : MonoBehaviour
   }
 
   //-------------------------------------------------------------------------------------
-  void HandleCooldown()
-  {
-    //if ( m_IsHeroMoving )
-    //{
-    //  if ( IsOutsideAnchoredBounds() )
-    //  {
-    //    TransitionToMovingToBoundary();
-    //    return;
-    //  }
-    //  else
-    //  {
-    //    TransitionToAnchored();
-    //    return;
-    //  }
-    //}
-
-    //m_TimeSinceMoved += Time.deltaTime;
-    //if ( m_TimeSinceMoved > m_WaitForCenterSeconds )
-    //{
-    //  TransitionToMoveToHero();
-    //}
-  }
-
-  //-------------------------------------------------------------------------------------
   void HandleOutsideBoundary()
   {
-    //if ( m_IsHeroMoving == false )
-    //{
-    //  TransitionToMoveToHero();
-    //}
-
     Bounds  boundaries = CalculateBounds( m_AnchorPosition, m_MovementPadding * m_MovementPaddingScaleWhenMoving );
     Vector2 outside_boundary_vec = GetHeroOutsideBoundsVec( boundaries );
 
@@ -295,34 +226,6 @@ public class CameraBasicHeroFollower : MonoBehaviour
     }
 
     return false;
-  }
-
-  //-------------------------------------------------------------------------------------
-  void HandleMoveToHero()
-  {
-    m_AnchorPosition = transform.position;
-
-    if ( m_IsHeroMoving )
-    {
-      if ( IsOutsideAnchoredBounds() )
-      {
-        TransitionToMovingToBoundary();
-        return;
-      }
-      else
-      {
-        TransitionToAnchored();
-        return;
-      }
-    }
-
-    Vector2 pos = transform.position;
-    bool arrived = FrameMoveTo( m_TargetPosition, ref pos );
-    transform.position = new Vector3( pos.x, pos.y, transform.position.z );
-    if ( arrived )
-    {
-      TransitionToAtRest();
-    }
   }
 
   //-------------------------------------------------------------------------------------
