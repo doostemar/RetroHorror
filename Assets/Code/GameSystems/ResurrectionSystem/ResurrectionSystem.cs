@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ResurrectionSystem : MonoBehaviour
 {
+  [HideInInspector]
   public ResurrectionEventChannel m_ResChannel;
 
   private DebugCircleRenderer m_AoeCircle;
