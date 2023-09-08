@@ -23,4 +23,14 @@ public class Game : MonoBehaviour
 
     return s_GameController;
   }
+
+  public static bool IsRunning()
+  {
+    if ( s_GameController == null )
+    {
+      GameObject[] game_controllers = GameObject.FindGameObjectsWithTag("GameController");
+      return game_controllers.Length > 0;
+    }
+    return true;
+  }
 }

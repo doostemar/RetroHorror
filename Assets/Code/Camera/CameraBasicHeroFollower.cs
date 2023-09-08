@@ -31,10 +31,7 @@ public class CameraBasicHeroFollower : MonoBehaviour
   private Collider2D m_HeroCollider;
   private bool       m_IsHeroMoving;
   private State      m_State;
-  private float      m_TimeSinceMoved;
-  private Vector2    m_TargetPosition;
   private Vector2    m_AnchorPosition;
-  private Bounds     m_Boundaries;
 
   //-------------------------------------------------------------------------------------
   private void Start()

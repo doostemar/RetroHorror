@@ -21,8 +21,11 @@ public class CorpseComponent : MonoBehaviour
 
   private void OnDestroy()
   {
-    ResurrectionEventChannel res_channel = Game.GetGameController().GetComponent<ResurrectionSystem>().m_ResChannel;
-    res_channel.OnResurrectionEvent -= OnResEvent;
+    if ( Game.IsRunning() )
+    {
+      ResurrectionEventChannel res_channel = Game.GetGameController().GetComponent<ResurrectionSystem>().m_ResChannel;
+      res_channel.OnResurrectionEvent -= OnResEvent;
+    }
   }
 
   void OnResEvent( ResurrectionEvent res_event )
