@@ -16,17 +16,29 @@ public class BotEnemy : MonoBehaviour
     Idle,
     HasAggro,
     MovingToAggroTarget,
+    Attacking,
   }
 
-  private State      m_State;
-  private GameObject m_AggroTarget;
-  private BotChannel m_BotChannel;
-  private bool       m_ArrivedAtTarget;
+  private State           m_State;
+  private GameObject      m_AggroTarget;
+  private BotChannel      m_BotChannel;
+  private BotEnemyChannel m_EnemyChannel;
+  private bool            m_ArrivedAtTarget;
+  private bool            m_AttackFinished;
 
   private void Start()
   {
-    m_State = State.Idle;
+    m_EnemyChannel    = GetComponent<BotEnemyChannel>();
     m_ArrivedAtTarget = false;
+    m_State           = State.Idle;
+
+    m_EnemyChannel.OnEnemyEvent += ( BotEnemyEvent evt ) =>
+    {
+      if ( evt.m_Type == BotEnemyEvent.Type.AttackFinished )
+      {
+        m_AttackFinished = true;
+      }
+    };
   }
 
   void Update()
@@ -47,6 +59,9 @@ public class BotEnemy : MonoBehaviour
         break;
       case State.MovingToAggroTarget:
         HandleMovingToAggroTarget();
+        break;
+      case State.Attacking:
+        HandleAttacking();
         break;
     }
   }
@@ -74,6 +89,24 @@ public class BotEnemy : MonoBehaviour
   {
     m_State = State.MovingToAggroTarget;
     m_ArrivedAtTarget = false;
+  }
+
+  void TransitionToAttacking()
+  {
+    {
+      BotMoveEvent move_evt = ScriptableObject.CreateInstance<BotMoveEvent>();
+      move_evt.m_Type = BotMoveEvent.Type.Stop;
+
+      m_BotChannel.RaiseMoveEvent( move_evt );
+    }
+
+    {
+      BotEnemyEvent evt = ScriptableObject.CreateInstance<BotEnemyEvent>();
+      evt.m_Type = BotEnemyEvent.Type.Attack;
+      m_EnemyChannel.RaiseEnemyEvent( evt );
+    }
+    m_AttackFinished = false;
+    m_State = State.Attacking;
   }
 
   void HandleIdle()
@@ -106,12 +139,6 @@ public class BotEnemy : MonoBehaviour
 
   void HandleAggro()
   {
-    //Vector2 to_target = m_AggroTarget.transform.position - transform.position;
-    //float   distance = to_target.magnitude;
-    //Vector3 rel_attack_position = (to_target / distance) * ( distance - m_AttackRange );
-
-    //Vector2 movement_target = transform.position + rel_attack_position;
-
     BotMoveEvent move_evt = ScriptableObject.CreateInstance<BotMoveEvent>();
     move_evt.m_TargetPosition = m_AggroTarget.transform.position;
     move_evt.m_Type           = BotMoveEvent.Type.Move;
@@ -124,8 +151,7 @@ public class BotEnemy : MonoBehaviour
   {
     if ( IsUnitInAttackRange( m_AggroTarget ) )
     {
-      Debug.Log( name + " wants attack" );
-      // todo: transition to attack
+      TransitionToAttacking();
     }
     else if ( m_ArrivedAtTarget )
     {
@@ -137,6 +163,14 @@ public class BotEnemy : MonoBehaviour
       {
         TransitionToIdle();
       }
+    }
+  }
+
+  void HandleAttacking()
+  {
+    if ( m_AttackFinished )
+    {
+      TransitionToAggro( m_AggroTarget );
     }
   }
 
