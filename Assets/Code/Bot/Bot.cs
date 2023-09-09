@@ -53,6 +53,8 @@ public class Bot : MonoBehaviour
       case BotMoveEvent.Type.Stop:
         TransitionToStopped();
         break;
+      default:
+        break;
     }
   }
 
@@ -89,6 +91,10 @@ public class Bot : MonoBehaviour
           }
           else
           {
+            BotMoveEvent arrived_evt = ScriptableObject.CreateInstance<BotMoveEvent>();
+            arrived_evt.m_Type = BotMoveEvent.Type.Arrived;
+            m_Channel.RaiseMoveEvent( arrived_evt );
+
             TransitionToStopped();
           }
         }

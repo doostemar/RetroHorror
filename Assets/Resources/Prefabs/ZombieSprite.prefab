@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1638945360848668995}
   m_Layer: 3
   m_Name: ZombieSprite
-  m_TagString: Untagged
+  m_TagString: HeroUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

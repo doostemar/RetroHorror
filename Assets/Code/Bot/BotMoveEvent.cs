@@ -8,6 +8,7 @@ public class BotMoveEvent : ScriptableObject
     Stop,
     Pause,
     Resume,
+    Arrived,
   };
 
   public Type    m_Type;
