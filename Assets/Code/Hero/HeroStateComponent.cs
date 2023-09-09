@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class HeroStateComponent : MonoBehaviour
 {
-  HeroSelfEventSystem m_HeroEvents;
+  HeroEventSystem m_HeroEvents;
 
   // Start is called before the first frame update
   void Start()
   {
-    m_HeroEvents = GetComponent<HeroSelfEventSystem>();
-    m_HeroEvents.OnHeroSelfEvent += OnSelfEvent;
+    m_HeroEvents = GetComponent<HeroEventSystem>();
+    m_HeroEvents.OnHeroEvent += OnSelfEvent;
   }
 
-  public void OnSelfEvent( HeroSelfEvent hero_event )
+  public void OnSelfEvent( HeroEvent hero_event )
   {
-    if (hero_event.m_Type == HeroSelfEvent.EventType.HeroStateCastDone)
+    if (hero_event.m_Type == HeroEvent.EventType.HeroStateCastDone)
     {
-      HeroSelfEvent idle_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
-      idle_event.m_Type = HeroSelfEvent.EventType.HeroStateIdle;
+      HeroEvent idle_event = ScriptableObject.CreateInstance<HeroEvent>();
+      idle_event.m_Type = HeroEvent.EventType.HeroStateIdle;
 
       m_HeroEvents.RaiseEvent( idle_event );
     }

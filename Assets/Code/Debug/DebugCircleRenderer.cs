@@ -35,7 +35,7 @@ public class DebugCircleRenderer : MonoBehaviour
 
     for ( int i_pt = 0; i_pt < m_PointCount; ++i_pt )
     {
-      pts[i_pt ] = m_Center + Vec2Math.Rotate2D( Vector2.right, div * i_pt ) * m_Radius;
+      pts[i_pt ] = m_Center + MathHelper.Rotate2D( Vector2.right, div * i_pt ) * m_Radius;
     }
 
     m_Line.startColor = m_Color;

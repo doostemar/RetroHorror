@@ -12,7 +12,7 @@ public class HeroMovementStalin : MonoBehaviour
   public float m_Friction       = 0.5f;
   public bool  m_DebugDisplay   = false;
 
-  private HeroSelfEventSystem m_HeroEvents;
+  private HeroEventSystem m_HeroEvents;
 
   private Vector2             m_ControlDir;
   private Vector2             m_Movement;
@@ -22,8 +22,8 @@ public class HeroMovementStalin : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-    m_HeroEvents = GetComponent<HeroSelfEventSystem>();
-    m_HeroEvents.OnHeroSelfEvent += OnSelfEvent;
+    m_HeroEvents = GetComponent<HeroEventSystem>();
+    m_HeroEvents.OnHeroEvent += OnSelfEvent;
 
     m_ControlDir = Vector2.zero;
     m_Movement   = Vector2.zero;
@@ -35,9 +35,9 @@ public class HeroMovementStalin : MonoBehaviour
     }
   }
 
-  public void OnSelfEvent( HeroSelfEvent self_event )
+  public void OnSelfEvent( HeroEvent self_event )
   {
-    if ( self_event.m_Type == HeroSelfEvent.EventType.HeroStateCasting )
+    if ( self_event.m_Type == HeroEvent.EventType.HeroStateCasting )
     {
       m_ControlDir = Vector2.zero;
       m_Movement   = Vector2.zero;
@@ -97,15 +97,15 @@ public class HeroMovementStalin : MonoBehaviour
     // Handle state stuff
     if ( was_moving == false && is_moving )
     {
-      HeroSelfEvent hero_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
-      hero_event.m_Type = HeroSelfEvent.EventType.HeroStateMoving;
+      HeroEvent hero_event = ScriptableObject.CreateInstance<HeroEvent>();
+      hero_event.m_Type = HeroEvent.EventType.HeroStateMoving;
       m_HeroEvents.RaiseEvent( hero_event );
     }
 
     if ( was_moving && is_moving == false )
     {
-      HeroSelfEvent hero_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
-      hero_event.m_Type = HeroSelfEvent.EventType.HeroStateIdle;
+      HeroEvent hero_event = ScriptableObject.CreateInstance<HeroEvent>();
+      hero_event.m_Type = HeroEvent.EventType.HeroStateIdle;
       m_HeroEvents.RaiseEvent( hero_event );
     }
 

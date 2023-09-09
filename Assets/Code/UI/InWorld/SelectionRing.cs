@@ -41,7 +41,7 @@ public class SelectionRing : MonoBehaviour
 
     for ( int i_pt = 0; i_pt < m_PointCount; ++i_pt )
     {
-      Vector2 pt = Vec2Math.Rotate2D( Vector2.right, div * i_pt );
+      Vector2 pt = MathHelper.Rotate2D( Vector2.right, div * i_pt );
       pt.x *= m_Width;
       pt.y *= m_Height;
       pts[ i_pt ] = center + new Vector3( pt.x, pt.y );

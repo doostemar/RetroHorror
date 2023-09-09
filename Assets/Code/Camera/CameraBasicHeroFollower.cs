@@ -40,24 +40,24 @@ public class CameraBasicHeroFollower : MonoBehaviour
     m_HeroCollider = m_Hero.GetComponent<Collider2D>();
     m_IsHeroMoving = false;
 
-    HeroSelfEventSystem hero_events = m_Hero.GetComponent<HeroSelfEventSystem>();
+    HeroEventSystem hero_events = m_Hero.GetComponent<HeroEventSystem>();
 
-    hero_events.OnHeroSelfEvent += OnHeroEvent;
+    hero_events.OnHeroEvent += OnHeroEvent;
 
     m_State               = State.AtRest;
     transform.position    = new Vector3( m_Hero.transform.position.x, m_Hero.transform.position.y, transform.position.z );
   }
 
   //-------------------------------------------------------------------------------------
-  void OnHeroEvent( HeroSelfEvent hero_event )
+  void OnHeroEvent( HeroEvent hero_event )
   {
-    if ( hero_event.m_Type == HeroSelfEvent.EventType.HeroStateMoving
-      || hero_event.m_Type == HeroSelfEvent.EventType.HeroStateCasting )
+    if ( hero_event.m_Type == HeroEvent.EventType.HeroStateMoving
+      || hero_event.m_Type == HeroEvent.EventType.HeroStateCasting )
     {
       m_IsHeroMoving = true;
     }
-    else if ( hero_event.m_Type == HeroSelfEvent.EventType.HeroStateIdle
-           || hero_event.m_Type == HeroSelfEvent.EventType.HeroStateCastDone )
+    else if ( hero_event.m_Type == HeroEvent.EventType.HeroStateIdle
+           || hero_event.m_Type == HeroEvent.EventType.HeroStateCastDone )
     {
       m_IsHeroMoving = false;
     }

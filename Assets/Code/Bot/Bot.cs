@@ -68,32 +68,35 @@ public class Bot : MonoBehaviour
     if ( m_State == State.Moving )
     {
       Vector3 target_pos = new Vector3( m_TargetPosition.x, m_TargetPosition.y, transform.position.z );
-      if ( m_PathIdx < m_Path.Count )
+      if ( m_Path != null )
       {
-        PathNode path = m_Path[ m_PathIdx ];
-        target_pos = new Vector3( path.WorldPos.x, path.WorldPos.y, transform.position.z );
-      }
-      Vector3 to_target = target_pos - transform.position;
-
-      float move_incr = m_MoveSpeed * Time.deltaTime;
-
-      if ( to_target.sqrMagnitude <= move_incr * move_incr )
-      {
-        transform.position = target_pos;
-
         if ( m_PathIdx < m_Path.Count )
         {
-          m_PathIdx++;
+          PathNode path = m_Path[ m_PathIdx ];
+          target_pos = new Vector3( path.WorldPos.x, path.WorldPos.y, transform.position.z );
+        }
+        Vector3 to_target = target_pos - transform.position;
+
+        float move_incr = m_MoveSpeed * Time.deltaTime;
+
+        if ( to_target.sqrMagnitude <= move_incr * move_incr )
+        {
+          transform.position = target_pos;
+
+          if ( m_PathIdx < m_Path.Count )
+          {
+            m_PathIdx++;
+          }
+          else
+          {
+            TransitionToStopped();
+          }
         }
         else
         {
-          TransitionToStopped();
+          Vector3 movement_dir = to_target.normalized;
+          transform.position = transform.position + ( movement_dir * m_MoveSpeed * Time.deltaTime );
         }
-      }
-      else
-      {
-        Vector3 movement_dir = to_target.normalized;
-        transform.position = transform.position + ( movement_dir * m_MoveSpeed * Time.deltaTime );
       }
     }
   }

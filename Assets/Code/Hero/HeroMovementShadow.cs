@@ -9,17 +9,17 @@ public class HeroMovementShadow : MonoBehaviour
   public float m_Velocity    = 2f;
   public float m_SlideScaler = 0.5f;
 
-  private HeroSelfEventSystem m_HeroEvents;
-  private BoxCollider2D       m_BoxCollider;
-  private List<Tilemap>       m_CollisionTilemaps;
-  private bool                m_PrevIsMoving;
-  private Vector3             m_LastOffAxisMovementDirection;
+  private HeroEventSystem m_HeroEvents;
+  private BoxCollider2D   m_BoxCollider;
+  private List<Tilemap>   m_CollisionTilemaps;
+  private bool            m_PrevIsMoving;
+  private Vector3         m_LastOffAxisMovementDirection;
 
   // Start is called before the first frame update
   void Start()
   {
-    m_HeroEvents = GetComponent<HeroSelfEventSystem>();
-    m_HeroEvents.OnHeroSelfEvent += OnSelfEvent;
+    m_HeroEvents = GetComponent<HeroEventSystem>();
+    m_HeroEvents.OnHeroEvent += OnSelfEvent;
     
     m_BoxCollider = GetComponent<BoxCollider2D>();
 
@@ -38,9 +38,9 @@ public class HeroMovementShadow : MonoBehaviour
     }
   }
 
-  public void OnSelfEvent(HeroSelfEvent self_event)
+  public void OnSelfEvent(HeroEvent self_event)
   {
-    if (self_event.m_Type == HeroSelfEvent.EventType.HeroStateCasting)
+    if (self_event.m_Type == HeroEvent.EventType.HeroStateCasting)
     {
       enabled = false;
     }
@@ -110,14 +110,14 @@ public class HeroMovementShadow : MonoBehaviour
     // Handle state stuff
     if ( is_moving && !m_PrevIsMoving )
     {
-      HeroSelfEvent hero_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
-      hero_event.m_Type = HeroSelfEvent.EventType.HeroStateMoving;  
+      HeroEvent hero_event = ScriptableObject.CreateInstance<HeroEvent>();
+      hero_event.m_Type = HeroEvent.EventType.HeroStateMoving;  
       m_HeroEvents.RaiseEvent(hero_event);
     }
     else if ( !is_moving && m_PrevIsMoving )
     {
-      HeroSelfEvent hero_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
-      hero_event.m_Type = HeroSelfEvent.EventType.HeroStateIdle;
+      HeroEvent hero_event = ScriptableObject.CreateInstance<HeroEvent>();
+      hero_event.m_Type = HeroEvent.EventType.HeroStateIdle;
       m_HeroEvents.RaiseEvent(hero_event);
     }
 

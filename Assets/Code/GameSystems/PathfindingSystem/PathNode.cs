@@ -6,10 +6,10 @@ public class PathNode
 {
 
   private Vector2Int m_Pos;
-  public Vector2Int GridPos { get { return m_Pos; } }
+  public  Vector2Int GridPos { get { return m_Pos; } }
 
   private Vector2 m_WorldPos;
-  public Vector2 WorldPos { get { return m_WorldPos; } }
+  public  Vector2 WorldPos { get { return m_WorldPos; } }
   
   public int      m_GCost;
   public int      m_HCost;
@@ -32,13 +32,4 @@ public class PathNode
   {
     m_FCost = m_GCost + m_HCost;
   }
-
-  //public override string ToString()
-  //{
-  //  if (!m_IsWalkable)
-  //  {
-  //    return "NO!";
-  //  }
-  //  return m_XPos + ", " + m_YPos;
-  //}
 }

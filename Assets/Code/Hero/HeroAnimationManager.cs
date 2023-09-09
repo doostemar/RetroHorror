@@ -10,25 +10,25 @@ public class HeroAnimationManager : MonoBehaviour
   void Start()
   {
     HeroAnimator = GetComponent<Animator>();
-    HeroSelfEventSystem hero_events = GetComponent<HeroSelfEventSystem>();
-    hero_events.OnHeroSelfEvent += OnHeroEvent;
+    HeroEventSystem hero_events = GetComponent<HeroEventSystem>();
+    hero_events.OnHeroEvent += OnHeroEvent;
   }
 
-  void OnHeroEvent(HeroSelfEvent hero_event)
+  void OnHeroEvent(HeroEvent hero_event)
   {
     switch ( hero_event.m_Type )
     {
-      case HeroSelfEvent.EventType.HeroStateCasting:
+      case HeroEvent.EventType.HeroStateCasting:
       {
         HeroAnimator.Play("Resurrect");
       }
       break;
-      case HeroSelfEvent.EventType.HeroStateMoving:
+      case HeroEvent.EventType.HeroStateMoving:
       { 
         HeroAnimator.Play("Move"); 
       }
       break;
-      case HeroSelfEvent.EventType.HeroStateIdle:
+      case HeroEvent.EventType.HeroStateIdle:
       { 
         HeroAnimator.Play("Shadow");
       }

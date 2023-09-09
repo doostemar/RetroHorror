@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HeroSelfEvent : ScriptableObject
+public class HeroEvent : ScriptableObject
 {
   public enum EventType
   {

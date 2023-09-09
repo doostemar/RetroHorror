@@ -46,8 +46,8 @@ public class DebugArrowRenderer : MonoBehaviour
     float arrow_len = len * m_ArrowPctSize;
 
     float arrow_angle_rad = Mathf.Deg2Rad * m_ArrowAngle;
-    Vector2 arrow_1 = Vec2Math.Rotate2D( -( dir / len ),  arrow_angle_rad ) * arrow_len;
-    Vector2 arrow_2 = Vec2Math.Rotate2D( -( dir / len ), -arrow_angle_rad ) * arrow_len;
+    Vector2 arrow_1 = MathHelper.Rotate2D( -( dir / len ),  arrow_angle_rad ) * arrow_len;
+    Vector2 arrow_2 = MathHelper.Rotate2D( -( dir / len ), -arrow_angle_rad ) * arrow_len;
 
     arrow_1 += m_End;
     arrow_2 += m_End;

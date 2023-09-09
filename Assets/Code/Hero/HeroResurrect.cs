@@ -5,7 +5,7 @@ public class HeroResurrect : MonoBehaviour
   public float m_ResRadius     = 5f;
   public float m_CooldownTimeS = 1f;
 
-  private HeroSelfEventSystem      m_HeroEvents;
+  private HeroEventSystem          m_HeroEvents;
   private ResurrectionEventChannel m_ResEvents;
 
   private enum State
@@ -24,7 +24,7 @@ public class HeroResurrect : MonoBehaviour
     m_State = State.None;
     m_TimeSinceCast = m_CooldownTimeS;
 
-    m_HeroEvents = GetComponent<HeroSelfEventSystem>();
+    m_HeroEvents = GetComponent<HeroEventSystem>();
     ResurrectionSystem res_system = Game.GetGameController().GetComponent<ResurrectionSystem>();
     m_ResEvents = res_system.m_ResChannel;
   }
@@ -58,8 +58,8 @@ public class HeroResurrect : MonoBehaviour
 
         if ( released_button )
         {
-          HeroSelfEvent cast_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
-          cast_event.m_Type = HeroSelfEvent.EventType.HeroStateCasting;
+          HeroEvent cast_event = ScriptableObject.CreateInstance<HeroEvent>();
+          cast_event.m_Type = HeroEvent.EventType.HeroStateCasting;
 
           m_HeroEvents.RaiseEvent(cast_event);
           
@@ -94,8 +94,8 @@ public class HeroResurrect : MonoBehaviour
     m_TimeSinceCast += Time.deltaTime;
     if ( m_TimeSinceCast >= m_CooldownTimeS )
     {
-      HeroSelfEvent cast_done_event = ScriptableObject.CreateInstance<HeroSelfEvent>();
-      cast_done_event.m_Type = HeroSelfEvent.EventType.HeroStateCastDone;
+      HeroEvent cast_done_event = ScriptableObject.CreateInstance<HeroEvent>();
+      cast_done_event.m_Type = HeroEvent.EventType.HeroStateCastDone;
 
       m_HeroEvents.RaiseEvent( cast_done_event );
       if ( m_State == State.WantsCast )

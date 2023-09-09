@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.U2D;
 using static UnityEngine.Rendering.DebugUI;
 
 public class PathfindingGrid
@@ -11,33 +12,44 @@ public class PathfindingGrid
   private List<Tilemap> m_CollisionTilemaps; 
   // private TextMesh[,]   m_DebugGrid;
 
-  public PathfindingGrid()
+  public PathfindingGrid( List<Tilemap> collision_tilemaps )
   {
     m_Nodes = new Dictionary<Vector2Int, PathNode>();
-
-    // m_DebugGrid = new TextMesh[m_Width, m_Height];
-
-    GameObject[] tilemap_objects = GameObject.FindGameObjectsWithTag("CollisionGrid");
-    m_CollisionTilemaps = new List<Tilemap>();
-    foreach (var tilemap_object in tilemap_objects)
-    {
-      Tilemap tm = tilemap_object.GetComponent<Tilemap>();
-      if (tm != null)
-      {
-        m_CollisionTilemaps.Add(tm);
-      }
-    }
-
-    // DrawDebugGrid();
-    
+    m_CollisionTilemaps = collision_tilemaps;
   }
 
+  // I think I overcomplicated this. Should probably be re-evaluated
   public Vector2Int WorldToGrid( Vector2 pos )
   {
     if ( m_CollisionTilemaps.Count > 0 )
     {
-      Vector3Int cell_pos = m_CollisionTilemaps[0].WorldToCell( pos );
-      return new Vector2Int( cell_pos.x, cell_pos.y );
+      Vector3Int ll_cell_pos = m_CollisionTilemaps[0].WorldToCell(pos);
+      Vector3Int[] all_corners =
+      {
+        ll_cell_pos,
+        ll_cell_pos + new Vector3Int( 0, 1 ),
+        ll_cell_pos + new Vector3Int( 1, 0 ),
+        ll_cell_pos + new Vector3Int( 1, 1 ),
+      };
+
+      float min_dist = float.MaxValue;
+      int   min_idx  = int.MaxValue;
+
+      int idx = 0;
+      foreach ( Vector3Int corner in all_corners )
+      {
+        Vector2 world = m_CollisionTilemaps[0].CellToWorld( corner );
+        float dist = (world - pos).sqrMagnitude;
+        if ( dist < min_dist )
+        {
+          min_dist = dist;
+          min_idx =  idx;
+        }
+        idx++;
+      }
+
+
+      return new Vector2Int( all_corners[ min_idx ].x, all_corners[ min_idx ].y );
     }
     return Vector2Int.zero;
   }
