@@ -650,7 +650,6 @@ GameObject:
   - component: {fileID: 827761233}
   - component: {fileID: 827761236}
   - component: {fileID: 827761235}
-  - component: {fileID: 827761238}
   - component: {fileID: 827761237}
   m_Layer: 0
   m_Name: Enemy
@@ -738,7 +737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d615cf0acbd224842b3b62464d3c7f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MoveSpeed: 0
+  m_MoveSpeed: 0.54
 --- !u!61 &827761236
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -799,18 +798,6 @@ MonoBehaviour:
   m_CorpsePrefab: {fileID: 0}
   m_AggroRange: 3.11
   m_AttackRange: 1.04
---- !u!114 &827761238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827761232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1edd79eddc85e84a9d2d94304c32c46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1282185203 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2320837228567807207, guid: 351740655e26dc14285db8e1fe0d21f7, type: 3}
