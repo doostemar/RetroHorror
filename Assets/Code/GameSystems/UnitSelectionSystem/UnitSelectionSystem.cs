@@ -19,6 +19,11 @@ public class UnitSelectionSystem : MonoBehaviour
   public GameObject m_SelectionLineRendererPrefab;
   
   private List<SelectableUnit> m_SelectedUnits;
+  public  List<SelectableUnit> SelectedUnits
+  {
+    get { return m_SelectedUnits; }
+  }
+
   private List<SelectableUnit> m_SelectingUnits;
   private Vector2              m_DownMousePos;
   private State                m_State;
@@ -26,6 +31,9 @@ public class UnitSelectionSystem : MonoBehaviour
   private int                  m_UnitsMask;
   private bool                 m_AddHeldForAction;
   private LineRenderer         m_LineRenderer;
+
+  const string kSelectButtonName    = "Select";
+  const string kSelectAddButtonName = "SelectAdd";
 
   private void Start()
   {
@@ -42,7 +50,7 @@ public class UnitSelectionSystem : MonoBehaviour
 
   private void Update()
   {
-    bool add_held = Input.GetButton( "SelectAdd" );
+    bool add_held = Input.GetButton( kSelectAddButtonName );
     if ( add_held == false )
     {
       m_AddHeldForAction = false;
@@ -64,7 +72,7 @@ public class UnitSelectionSystem : MonoBehaviour
 
   void HandleNoneState( bool add_held )
   {
-    if ( Input.GetMouseButtonDown(0) ) // single click
+    if ( Input.GetButtonDown( kSelectButtonName ) )
     {
       m_TimeSinceDownSeconds = 0f;
       m_DownMousePos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
@@ -80,7 +88,7 @@ public class UnitSelectionSystem : MonoBehaviour
 
   void HandlePotentiallyClicking( )
   {
-    if ( Input.GetMouseButtonUp( 0 ) )
+    if ( Input.GetButtonUp( kSelectButtonName ) )
     {
       HandleClick( );
       return;
@@ -126,7 +134,7 @@ public class UnitSelectionSystem : MonoBehaviour
 
   private void HandleSelecting()
   {
-    if ( Input.GetMouseButtonUp( 0 ) )
+    if ( Input.GetButtonUp( kSelectButtonName ) )
     {
       HandleAreaSelect( );
       return;

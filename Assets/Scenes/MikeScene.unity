@@ -670,6 +670,18 @@ MonoBehaviour:
   m_ClickTimerSeconds: 0.25
   m_ClickMousePositionDelta: 0.001
   m_SelectionLineRendererPrefab: {fileID: 3959675133706597523, guid: 6dd474882950111418432009247beb07, type: 3}
+--- !u!114 &1282185210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282185203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf116625c518bdd4ab6f05a2237acff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1567319809
 GameObject:
   m_ObjectHideFlags: 0
@@ -24254,15 +24266,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5403031886881531959, guid: 351740655e26dc14285db8e1fe0d21f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.0557895
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5403031886881531959, guid: 351740655e26dc14285db8e1fe0d21f7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.06769371
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5403031886881531959, guid: 351740655e26dc14285db8e1fe0d21f7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.007951108
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5403031886881531959, guid: 351740655e26dc14285db8e1fe0d21f7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -24302,6 +24314,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2320837228567807207, guid: 351740655e26dc14285db8e1fe0d21f7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1282185209}
+    - targetCorrespondingSourceObject: {fileID: 2320837228567807207, guid: 351740655e26dc14285db8e1fe0d21f7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1282185210}
   m_SourcePrefab: {fileID: 100100000, guid: 351740655e26dc14285db8e1fe0d21f7, type: 3}
 --- !u!1001 &4360460961973763156
 PrefabInstance:
