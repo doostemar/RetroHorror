@@ -1,15 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class BotEnemy : MonoBehaviour
 {
   public GameObject m_CorpsePrefab;
   public float      m_AggroRange;
   public float      m_AttackRange;
+  public Vector2    m_RangeCenterOffset;
 
   private enum State
   {
@@ -29,26 +25,38 @@ public class BotEnemy : MonoBehaviour
   private void Start()
   {
     m_EnemyChannel    = GetComponent<BotEnemyChannel>();
+    m_BotChannel      = GetComponent<BotChannel>();
     m_ArrivedAtTarget = false;
     m_State           = State.Idle;
 
-    m_EnemyChannel.OnEnemyEvent += ( BotEnemyEvent evt ) =>
+    m_EnemyChannel.OnEnemyEvent += OnEnemyEvent;
+    m_BotChannel.OnMoveEvent    += OnBotMoveEvent;
+  }
+
+  void OnDestroy()
+  {
+    m_BotChannel.OnMoveEvent    -= OnBotMoveEvent;
+    m_EnemyChannel.OnEnemyEvent -= OnEnemyEvent;
+  }
+
+  void OnBotMoveEvent( BotMoveEvent evt )
+  {
+    if ( evt.m_Type == BotMoveEvent.Type.Arrived )
     {
-      if ( evt.m_Type == BotEnemyEvent.Type.AttackFinished )
-      {
-        m_AttackFinished = true;
-      }
-    };
+      m_ArrivedAtTarget = true;
+    }
+  }
+
+  void OnEnemyEvent( BotEnemyEvent evt )
+  {
+    if ( evt.m_Type == BotEnemyEvent.Type.AttackFinished )
+    {
+      m_AttackFinished = true;
+    }
   }
 
   void Update()
   {
-    if ( m_BotChannel == null )
-    {
-      m_BotChannel = GetComponent<BotChannel>();
-      m_BotChannel.OnMoveEvent += OnBotMoveEvent;
-    }
-
     switch ( m_State )
     {
       case State.Idle:
@@ -63,14 +71,6 @@ public class BotEnemy : MonoBehaviour
       case State.Attacking:
         HandleAttacking();
         break;
-    }
-  }
-
-  void OnBotMoveEvent( BotMoveEvent evt )
-  {
-    if ( evt.m_Type == BotMoveEvent.Type.Arrived )
-    {
-      m_ArrivedAtTarget = true;
     }
   }
 
@@ -125,15 +125,25 @@ public class BotEnemy : MonoBehaviour
     }
   }
 
+  Vector3 GetCalcCenter()
+  {
+    return transform.position + new Vector3( m_RangeCenterOffset.x, m_RangeCenterOffset.y );
+  }
+
   bool IsUnitInAggroRange( GameObject unit )
   {
-    float dist_sqr = ( unit.transform.position - transform.position ).sqrMagnitude;
+    Vector2 calc_center = GetCalcCenter();
+    Vector2 closest_pt  = unit.GetComponent<Collider2D>().ClosestPoint( calc_center );
+
+    float dist_sqr = ( closest_pt - calc_center ).sqrMagnitude;
     return dist_sqr < m_AggroRange * m_AggroRange;
   }
 
   bool IsUnitInAttackRange( GameObject unit )
   {
-    float dist_sqr = ( unit.transform.position - transform.position ).sqrMagnitude;
+    Vector2 calc_center = GetCalcCenter();
+    Vector2 closest_pt  = unit.GetComponent<Collider2D>().ClosestPoint( calc_center );
+    float dist_sqr = ( closest_pt - calc_center ).sqrMagnitude;
     return dist_sqr < m_AttackRange * m_AttackRange;
   }
 
@@ -177,9 +187,9 @@ public class BotEnemy : MonoBehaviour
   private void OnDrawGizmosSelected()
   {
     UnityEditor.Handles.color = Color.green;
-    UnityEditor.Handles.DrawWireDisc( transform.position, Vector3.forward, m_AggroRange );
+    UnityEditor.Handles.DrawWireDisc( GetCalcCenter(), Vector3.forward, m_AggroRange );
 
     UnityEditor.Handles.color = Color.red;
-    UnityEditor.Handles.DrawWireDisc( transform.position, Vector3.forward, m_AttackRange );
+    UnityEditor.Handles.DrawWireDisc( GetCalcCenter(), Vector3.forward, m_AttackRange );
   }
 }

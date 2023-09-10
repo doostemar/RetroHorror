@@ -21,12 +21,12 @@ public class UnitMovementSystem : MonoBehaviour
       List<SelectableUnit> selected_units = m_UnitSelectionSystem.SelectedUnits;
 
       // get centroid of all selected units
-      List<Bot> moveable_units = new List<Bot>();
+      List<BotChannel> moveable_units = new List<BotChannel>();
       Vector2 unit_centroid = Vector2.zero;
       int     unit_count    = 0;
       foreach ( SelectableUnit unit in selected_units )
       {
-        Bot bot = unit.GetComponent<Bot>();
+        BotChannel bot = unit.GetComponent<BotChannel>();
         if ( bot != null )
         {
           moveable_units.Add( bot );
@@ -40,7 +40,7 @@ public class UnitMovementSystem : MonoBehaviour
 
       // tell each unit to go to their offset from the click position
       Vector2 target_position = Camera.main.ScreenToWorldPoint( Input.mousePosition );
-      foreach ( Bot unit in moveable_units )
+      foreach ( BotChannel unit in moveable_units )
       {
         Vector2 unit_position             = unit.transform.position;
         Vector2 unit_offset_from_centroid = unit_position - unit_centroid;
@@ -49,7 +49,7 @@ public class UnitMovementSystem : MonoBehaviour
         BotMoveEvent move_event     = ScriptableObject.CreateInstance<BotMoveEvent>();
         move_event.m_TargetPosition = final_pos;
         move_event.m_Type           = BotMoveEvent.Type.Move;
-        unit.Channel.RaiseMoveEvent( move_event );
+        unit.RaiseMoveEvent( move_event );
       }
     }
   }

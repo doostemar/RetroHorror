@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8617242186327384004}
   - component: {fileID: 8019895731741237039}
   - component: {fileID: -7365931121995651039}
+  - component: {fileID: -2912558405634119482}
   - component: {fileID: 6333846260487221211}
   - component: {fileID: -8003670616978890543}
   - component: {fileID: 3271930566050690974}
@@ -103,6 +104,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MoveSpeed: 3
+--- !u!114 &-2912558405634119482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5989785676371567735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1edd79eddc85e84a9d2d94304c32c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6333846260487221211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,10 +185,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.046265066}
+  m_Offset: {x: -0.015492678, y: 0.41593844}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0.03899464}
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -183,7 +196,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16011143, y: 0.8268026}
+  m_Size: {x: 0.18076849, y: 0.8422953}
   m_EdgeRadius: 0
 --- !u!114 &1638945360848668995
 MonoBehaviour:
@@ -201,4 +214,4 @@ MonoBehaviour:
   m_Width: 0.25
   m_Height: 0.125
   m_PointCount: 10
-  m_Offset: {x: 0, y: -0.5}
+  m_Offset: {x: 0, y: 0}
