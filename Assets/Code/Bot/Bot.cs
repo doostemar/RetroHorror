@@ -9,10 +9,6 @@ public class Bot : MonoBehaviour
   public float m_MoveSpeed;
 
   private BotChannel m_Channel;
-  public BotChannel Channel
-  {
-    get { return m_Channel; }
-  }
 
   enum State
   {
@@ -28,7 +24,7 @@ public class Bot : MonoBehaviour
 
   void Start()
   {
-    m_Channel = gameObject.AddComponent<BotChannel>();
+    m_Channel = gameObject.GetComponent<BotChannel>();
     m_State = State.Idle;
     m_PathSystem = Game.GetGameController().GetComponent<PathfindingSystem>();
     m_Channel.OnMoveEvent += OnMoveEvent;
