@@ -9,6 +9,7 @@ TagManager:
   - CollisionGrid
   - Traversable
   - HeroUnit
+  - HealthBar
   layers:
   - Default
   - TransparentFX
