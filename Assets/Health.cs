@@ -22,12 +22,22 @@ public class Health : MonoBehaviour
     m_HealthBar.SetHealth(m_CurrentHealth);
   }
 
-  // Test
+  void Heal(float damage)
+  {
+    m_CurrentHealth += damage;
+    m_HealthBar.SetHealth(m_CurrentHealth);
+  }
+
+  // This method is just for testing
   void Update()
   {
     if (Input.GetKeyUp(KeyCode.Space))
     {
       TakeDamage(2);
+    }
+    if (Input.GetKeyUp(KeyCode.LeftShift))
+    {
+      Heal(2);
     }
   }
 }

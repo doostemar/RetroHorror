@@ -27,16 +27,9 @@ public class HealthBar : MonoBehaviour
   {
     slider.value = health;
 
-    if (health < slider.maxValue * MEDIUM_HEALTH_MODIFIER)
-    {
-      fill.color = Color.yellow;
-    }
+    if (health >= slider.maxValue * MEDIUM_HEALTH_MODIFIER) fill.color = Color.green;
+    else if (health > slider.maxValue * LOW_HEALTH_MODIFIER) fill.color = Color.yellow;
+    else fill.color = Color.red;
 
-    if (health < slider.maxValue * LOW_HEALTH_MODIFIER)
-    {
-      fill.color = Color.red;
-    }
   }
-
-
 }
