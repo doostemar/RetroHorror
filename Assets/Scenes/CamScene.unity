@@ -24875,6 +24875,7 @@ MonoBehaviour:
   m_CorpsePrefab: {fileID: 0}
   m_AggroRange: 3.11
   m_AttackRange: 1.04
+  m_RangeCenterOffset: {x: 0, y: 0}
 --- !u!114 &1960978931
 MonoBehaviour:
   m_ObjectHideFlags: 0

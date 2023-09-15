@@ -4,8 +4,10 @@ public class BotEnemy : MonoBehaviour
 {
   public GameObject m_CorpsePrefab;
   public float      m_AggroRange;
-  public float      m_AttackRange;
   public Vector2    m_RangeCenterOffset;
+
+  public float      m_AttackRange;
+  public Vector2    m_AttackTargetPosition;
 
   private enum State
   {
@@ -125,14 +127,19 @@ public class BotEnemy : MonoBehaviour
     }
   }
 
-  Vector3 GetCalcCenter()
+  Vector3 GetAggroCenter()
   {
     return transform.position + new Vector3( m_RangeCenterOffset.x, m_RangeCenterOffset.y );
   }
 
+  Vector3 GetAttackTargetCenter()
+  {
+    return transform.position + new Vector3( m_AttackTargetPosition.x, m_AttackTargetPosition.y );
+  }
+
   bool IsUnitInAggroRange( GameObject unit )
   {
-    Vector2 calc_center = GetCalcCenter();
+    Vector2 calc_center = GetAggroCenter();
     Vector2 closest_pt  = unit.GetComponent<Collider2D>().ClosestPoint( calc_center );
 
     float dist_sqr = ( closest_pt - calc_center ).sqrMagnitude;
@@ -141,7 +148,7 @@ public class BotEnemy : MonoBehaviour
 
   bool IsUnitInAttackRange( GameObject unit )
   {
-    Vector2 calc_center = GetCalcCenter();
+    Vector2 calc_center = GetAttackTargetCenter();
     Vector2 closest_pt  = unit.GetComponent<Collider2D>().ClosestPoint( calc_center );
     float dist_sqr = ( closest_pt - calc_center ).sqrMagnitude;
     return dist_sqr < m_AttackRange * m_AttackRange;
@@ -149,17 +156,32 @@ public class BotEnemy : MonoBehaviour
 
   void HandleAggro()
   {
-    BotMoveEvent move_evt = ScriptableObject.CreateInstance<BotMoveEvent>();
-    move_evt.m_TargetPosition = m_AggroTarget.transform.position;
-    move_evt.m_Type           = BotMoveEvent.Type.Move;
-    m_BotChannel.RaiseMoveEvent( move_evt );
+    // target may have been killed
+    if ( m_AggroTarget != null )
+    {
+      Collider2D enemy_collider = m_AggroTarget.GetComponent<Collider2D>();
+      Vector2 closest_enemy_pos = enemy_collider.ClosestPoint( transform.position );
 
-    TransitionToMovingToTarget();
+      BotMoveEvent move_evt = ScriptableObject.CreateInstance<BotMoveEvent>();
+      move_evt.m_TargetPosition = closest_enemy_pos - m_AttackTargetPosition;
+      move_evt.m_Type           = BotMoveEvent.Type.Move;
+      m_BotChannel.RaiseMoveEvent( move_evt );
+
+      TransitionToMovingToTarget();
+    }
+    else
+    {
+      TransitionToIdle();
+    }
   }
 
   void HandleMovingToAggroTarget()
   {
-    if ( IsUnitInAttackRange( m_AggroTarget ) )
+    if ( m_AggroTarget == null ) // target has died
+    {
+      TransitionToIdle();
+    }
+    else if ( IsUnitInAttackRange( m_AggroTarget ) )
     {
       TransitionToAttacking();
     }
@@ -187,9 +209,9 @@ public class BotEnemy : MonoBehaviour
   private void OnDrawGizmosSelected()
   {
     UnityEditor.Handles.color = Color.green;
-    UnityEditor.Handles.DrawWireDisc( GetCalcCenter(), Vector3.forward, m_AggroRange );
+    UnityEditor.Handles.DrawWireDisc( GetAggroCenter(), Vector3.forward, m_AggroRange );
 
     UnityEditor.Handles.color = Color.red;
-    UnityEditor.Handles.DrawWireDisc( GetCalcCenter(), Vector3.forward, m_AttackRange );
+    UnityEditor.Handles.DrawWireDisc( GetAttackTargetCenter(), Vector3.forward, m_AttackRange );
   }
 }

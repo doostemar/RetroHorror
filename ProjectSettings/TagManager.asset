@@ -10,6 +10,7 @@ TagManager:
   - Traversable
   - HeroUnit
   - HealthBar
+  - EnemyUnit
   layers:
   - Default
   - TransparentFX
