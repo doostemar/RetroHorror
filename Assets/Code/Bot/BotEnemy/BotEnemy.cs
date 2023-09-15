@@ -21,6 +21,7 @@ public class BotEnemy : MonoBehaviour
   private GameObject      m_AggroTarget;
   private BotChannel      m_BotChannel;
   private BotEnemyChannel m_EnemyChannel;
+  private HealthChannel   m_HealthChannel;
   private bool            m_ArrivedAtTarget;
   private bool            m_AttackFinished;
 
@@ -28,17 +29,20 @@ public class BotEnemy : MonoBehaviour
   {
     m_EnemyChannel    = GetComponent<BotEnemyChannel>();
     m_BotChannel      = GetComponent<BotChannel>();
+    m_HealthChannel   = GetComponent<HealthChannel>();
     m_ArrivedAtTarget = false;
     m_State           = State.Idle;
 
-    m_EnemyChannel.OnEnemyEvent += OnEnemyEvent;
-    m_BotChannel.OnMoveEvent    += OnBotMoveEvent;
+    m_EnemyChannel.OnEnemyEvent   += OnEnemyEvent;
+    m_BotChannel.OnMoveEvent      += OnBotMoveEvent;
+    m_HealthChannel.OnHealthEvent += OnHealthEvent;
   }
 
   void OnDestroy()
   {
-    m_BotChannel.OnMoveEvent    -= OnBotMoveEvent;
-    m_EnemyChannel.OnEnemyEvent -= OnEnemyEvent;
+    m_BotChannel.OnMoveEvent      -= OnBotMoveEvent;
+    m_EnemyChannel.OnEnemyEvent   -= OnEnemyEvent;
+    m_HealthChannel.OnHealthEvent -= OnHealthEvent;
   }
 
   void OnBotMoveEvent( BotMoveEvent evt )
@@ -54,6 +58,15 @@ public class BotEnemy : MonoBehaviour
     if ( evt.m_Type == BotEnemyEvent.Type.AttackFinished )
     {
       m_AttackFinished = true;
+    }
+  }
+
+  void OnHealthEvent( HealthEvent evt ) 
+  {
+    if (evt.m_Type == HealthEvent.Type.Dead)
+    {
+      Instantiate( m_CorpsePrefab, transform.position, Quaternion.identity );
+      Destroy( gameObject );
     }
   }
 

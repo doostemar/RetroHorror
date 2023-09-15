@@ -1,43 +1,42 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySerfAttack : MonoBehaviour
+public class BotUnitMeleeAttack : MonoBehaviour
 {
-  public Collider2D   m_Collider;
-  public float        m_AttackValue;
+  public Collider2D m_Collider;
+  public float      m_AttackValue;
 
-  BotEnemyChannel     m_Channel;
-  LayerMask           m_HeroUnitMask;
+  BotUnitChannel      m_UnitChannel;
+  LayerMask           m_EnemyUnitMask;
   HashSet<Collider2D> m_AlreadyHitColliders;
 
   void Start()
   {
-    m_HeroUnitMask = LayerMask.GetMask(new string[] { "HeroUnit" });
-
-    m_Channel = GetComponent<BotEnemyChannel>();
-
-    m_Channel.OnEnemyEvent += OnEnemyEvent;
+    m_EnemyUnitMask = LayerMask.GetMask( new string[] { "EnemyUnit" } );
+    m_UnitChannel   = GetComponent<BotUnitChannel>();
+    m_UnitChannel.OnUnitEvent += OnUnitEvent;
     enabled = false;
   }
 
-  void OnEnemyEvent( BotEnemyEvent evt )
+  void OnUnitEvent( BotUnitEvent evt )
   {
-    if ( evt.m_Type == BotEnemyEvent.Type.Attack )
+    if ( evt.m_Type == BotUnitEvent.Type.Attack )
     {
       m_AlreadyHitColliders = new HashSet<Collider2D>();
       enabled = true;
     }
-    else if ( evt.m_Type == BotEnemyEvent.Type.AttackFinished )
+    else if ( evt.m_Type == BotUnitEvent.Type.AttackFinished )
     {
       enabled = false;
     }
   }
 
-  void FixedUpdate()
+  private void FixedUpdate()
   {
     ContactFilter2D filter2D = new ContactFilter2D();
     filter2D.useLayerMask = true;
-    filter2D.layerMask    = m_HeroUnitMask;
+    filter2D.layerMask    = m_EnemyUnitMask;
     List<Collider2D> overlaps = new List<Collider2D>();
     m_Collider.OverlapCollider( filter2D, overlaps );
 
@@ -51,7 +50,7 @@ public class EnemySerfAttack : MonoBehaviour
           HealthEvent evt = ScriptableObject.CreateInstance<HealthEvent>();
           evt.m_Type  = HealthEvent.Type.Damage;
           evt.m_Value = m_AttackValue;
-
+          
           health.RaiseHealthEvent( evt );
         }
         m_AlreadyHitColliders.Add( overlap );

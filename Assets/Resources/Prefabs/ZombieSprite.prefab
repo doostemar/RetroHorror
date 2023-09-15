@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 4105193675189857111}
   - component: {fileID: 734092812320474984}
   - component: {fileID: 188101042504155761}
+  - component: {fileID: 1249229235426112883}
   m_Layer: 3
   m_Name: ZombieSprite
   m_TagString: HeroUnit
@@ -578,8 +579,22 @@ MonoBehaviour:
   m_CorpsePrefab: {fileID: 0}
   m_AggroRange: 1.38
   m_RangeCenterOffset: {x: 0, y: 0.08}
-  m_AttackRange: 0.42
-  m_AttackTargetPosition: {x: -0.57, y: 0.32}
+  m_AttackRange: 0.22
+  m_AttackTargetPosition: {x: -0.37, y: 0.32}
+--- !u!114 &1249229235426112883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4489354308647069862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80f43dee0f9f7645b04f4a11d11f000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Collider: {fileID: 4439236300815780455}
+  m_AttackValue: 20
 --- !u!1 &4848712495995884283
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,7 +634,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4848712495995884283}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
