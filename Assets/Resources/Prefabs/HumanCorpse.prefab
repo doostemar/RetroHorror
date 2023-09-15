@@ -165,4 +165,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b18145520357b243893a85c19b65b62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ResurrectionSpawn: {fileID: 5989785676371567735, guid: 70f38085a454beb4687a5c225572809e, type: 3}
+  m_ResurrectionSpawn: {fileID: 4489354308647069862, guid: 70f38085a454beb4687a5c225572809e, type: 3}
