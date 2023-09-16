@@ -68,6 +68,8 @@ public class ResurrectionSystem : MonoBehaviour
     }
     else if ( res_event.m_Type == ResurrectionEvent.Type.Cast )
     {
+      Animator anim = m_SealGameObj.GetComponent<Animator>();
+      anim.Play( "ResSealAnimCast" );
       m_FadeTimeS          = res_event.m_TimeToDisplay;
       m_TimeSinceCastS     = 0f;
       m_Fading             = true;
