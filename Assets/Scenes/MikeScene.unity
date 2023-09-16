@@ -783,8 +783,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1352441733
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: -1417370143, guid: 8d861035e8db35249a95f21104f2fe5c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6842,7 +6842,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8e8148b33a308b84a8170de1252828e1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25039,6 +25039,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7870222758668581594, guid: 351740655e26dc14285db8e1fe0d21f7, type: 3}
+      propertyPath: m_SealSpritePrefab
+      value: 
+      objectReference: {fileID: 6440994192493483235, guid: 0992553ac4f8cb040ab68e3140dbf14a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

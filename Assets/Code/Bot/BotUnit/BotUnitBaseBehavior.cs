@@ -189,7 +189,7 @@ public class BotUnitBaseBehavior : MonoBehaviour
 
   void HandleReturningToPosition()
   {
-    GameObject[] enemy_units = GameObject.FindGameObjectsWithTag( "EnemyUnits" );
+    GameObject[] enemy_units = GameObject.FindGameObjectsWithTag( "EnemyUnit" );
 
     foreach ( var unit in enemy_units )
     {
@@ -211,7 +211,14 @@ public class BotUnitBaseBehavior : MonoBehaviour
   {
     if ( m_AttackFinished )
     {
-      TransitionToMovingToTarget( m_AggroTarget );
+      if ( m_AggroTarget != null )
+      {
+        TransitionToMovingToTarget( m_AggroTarget );
+      }
+      else
+      {
+        TransitionToReturnToPosition();
+      }
     }
   }
 
