@@ -37,7 +37,7 @@ public class CorpseComponent : MonoBehaviour
       {
         if ( m_Highlighted == false )
         {
-          m_Animator.Play( "Highlighted" );
+          m_Animator.Play( "CorpseHighlightedShader" );
           m_Highlighted = true;
         }
         return;
