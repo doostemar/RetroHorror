@@ -20,10 +20,10 @@ public class Health : MonoBehaviour
       switch ( evt.m_Type )
       {
         case HealthEvent.Type.Damage:
-          TakeDamage( evt.m_Value );
+          TakeDamage( evt.m_Value, evt.m_Direction );
           break;
         case HealthEvent.Type.Heal:
-          TakeDamage( -evt.m_Value );
+          TakeDamage( -evt.m_Value, evt.m_Direction );
           break;
         case HealthEvent.Type.InvincibleStart:
           m_IsInvincible = true;
@@ -35,7 +35,7 @@ public class Health : MonoBehaviour
     };
   }
 
-  void TakeDamage( float damage )
+  void TakeDamage( float damage, Vector3 direction )
   {
     m_CurrentHealth = Mathf.Clamp( m_CurrentHealth - damage, 0, m_MaxHealth );
     m_HealthBar.SetHealth( m_CurrentHealth );
@@ -43,7 +43,8 @@ public class Health : MonoBehaviour
     if ( m_CurrentHealth == 0 )
     {
       HealthEvent evt = ScriptableObject.CreateInstance<HealthEvent>();
-      evt.m_Type = HealthEvent.Type.Dead;
+      evt.m_Type      = HealthEvent.Type.Dead;
+      evt.m_Direction = direction;
       m_HealthChannel.RaiseHealthEvent( evt );
     }
   }

@@ -24,6 +24,7 @@ public class BotEnemy : MonoBehaviour
   private HealthChannel   m_HealthChannel;
   private bool            m_ArrivedAtTarget;
   private bool            m_AttackFinished;
+  private GameObject      m_BloodParticleAsset;
 
   private void Start()
   {
@@ -32,6 +33,7 @@ public class BotEnemy : MonoBehaviour
     m_HealthChannel   = GetComponent<HealthChannel>();
     m_ArrivedAtTarget = false;
     m_State           = State.Idle;
+    m_BloodParticleAsset = Resources.Load<GameObject>( "Prefabs/Blood Particles" );
 
     m_EnemyChannel.OnEnemyEvent   += OnEnemyEvent;
     m_BotChannel.OnMoveEvent      += OnBotMoveEvent;
@@ -65,6 +67,8 @@ public class BotEnemy : MonoBehaviour
   {
     if (evt.m_Type == HealthEvent.Type.Dead)
     {
+      Quaternion direction = Quaternion.LookRotation( evt.m_Direction );
+      Instantiate( m_BloodParticleAsset, transform.position, direction );
       Instantiate( m_CorpsePrefab, transform.position, Quaternion.identity );
       Destroy( gameObject );
     }

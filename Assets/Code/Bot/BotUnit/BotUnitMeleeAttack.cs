@@ -48,8 +48,9 @@ public class BotUnitMeleeAttack : MonoBehaviour
         if ( health != null )
         {
           HealthEvent evt = ScriptableObject.CreateInstance<HealthEvent>();
-          evt.m_Type  = HealthEvent.Type.Damage;
-          evt.m_Value = m_AttackValue;
+          evt.m_Direction = overlap.transform.position - m_Collider.transform.position;
+          evt.m_Type      = HealthEvent.Type.Damage;
+          evt.m_Value     = m_AttackValue;
           
           health.RaiseHealthEvent( evt );
         }

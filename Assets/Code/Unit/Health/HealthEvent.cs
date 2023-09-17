@@ -11,6 +11,7 @@ public class HealthEvent : ScriptableObject
     InvincibleEnd
   }
 
-  public Type  m_Type;
-  public float m_Value;
+  public Vector3 m_Direction;
+  public Type    m_Type;
+  public float   m_Value;
 }
