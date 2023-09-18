@@ -10,14 +10,16 @@ using static UnityEngine.Rendering.DebugUI;
 public class PathfindingGrid
 {
   private Dictionary<Vector2Int, GridNode> m_Nodes;
-  private List<Tilemap> m_CollisionTilemaps; 
+  private List<Tilemap> m_CollisionTilemaps;
 
+  //-------------------------------------------------------------------------------------
   public PathfindingGrid( List<Tilemap> collision_tilemaps )
   {
     m_Nodes = new Dictionary<Vector2Int, GridNode>();
     m_CollisionTilemaps = collision_tilemaps;
   }
 
+  //-------------------------------------------------------------------------------------
   public Vector2Int WorldToGrid( Vector2 pos )
   {
     if ( m_CollisionTilemaps.Count > 0 )
@@ -28,6 +30,7 @@ public class PathfindingGrid
     return Vector2Int.zero;
   }
 
+  //-------------------------------------------------------------------------------------
   public void InitGridObject( Vector2Int position )
   {
     GridNode node = new GridNode( position );
@@ -37,6 +40,7 @@ public class PathfindingGrid
     m_Nodes[position] = node;
   }
 
+  //-------------------------------------------------------------------------------------
   public enum WalkableState
   {
     Open,
@@ -44,8 +48,9 @@ public class PathfindingGrid
     DiagonallyClosed
   }
 
+  //-------------------------------------------------------------------------------------
   // We assume that from and to are adjacent
-  public WalkableState IsWalkable( GridNode from, GridNode to )
+  public WalkableState FindWalkableState( GridNode from, GridNode to )
   {
     List< Vector3Int > check_positions = new List< Vector3Int >
     {
@@ -78,11 +83,26 @@ public class PathfindingGrid
     return WalkableState.Open;
   }
 
+  //-------------------------------------------------------------------------------------
+  public bool HasObstruction( GridNode node )
+  {
+    for (int i = 0; i < m_CollisionTilemaps.Count; i++)
+    {
+      if ( m_CollisionTilemaps[i].GetColliderType( new Vector3Int( node.GridPos.x, node.GridPos.y ) ) == Tile.ColliderType.Grid )
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  //-------------------------------------------------------------------------------------
   public void SetGridObject(int x, int y, GridNode value)
   {
     m_Nodes[new Vector2Int(x, y)] = value;
   }
 
+  //-------------------------------------------------------------------------------------
   public GridNode GetGridObject(Vector2Int position)
   {
     if (m_Nodes.ContainsKey(position))

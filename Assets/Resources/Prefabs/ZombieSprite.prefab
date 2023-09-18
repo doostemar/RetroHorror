@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MoveSpeed: 3
-  m_DebugDrawMovement: 1
+  m_DebugDrawMovement: 0
 --- !u!114 &6409505778308455515
 MonoBehaviour:
   m_ObjectHideFlags: 0

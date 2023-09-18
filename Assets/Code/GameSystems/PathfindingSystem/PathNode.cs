@@ -20,4 +20,10 @@ public class PathNode
     Bounds cell_bounds = new Bounds( ll_corner + cell_extents, tm.cellSize );
     m_WorldPosition = cell_bounds.ClosestPoint( prev_world_pos );
   }
+
+  public PathNode( Vector2Int grid_pos, Vector2 abs_pos )
+  {
+    m_GridPosition  = grid_pos;
+    m_WorldPosition = abs_pos;
+  }
 }

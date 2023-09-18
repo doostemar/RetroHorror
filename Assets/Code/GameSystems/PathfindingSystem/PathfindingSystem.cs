@@ -53,7 +53,11 @@ public class PathfindingSystem : MonoBehaviour
     Vector2Int grid_end   = grid.WorldToGrid( end );
 
     GridNode start_node = grid.GetGridObject( grid_start );
-    GridNode end_node   = grid.GetGridObject( grid_end );
+    GridNode end_node   = FindGoodEndNode( grid, start_node, grid_end );
+    if ( end_node == null )
+    {
+      return CalculatePath( grid, start_node, start, end );
+    }
 
     HashSet<GridNode> open_list   = new HashSet<GridNode> { start_node };
     HashSet<GridNode> closed_list = new HashSet<GridNode>();
@@ -73,7 +77,7 @@ public class PathfindingSystem : MonoBehaviour
       if (current_node == end_node)
       {
         // reached the end
-        return CalculatePath( end_node, start );
+        return CalculatePath( grid, end_node, start, end );
       }
 
       open_list.Remove(current_node);
@@ -83,7 +87,7 @@ public class PathfindingSystem : MonoBehaviour
       {
         if (closed_list.Contains( neighbor ) ) continue;
 
-        PathfindingGrid.WalkableState walkable_state = grid.IsWalkable( current_node, neighbor );
+        PathfindingGrid.WalkableState walkable_state = grid.FindWalkableState( current_node, neighbor );
         if ( walkable_state != PathfindingGrid.WalkableState.Open )
         {
           if ( walkable_state == PathfindingGrid.WalkableState.Closed )
@@ -111,6 +115,26 @@ public class PathfindingSystem : MonoBehaviour
   }
 
   //-------------------------------------------------------------------------------------
+  private GridNode FindGoodEndNode( PathfindingGrid grid, GridNode start_node, Vector2Int end_position )
+  {
+    GridNode end = grid.GetGridObject( end_position );
+
+    while ( grid.HasObstruction( end ) )
+    {
+      Vector2Int dir_to_start = start_node.GridPos - end.GridPos;
+      dir_to_start.Clamp( -Vector2Int.one, Vector2Int.one );
+      end = grid.GetGridObject( end.GridPos + dir_to_start );
+
+      if ( start_node == end )
+      {
+        return null;
+      }
+    }
+
+    return end;
+  }
+
+  //-------------------------------------------------------------------------------------
   private List<GridNode> GetNeighbors(PathfindingGrid grid, GridNode current_node)
   {
     List<GridNode> neighbor_nodes = new List<GridNode>();
@@ -135,7 +159,7 @@ public class PathfindingSystem : MonoBehaviour
   }
 
   //-------------------------------------------------------------------------------------
-  private List<PathNode> CalculatePath( GridNode end_node, Vector2 start_pos )
+  private List<PathNode> CalculatePath( PathfindingGrid grid, GridNode end_node, Vector2 start_pos, Vector2 end_pos )
   {
     List< GridNode > grid_list = new List< GridNode >();
     for ( GridNode node = end_node; node != null; node = node.m_PreviousNode )
@@ -150,6 +174,32 @@ public class PathfindingSystem : MonoBehaviour
       Vector2 prev_pos = ( i_node == 0 ) ? start_pos : path[ i_node - 1 ].WorldPosition;
       PathNode pn = new PathNode( grid_list[ i_node ].GridPos, prev_pos, m_CollisionTilemaps[0] );
       path.Add( pn );
+    }
+
+
+    // Either walk directly to the targeted position (if it's reachable)
+    PathNode last_node = path[ path.Count - 1 ];
+
+    Vector2Int end_pos_tile = grid.WorldToGrid( end_pos );
+    if ( last_node.GridPosition == end_pos_tile )
+    {
+      PathNode final_node = new PathNode( end_pos_tile, end_pos );
+      path.Add( final_node );
+    }
+    else // or get as close as you can in the tile that was selected
+    {
+      Vector2Int final_grid      = last_node.GridPosition;
+      Vector3    grid_world_pos  = m_CollisionTilemaps[ 0 ].CellToWorld( new Vector3Int( final_grid.x, final_grid.y ) );
+
+      Vector3 cell_size      =  m_CollisionTilemaps[ 0 ].cellSize;
+      Vector3 cell_extents   = cell_size / 2f;
+      Vector3 bounds_extents = cell_size * 2f / 3f; // restrict the size of the final bounds so that we don't accidentally spill over into an adjacent tile
+
+      Bounds cell_bounds = new Bounds( grid_world_pos + cell_extents, bounds_extents );
+      Vector3 world_pos  = cell_bounds.ClosestPoint( end_pos );
+
+      PathNode final_node = new PathNode( final_grid, world_pos );
+      path.Add( final_node );
     }
 
     #if PATHFINDING_LOGGING

@@ -84,9 +84,9 @@ public class Bot : MonoBehaviour
 
   void HandleMoving()
   {
-    Vector3 target_pos = new Vector3( m_TargetPosition.x, m_TargetPosition.y, transform.position.z );
     if ( m_Path != null )
     {
+      Vector3 target_pos = m_Path[ m_Path.Count - 1 ].WorldPosition;
       if ( m_PathIdx < m_Path.Count )
       {
         PathNode path = m_Path[ m_PathIdx ];
