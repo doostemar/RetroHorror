@@ -1,35 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PathNode
 {
+  private Vector2Int m_GridPosition;
+  public  Vector2Int GridPosition { get { return m_GridPosition; } }
 
-  private Vector2Int m_Pos;
-  public  Vector2Int GridPos { get { return m_Pos; } }
+  private Vector2    m_WorldPosition;
+  public  Vector2    WorldPosition {  get { return m_WorldPosition; } }
 
-  private Vector2 m_WorldPos;
-  public  Vector2 WorldPos { get { return m_WorldPos; } }
-  
-  public int      m_GCost;
-  public int      m_HCost;
-  public int      m_FCost;
-  public PathNode m_PreviousNode;
-
-
-  public PathNode( Vector2Int grid_pos, Vector2 world_pos )
+  public PathNode( Vector2Int grid_pos, Vector2 prev_world_pos, Tilemap tm )
   {
-    m_Pos      = grid_pos;
-    m_WorldPos = world_pos;
-  }
+    m_GridPosition = grid_pos;
+    Vector3 ll_corner    = tm.CellToWorld( new Vector3Int( grid_pos.x, grid_pos.y ) );
+    Vector3 cell_extents = tm.cellSize / 2f;
 
-  public Vector2Int GetGridPos()
-  {
-    return m_Pos;
-  }
-
-  public void CalculateFCost()
-  {
-    m_FCost = m_GCost + m_HCost;
+    Bounds cell_bounds = new Bounds( ll_corner + cell_extents, tm.cellSize );
+    m_WorldPosition = cell_bounds.ClosestPoint( prev_world_pos );
   }
 }

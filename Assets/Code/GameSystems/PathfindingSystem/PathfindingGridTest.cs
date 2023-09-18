@@ -29,8 +29,8 @@ public class PathfindingGridTest : MonoBehaviour
       {
         for (int i = 0; i < path.Count - 1; i++)
         {
-          Debug.DrawLine(new Vector3(path[i].GridPos.x, path[i].GridPos.y) + Vector3.one * .5f,
-          new Vector3(path[i + 1].GridPos.x, path[i + 1].GridPos.y) + Vector3.one * .5f, Color.green, 3f, false);
+          Debug.DrawLine(new Vector3(path[i].GridPosition.x, path[i].GridPosition.y) + Vector3.one * .5f,
+          new Vector3(path[i + 1].GridPosition.x, path[i + 1].GridPosition.y) + Vector3.one * .5f, Color.green, 3f, false);
         }
       }
     }

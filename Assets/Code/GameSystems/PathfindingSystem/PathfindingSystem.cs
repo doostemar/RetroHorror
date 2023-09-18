@@ -12,6 +12,7 @@ public class PathfindingSystem : MonoBehaviour
   private List<Tilemap> m_CollisionTilemaps;
   private BoundsInt     m_GridBounds;
 
+  //-------------------------------------------------------------------------------------
   private void Start()
   {
     m_GridBounds = new BoundsInt();
@@ -32,17 +33,30 @@ public class PathfindingSystem : MonoBehaviour
     }
   }
 
+  //-------------------------------------------------------------------------------------
+  public Vector2 GetTileSize()
+  {
+    return m_CollisionTilemaps[0].cellSize;
+  }
+
+  //-------------------------------------------------------------------------------------
+  public Vector2 GetGridWorldPosition( Vector2Int grid_pos )
+  {
+    return m_CollisionTilemaps[0].CellToWorld( new Vector3Int( grid_pos.x, grid_pos.y ) );
+  }
+
+  //-------------------------------------------------------------------------------------
   public List<PathNode> FindPath( Vector2 start, Vector2 end )
   {
     PathfindingGrid grid = new PathfindingGrid( m_CollisionTilemaps );
     Vector2Int grid_start = grid.WorldToGrid( start );
     Vector2Int grid_end   = grid.WorldToGrid( end );
 
-    PathNode start_node = grid.GetGridObject( grid_start );
-    PathNode end_node   = grid.GetGridObject( grid_end );
+    GridNode start_node = grid.GetGridObject( grid_start );
+    GridNode end_node   = grid.GetGridObject( grid_end );
 
-    List<PathNode>    open_list   = new List<PathNode> { start_node };
-    HashSet<PathNode> closed_list = new HashSet<PathNode>();
+    HashSet<GridNode> open_list   = new HashSet<GridNode> { start_node };
+    HashSet<GridNode> closed_list = new HashSet<GridNode>();
 
     start_node.m_GCost = 0;
     start_node.m_HCost = CalculateDistanceCost(start_node, end_node);
@@ -55,23 +69,27 @@ public class PathfindingSystem : MonoBehaviour
 
     while ( open_list.Count > 0 )
     {
-      PathNode current_node = GetLowestFCostNode(open_list);
+      GridNode current_node = GetLowestFCostNode( open_list );
       if (current_node == end_node)
       {
         // reached the end
-        return CalculatePath(end_node);
+        return CalculatePath( end_node, start );
       }
 
       open_list.Remove(current_node);
       closed_list.Add(current_node);
 
-      foreach (PathNode neighbor in GetNeighbors(grid, current_node))
+      foreach (GridNode neighbor in GetNeighbors( grid, current_node ) )
       {
-        if (closed_list.Contains(neighbor)) continue;
+        if (closed_list.Contains( neighbor ) ) continue;
 
-        if (grid.IsWalkable(neighbor) == false)
+        PathfindingGrid.WalkableState walkable_state = grid.IsWalkable( current_node, neighbor );
+        if ( walkable_state != PathfindingGrid.WalkableState.Open )
         {
-          closed_list.Add(neighbor);
+          if ( walkable_state == PathfindingGrid.WalkableState.Closed )
+          {
+            closed_list.Add( neighbor );
+          }
           continue;
         }
 
@@ -92,9 +110,10 @@ public class PathfindingSystem : MonoBehaviour
     return null;
   }
 
-  private List<PathNode> GetNeighbors(PathfindingGrid grid, PathNode current_node)
+  //-------------------------------------------------------------------------------------
+  private List<GridNode> GetNeighbors(PathfindingGrid grid, GridNode current_node)
   {
-    List<PathNode> neighbor_nodes = new List<PathNode>();
+    List<GridNode> neighbor_nodes = new List<GridNode>();
 
     for (int dx = -1; dx <= 1; ++dx)
     {
@@ -104,7 +123,7 @@ public class PathfindingSystem : MonoBehaviour
         
         if ( m_GridBounds.Contains( new Vector3Int( node_pos.x, node_pos.y ) ) )
         {
-          PathNode node = grid.GetGridObject( node_pos );
+          GridNode node = grid.GetGridObject( node_pos );
           if (node != null)
           {
             neighbor_nodes.Add(node);
@@ -115,15 +134,23 @@ public class PathfindingSystem : MonoBehaviour
     return neighbor_nodes;
   }
 
-  private List<PathNode> CalculatePath(PathNode end_node)
+  //-------------------------------------------------------------------------------------
+  private List<PathNode> CalculatePath( GridNode end_node, Vector2 start_pos )
   {
-    List<PathNode> path = new List<PathNode>();
-    for ( PathNode node = end_node; node != null; node = node.m_PreviousNode )
-    { 
-      path.Add( node );
+    List< GridNode > grid_list = new List< GridNode >();
+    for ( GridNode node = end_node; node != null; node = node.m_PreviousNode )
+    {
+      grid_list.Add( node ) ;
     }
 
-    path.Reverse();
+    grid_list.Reverse();
+    List<PathNode> path = new List<PathNode>();
+    for ( int i_node = 0; i_node < grid_list.Count; ++i_node )
+    {
+      Vector2 prev_pos = ( i_node == 0 ) ? start_pos : path[ i_node - 1 ].WorldPosition;
+      PathNode pn = new PathNode( grid_list[ i_node ].GridPos, prev_pos, m_CollisionTilemaps[0] );
+      path.Add( pn );
+    }
 
     #if PATHFINDING_LOGGING
     Debug.Log("nodes in path: " + path.Count);
@@ -132,7 +159,8 @@ public class PathfindingSystem : MonoBehaviour
     return path;
   }
 
-  private int CalculateDistanceCost(PathNode start, PathNode end)
+  //-------------------------------------------------------------------------------------
+  private int CalculateDistanceCost(GridNode start, GridNode end)
   {
     int x_distance = Mathf.Abs(start.GridPos.x - end.GridPos.x);
     int y_distance = Mathf.Abs(start.GridPos.y - end.GridPos.y);
@@ -141,15 +169,20 @@ public class PathfindingSystem : MonoBehaviour
     return kDiagonalCost * Mathf.Min(x_distance, y_distance) + kStraightCost * remaining;
   }
 
-  private PathNode GetLowestFCostNode(List<PathNode> nodes)
+  //-------------------------------------------------------------------------------------
+  private GridNode GetLowestFCostNode( HashSet<GridNode> nodes )
   {
-    PathNode lowest_fcost_node = nodes[0];
-    for (int i = 1; i < nodes.Count; i++)
-    { 
-      if (nodes[i].m_FCost < lowest_fcost_node.m_FCost) lowest_fcost_node = nodes[i];
+    GridNode lowest_cost = null;
+    foreach( GridNode node in nodes )
+    {
+      if ( lowest_cost == null 
+        || node.m_FCost < lowest_cost.m_FCost )
+      {
+        lowest_cost = node;
+      }
     }
 
-    return lowest_fcost_node;
+    return lowest_cost;
   }
 
 }
