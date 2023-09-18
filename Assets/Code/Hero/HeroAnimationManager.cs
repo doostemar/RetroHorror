@@ -30,7 +30,7 @@ public class HeroAnimationManager : MonoBehaviour
       break;
       case HeroEvent.EventType.HeroStateIdle:
       { 
-        HeroAnimator.Play("Shadow");
+        HeroAnimator.Play("ShadowIdle");
       }
       break;
     }
