@@ -127,7 +127,7 @@ public class UnitSelectionSystem : MonoBehaviour
       }
       else
       {
-        Debug.LogError( "Clicked object on selectable layer that does not have SelectableUnit object" );
+        Debug.LogError( "Clicked object on selectable layer that does not have SelectableUnit object: " + cast_result.collider.gameObject.name );
       }
     }
   }
