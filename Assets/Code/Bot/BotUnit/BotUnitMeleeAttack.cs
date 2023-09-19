@@ -34,6 +34,11 @@ public class BotUnitMeleeAttack : MonoBehaviour
 
   private void FixedUpdate()
   {
+    if ( m_Collider.enabled == false )
+    {
+      return;
+    }
+
     ContactFilter2D filter2D = new ContactFilter2D();
     filter2D.useLayerMask = true;
     filter2D.layerMask    = m_EnemyUnitMask;

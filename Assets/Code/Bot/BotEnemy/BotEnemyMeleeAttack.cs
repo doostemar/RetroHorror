@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySerfAttack : MonoBehaviour
+public class BotEnemyMeleeAttack : MonoBehaviour
 {
   public Collider2D   m_Collider;
   public float        m_AttackValue;
 
   BotEnemyChannel     m_Channel;
   LayerMask           m_HeroUnitMask;
-  HashSet<Collider2D> m_AlreadyHitColliders;
+  Collider2D          m_AlreadyHitCollider;
 
   void Start()
   {
@@ -24,7 +24,7 @@ public class EnemySerfAttack : MonoBehaviour
   {
     if ( evt.m_Type == BotEnemyEvent.Type.Attack )
     {
-      m_AlreadyHitColliders = new HashSet<Collider2D>();
+      m_AlreadyHitCollider = null;
       enabled = true;
     }
     else if ( evt.m_Type == BotEnemyEvent.Type.AttackFinished )
@@ -35,28 +35,31 @@ public class EnemySerfAttack : MonoBehaviour
 
   void FixedUpdate()
   {
+    if ( m_Collider.enabled == false || m_AlreadyHitCollider != null )
+    {
+      return;
+    }
+
     ContactFilter2D filter2D = new ContactFilter2D();
     filter2D.useLayerMask = true;
     filter2D.layerMask    = m_HeroUnitMask;
     List<Collider2D> overlaps = new List<Collider2D>();
     m_Collider.OverlapCollider( filter2D, overlaps );
 
-    foreach ( Collider2D overlap in overlaps )
+    if ( overlaps.Count > 0 )
     {
-      if ( m_AlreadyHitColliders.Contains( overlap ) == false )
+      Collider2D overlap = overlaps[0];
+      HealthChannel health = overlap.gameObject.GetComponent<HealthChannel>();
+      if ( health != null )
       {
-        HealthChannel health = overlap.gameObject.GetComponent<HealthChannel>();
-        if ( health != null )
-        {
-          HealthEvent evt = ScriptableObject.CreateInstance<HealthEvent>();
-          evt.m_Direction = overlap.transform.position - m_Collider.transform.position;
-          evt.m_Type      = HealthEvent.Type.Damage;
-          evt.m_Value     = m_AttackValue;
+        HealthEvent evt = ScriptableObject.CreateInstance<HealthEvent>();
+        evt.m_Direction = overlap.transform.position - m_Collider.transform.position;
+        evt.m_Type      = HealthEvent.Type.Damage;
+        evt.m_Value     = m_AttackValue;
 
-          health.RaiseHealthEvent( evt );
-        }
-        m_AlreadyHitColliders.Add( overlap );
+        health.RaiseHealthEvent( evt );
       }
+      m_AlreadyHitCollider = overlap;
     }
   }
 }

@@ -7,6 +7,7 @@ public class BotUnitAnimation : MonoBehaviour
   BotChannel     m_BotChannel;
   BotUnitChannel m_UnitChannel;
   Animator       m_Animator;
+  bool           m_Attacking;
 
   void Start()
   {
@@ -16,6 +17,9 @@ public class BotUnitAnimation : MonoBehaviour
 
     m_BotChannel.OnMoveEvent += OnBotEvent;
     m_UnitChannel.OnUnitEvent += OnUnitEvent;
+
+    m_Animator.Play( "Idle" );
+    m_Attacking = false;
   }
 
   private void OnDestroy()
@@ -26,7 +30,18 @@ public class BotUnitAnimation : MonoBehaviour
 
   void OnBotEvent( BotMoveEvent evt )
   {
-
+    if ( evt.m_Type == BotMoveEvent.Type.Move 
+      || evt.m_Type == BotMoveEvent.Type.Resume )
+    {
+      m_Animator.Play( "Move" );
+    }
+    else if ( m_Attacking == false &&
+            ( evt.m_Type == BotMoveEvent.Type.Pause
+           || evt.m_Type == BotMoveEvent.Type.Stop
+           || evt.m_Type == BotMoveEvent.Type.Arrived ) )
+    {
+      m_Animator.Play( "Idle" );
+    }
   }
 
   void OnUnitEvent( BotUnitEvent evt )

@@ -127,7 +127,11 @@ public class UnitSelectionSystem : MonoBehaviour
       }
       else
       {
-        Debug.LogError( "Clicked object on selectable layer that does not have SelectableUnit object: " + cast_result.collider.gameObject.name );
+        GameObject err_obj = cast_result.collider.gameObject;
+        Transform  parent  = err_obj.transform.parent;
+        Debug.LogError( "Clicked object on selectable layer that does not have SelectableUnit object: " 
+                        + cast_result.collider.gameObject.name
+                        + ( parent == null ? "" : ", " + parent.name ) );
       }
     }
   }
@@ -205,5 +209,10 @@ public class UnitSelectionSystem : MonoBehaviour
       unit.Selected = false;
     }
     units.Clear();
+  }
+
+  public void RemoveUnit( SelectableUnit unit )
+  {
+    m_SelectedUnits.Remove( unit );
   }
 }

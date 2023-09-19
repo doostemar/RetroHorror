@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 8839810700316353875}
   - component: {fileID: 6585171334202027675}
   m_Layer: 6
-  m_Name: EnemySerf
+  m_Name: EnemyKnight
   m_TagString: EnemyUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -518,7 +518,7 @@ SpriteRenderer:
   m_SortingLayerID: -1352441733
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1417370143, guid: 8d861035e8db35249a95f21104f2fe5c, type: 3}
+  m_Sprite: {fileID: 996316032, guid: 53e19619882a2654b8d022c3b9e87794, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -561,18 +561,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.11981392, y: 0.5171572}
+  m_Offset: {x: -0.077252865, y: 0.6164683}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.3, y: 0}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3609934, y: 0.8469238}
+  m_Size: {x: 0.5312395, y: 1.045546}
   m_EdgeRadius: 0
 --- !u!114 &1606927264558688208
 MonoBehaviour:
@@ -612,11 +612,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176e29d389c6578489752ffdea8de42f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CorpsePrefab: {fileID: 8053785603438987009, guid: 7bc41a9be4457f64ca8ddf39dd6c6c9a, type: 3}
+  m_CorpsePrefab: {fileID: 8053785603438987009, guid: c483bcdbe04000b46aefaa8145c70a37, type: 3}
   m_AggroRange: 2.75
   m_RangeCenterOffset: {x: 0.01, y: 0.46}
   m_AttackRange: 0.15
-  m_AttackTargetPosition: {x: 0.36, y: 0.56}
+  m_AttackTargetPosition: {x: 0.66, y: 0.62}
 --- !u!114 &5866111638616392564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,7 +642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Collider: {fileID: 661500978085992318}
-  m_AttackValue: 1
+  m_AttackValue: 20
 --- !u!95 &593684032972900971
 Animator:
   serializedVersion: 5
@@ -653,7 +653,7 @@ Animator:
   m_GameObject: {fileID: 9170860239066068757}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 79b4b87337093844ba6881f14dcc318f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1015bd1603a86b84c9f8db3c196f4c47, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -688,7 +688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cac4a2bdea33b849b98c34e2376b6da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 25
+  m_MaxHealth: 500
   m_HealthBar: {fileID: 4335060221638697450}
   m_IsInvincible: 0
 --- !u!114 &6585171334202027675

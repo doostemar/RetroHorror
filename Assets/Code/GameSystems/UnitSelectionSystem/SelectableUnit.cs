@@ -43,4 +43,17 @@ public class SelectableUnit : MonoBehaviour
       Debug.LogError( "Selectable item " + name + " did not have a SelectionRing attached! Please attach one." );
     }
   }
+
+  private void OnDestroy()
+  {
+    if ( m_Selected )
+    {
+      GameObject gamecon = Game.GetGameController();
+      if ( gamecon != null )
+      {
+        UnitSelectionSystem sys = gamecon.GetComponent<UnitSelectionSystem>();
+        sys.RemoveUnit( this );
+      }
+    }
+  }
 }
