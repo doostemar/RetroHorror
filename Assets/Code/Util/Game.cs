@@ -5,10 +5,11 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
   static GameObject s_GameController;
+  static bool       s_Destroyed = false;
 
   public static GameObject GetGameController()
   {
-    if ( s_GameController == null )
+    if ( s_GameController == null && s_Destroyed == false )
     { 
       GameObject[] game_controllers = GameObject.FindGameObjectsWithTag("GameController");
 
@@ -22,6 +23,11 @@ public class Game : MonoBehaviour
     }
 
     return s_GameController;
+  }
+
+  static public void Shutdown()
+  {
+    s_Destroyed = true;
   }
 
   public static bool IsRunning()
