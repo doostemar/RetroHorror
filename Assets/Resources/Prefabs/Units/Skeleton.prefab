@@ -266,8 +266,8 @@ GameObject:
   - component: {fileID: 4413018778938424363}
   - component: {fileID: 188101042504155761}
   - component: {fileID: 1990949028862657324}
-  - component: {fileID: 41512752960170883}
   - component: {fileID: 1249229235426112883}
+  - component: {fileID: 41512752960170883}
   - component: {fileID: 25443690479579431}
   - component: {fileID: 734092812320474984}
   - component: {fileID: 3588428297571721241}
@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 1892904664085858555}
   - component: {fileID: 6409505778308455515}
   m_Layer: 3
-  m_Name: DeathKnight
+  m_Name: Skeleton
   m_TagString: HeroUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -342,7 +342,7 @@ SpriteRenderer:
   m_SortingLayerID: -1352441733
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1518100928, guid: 0d4b23523229cdf4a821c6f7f9a84a40, type: 3}
+  m_Sprite: {fileID: 1996091025, guid: df9c3b989ff31fc499870c94cdb91285, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -365,12 +365,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0a5301342464584aafc5cab296fdee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CorpsePrefab: {fileID: 8053785603438987009, guid: 7bc41a9be4457f64ca8ddf39dd6c6c9a, type: 3}
-  m_DeathParticleSystem: {fileID: 7540078151929298971, guid: a34a87be4456ec94094949e2af49b635, type: 3}
-  m_AggroRange: 1.86
+  m_CorpsePrefab: {fileID: 0}
+  m_DeathParticleSystem: {fileID: 7540078151929298971, guid: a48ff5db095b39048bf6775285b12261, type: 3}
+  m_AggroRange: 1.38
   m_RangeCenterOffset: {x: 0, y: 0.08}
-  m_AttackRange: 0.28
-  m_AttackTargetPosition: {x: -0.62, y: 0.51}
+  m_AttackRange: 0.22
+  m_AttackTargetPosition: {x: -0.37, y: 0.32}
 --- !u!114 &1990949028862657324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,23 +383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d615cf0acbd224842b3b62464d3c7f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MoveSpeed: 0.8
+  m_MoveSpeed: 1.5
   m_DebugDrawMovement: 0
---- !u!114 &41512752960170883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4489354308647069862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cac4a2bdea33b849b98c34e2376b6da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MaxHealth: 600
-  m_HealthBar: {fileID: 8386914883734093829}
-  m_IsInvincible: 0
 --- !u!114 &1249229235426112883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,7 +398,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Collider: {fileID: 4439236300815780455}
-  m_AttackValue: 70
+  m_AttackValue: 20
+--- !u!114 &41512752960170883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4489354308647069862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cac4a2bdea33b849b98c34e2376b6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxHealth: 10
+  m_HealthBar: {fileID: 8386914883734093829}
+  m_IsInvincible: 0
 --- !u!114 &25443690479579431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LineRendererPrefab: {fileID: 3959675133706597523, guid: 9db03dc1feb11144db749232044fc8f8, type: 3}
-  m_Width: 0.43
+  m_Width: 0.25
   m_Height: 0.125
   m_PointCount: 10
   m_Offset: {x: 0, y: 0}
@@ -441,7 +441,7 @@ Animator:
   m_GameObject: {fileID: 4489354308647069862}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1590444c888c2254dae5af68f0fad108, type: 2}
+  m_Controller: {fileID: 9100000, guid: c1d878bdfb69440448d523cdf0e9aa82, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -484,18 +484,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.025242269, y: 0.58657175}
+  m_Offset: {x: 0.012970686, y: 0.41593844}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.3, y: 0}
-    oldSize: {x: 2, y: 2}
+    oldSize: {x: 1.5, y: 1.5}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.49192345, y: 1.1835619}
+  m_Size: {x: 0.34294558, y: 0.8422953}
   m_EdgeRadius: 0
 --- !u!114 &5512396654824214733
 MonoBehaviour:

@@ -3,6 +3,7 @@ using UnityEngine;
 public class BotUnitBaseBehavior : MonoBehaviour
 {
   public GameObject m_CorpsePrefab;
+  public GameObject m_DeathParticleSystem;
   public float      m_AggroRange;
   public Vector2    m_RangeCenterOffset;
 
@@ -35,6 +36,9 @@ public class BotUnitBaseBehavior : MonoBehaviour
     m_UnitChannel.OnUnitEvent += OnUnitEvent;
     m_BotChannel.OnMoveEvent  += OnBotMoveEvent;
     m_DirectedPosition = transform.position;
+
+    HealthChannel health_channel = GetComponent<HealthChannel>();
+    health_channel.OnHealthEvent += OnHealthEvent;
   }
 
   private void OnDestroy()
@@ -60,6 +64,23 @@ public class BotUnitBaseBehavior : MonoBehaviour
     if ( evt.m_Type == BotUnitEvent.Type.AttackFinished )
     {
       m_AttackFinished = true;
+    }
+  }
+
+  void OnHealthEvent( HealthEvent evt )
+  {
+    if ( evt.m_Type == HealthEvent.Type.Dead )
+    {
+      Quaternion direction = Quaternion.LookRotation( evt.m_Direction );
+      if ( m_DeathParticleSystem != null )
+      {
+        Instantiate( m_DeathParticleSystem, transform.position, direction );
+      }
+      if ( m_CorpsePrefab != null )
+      {
+        Instantiate( m_CorpsePrefab, transform.position, Quaternion.identity );
+      }
+      Destroy( gameObject );
     }
   }
 

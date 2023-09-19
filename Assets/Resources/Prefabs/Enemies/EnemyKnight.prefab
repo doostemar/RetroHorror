@@ -615,7 +615,7 @@ MonoBehaviour:
   m_CorpsePrefab: {fileID: 8053785603438987009, guid: c483bcdbe04000b46aefaa8145c70a37, type: 3}
   m_AggroRange: 2.75
   m_RangeCenterOffset: {x: 0.01, y: 0.46}
-  m_AttackRange: 0.15
+  m_AttackRange: 0.12
   m_AttackTargetPosition: {x: 0.66, y: 0.62}
 --- !u!114 &5866111638616392564
 MonoBehaviour:
