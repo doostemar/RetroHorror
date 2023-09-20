@@ -9,6 +9,11 @@ public class BotUnitAnimation : MonoBehaviour
   Animator       m_Animator;
   bool           m_Attacking;
 
+  static int kIdleStateId      = Animator.StringToHash( "Idle" );
+  static int kResurrectStateId = Animator.StringToHash( "Resurrection" );
+  static int kAttackStateId    = Animator.StringToHash( "Attack" );
+  static int kMoveStateId      = Animator.StringToHash( "Move" );
+
   void Start()
   {
     m_Animator = GetComponent<Animator>();
@@ -18,7 +23,7 @@ public class BotUnitAnimation : MonoBehaviour
     m_BotChannel.OnMoveEvent += OnBotEvent;
     m_UnitChannel.OnUnitEvent += OnUnitEvent;
 
-    m_Animator.Play( "Idle" );
+    m_Animator.Play( kIdleStateId );
     m_Attacking = false;
   }
 
@@ -33,14 +38,14 @@ public class BotUnitAnimation : MonoBehaviour
     if ( evt.m_Type == BotMoveEvent.Type.Move 
       || evt.m_Type == BotMoveEvent.Type.Resume )
     {
-      m_Animator.Play( "Move" );
+      m_Animator.Play( kMoveStateId );
     }
     else if ( m_Attacking == false &&
             ( evt.m_Type == BotMoveEvent.Type.Pause
            || evt.m_Type == BotMoveEvent.Type.Stop
            || evt.m_Type == BotMoveEvent.Type.Arrived ) )
     {
-      m_Animator.Play( "Idle" );
+      m_Animator.Play( kIdleStateId );
     }
   }
 
@@ -48,7 +53,14 @@ public class BotUnitAnimation : MonoBehaviour
   {
     if ( evt.m_Type == BotUnitEvent.Type.Attack )
     {
-      m_Animator.Play( "Attack" );
+      m_Animator.Play( kAttackStateId );
+    }
+    else if ( evt.m_Type == BotUnitEvent.Type.Resurrect )
+    {
+      if ( m_Animator.HasState( 0, kResurrectStateId ) )
+      {
+        m_Animator.Play( kResurrectStateId );
+      }
     }
   }
 }

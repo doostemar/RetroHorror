@@ -8,6 +8,7 @@ public class BotUnitEvent : ScriptableObject
   {
     Attack,
     AttackFinished,
+    Resurrect
   }
 
   public Type m_Type;

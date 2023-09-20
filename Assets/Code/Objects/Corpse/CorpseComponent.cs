@@ -44,7 +44,8 @@ public class CorpseComponent : MonoBehaviour
       }
       else if ( res_event.m_Type == ResurrectionEvent.Type.Cast )
       {
-        Instantiate( m_ResurrectionSpawn, transform.position, Quaternion.identity );
+        GameObject resed_obj = Instantiate( m_ResurrectionSpawn, transform.position, Quaternion.identity );
+        resed_obj.AddComponent<CreatedFromCorpseComponent>();
         Destroy( gameObject );
         return;
       }
