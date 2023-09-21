@@ -15,8 +15,6 @@ public class Bot : MonoBehaviour
     kRight
   }
 
-  public Direction m_Direction;
-
   private BotChannel m_Channel;
 
   enum State
@@ -30,6 +28,7 @@ public class Bot : MonoBehaviour
   private State             m_State;
   private List<PathNode>    m_Path;
   private int               m_PathIdx; // which element in the path we're moving toward
+  private Direction         m_Direction;
 
   private struct Debug
   {
@@ -45,6 +44,7 @@ public class Bot : MonoBehaviour
     m_State = State.Idle;
     m_PathSystem = Game.GetGameController().GetComponent<PathfindingSystem>();
     m_Channel.OnMoveEvent += OnMoveEvent;
+    m_Direction = Direction.kRight;
 
     m_Debug.m_LineAsset = Resources.Load<LineRenderer>( "DebugLineRenderer" );
   }
@@ -92,6 +92,8 @@ public class Bot : MonoBehaviour
 
   void HandleMoving()
   {
+    Vector3 prev_position = transform.position;
+
     if ( m_Path != null )
     {
       Vector3 target_pos = m_Path[ m_Path.Count - 1 ].WorldPosition;
@@ -126,6 +128,24 @@ public class Bot : MonoBehaviour
         Vector3 movement_dir = to_target.normalized;
         transform.position = transform.position + ( movement_dir * m_MoveSpeed * Time.deltaTime );
       }
+    }
+
+    Vector3 delta_pos = transform.position - prev_position;
+    if ( delta_pos.x > 0.001 && m_Direction == Direction.kLeft )
+    {
+      BotMoveEvent evt = ScriptableObject.CreateInstance<BotMoveEvent>();
+      evt.m_Type = BotMoveEvent.Type.DirectionRight;
+      m_Channel.RaiseMoveEvent( evt );
+
+      m_Direction = Direction.kRight;
+    }
+    else if ( delta_pos.x < -0.001 && m_Direction == Direction.kRight )
+    {
+      BotMoveEvent evt = ScriptableObject.CreateInstance<BotMoveEvent>();
+      evt.m_Type = BotMoveEvent.Type.DirectionLeft;
+      m_Channel.RaiseMoveEvent( evt );
+
+      m_Direction = Direction.kLeft;
     }
   }
 

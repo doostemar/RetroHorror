@@ -47,6 +47,14 @@ public class BotUnitAnimation : MonoBehaviour
     {
       m_Animator.Play( kIdleStateId );
     }
+    else if ( evt.m_Type == BotMoveEvent.Type.DirectionLeft )
+    {
+      transform.localScale = new Vector3( -1, 1, 1 );
+    }
+    else if ( evt.m_Type == BotMoveEvent.Type.DirectionRight )
+    {
+      transform.localScale = Vector3.one;
+    }
   }
 
   void OnUnitEvent( BotUnitEvent evt )
