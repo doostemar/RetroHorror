@@ -7,7 +7,9 @@ public class BotEnemyEvent : ScriptableObject
   public enum Type
   {
     Attack,
-    AttackFinished
+    AttackFinished,
+    Die,
+    DeathAnimFinished,
   };
 
   public Type m_Type;

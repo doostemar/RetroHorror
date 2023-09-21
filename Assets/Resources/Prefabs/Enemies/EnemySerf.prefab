@@ -518,7 +518,7 @@ SpriteRenderer:
   m_SortingLayerID: -1352441733
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1417370143, guid: 8d861035e8db35249a95f21104f2fe5c, type: 3}
+  m_Sprite: {fileID: -1715779267, guid: 89ff9f7675beeb4499326347b87ea92b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -561,18 +561,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.11981392, y: 0.5171572}
+  m_Offset: {x: 0.0408535, y: 0.5171572}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.3, y: 0}
+    oldSize: {x: 1.5, y: 1.5}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3609934, y: 0.8469238}
+  m_Size: {x: 0.44132614, y: 0.8469238}
   m_EdgeRadius: 0
 --- !u!114 &1606927264558688208
 MonoBehaviour:
@@ -588,6 +588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveSpeed: 0.54
   m_DebugDrawMovement: 0
+  m_Direction: 0
 --- !u!114 &3234033575680075347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,9 +615,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CorpsePrefab: {fileID: 8053785603438987009, guid: 7bc41a9be4457f64ca8ddf39dd6c6c9a, type: 3}
   m_AggroRange: 2.75
-  m_RangeCenterOffset: {x: 0.01, y: 0.46}
-  m_AttackRange: 0.15
-  m_AttackTargetPosition: {x: 0.36, y: 0.56}
+  m_RangeCenterOffset: {x: 0.09, y: 0.24}
+  m_AttackRange: 0.21
+  m_AttackTargetPosition: {x: 0.45, y: 0.56}
 --- !u!114 &5866111638616392564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,7 +654,7 @@ Animator:
   m_GameObject: {fileID: 9170860239066068757}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 79b4b87337093844ba6881f14dcc318f, type: 2}
+  m_Controller: {fileID: 9100000, guid: b14bb6f04218d674f84b9239c39117c0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -264,13 +264,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5642933665391027483}
   - component: {fileID: 4413018778938424363}
-  - component: {fileID: 1990949028862657324}
   - component: {fileID: 188101042504155761}
+  - component: {fileID: 1990949028862657324}
   - component: {fileID: 1249229235426112883}
   - component: {fileID: 41512752960170883}
   - component: {fileID: 25443690479579431}
-  - component: {fileID: 3588428297571721241}
   - component: {fileID: 734092812320474984}
+  - component: {fileID: 3588428297571721241}
   - component: {fileID: 5512396654824214733}
   - component: {fileID: 344459349145789598}
   - component: {fileID: 4105193675189857111}
@@ -342,7 +342,7 @@ SpriteRenderer:
   m_SortingLayerID: -1352441733
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -937505783, guid: 8d88f602434c57a4c8cf437cdc7c8c50, type: 3}
+  m_Sprite: {fileID: -1845373761, guid: e45bb88b20ec7c1408f18bd63d3125b8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -353,20 +353,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1990949028862657324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4489354308647069862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d615cf0acbd224842b3b62464d3c7f3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MoveSpeed: 3
-  m_DebugDrawMovement: 0
 --- !u!114 &188101042504155761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,7 +370,22 @@ MonoBehaviour:
   m_AggroRange: 1.38
   m_RangeCenterOffset: {x: 0, y: 0.08}
   m_AttackRange: 0.22
-  m_AttackTargetPosition: {x: -0.37, y: 0.32}
+  m_AttackTargetPosition: {x: 0.3, y: 0.47}
+--- !u!114 &1990949028862657324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4489354308647069862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d615cf0acbd224842b3b62464d3c7f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MoveSpeed: 3
+  m_DebugDrawMovement: 0
+  m_Direction: 0
 --- !u!114 &1249229235426112883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,6 +432,27 @@ MonoBehaviour:
   m_Height: 0.125
   m_PointCount: 10
   m_Offset: {x: 0, y: 0}
+--- !u!95 &734092812320474984
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4489354308647069862}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 974167632a9d1d946b78c5e6dc1a6721, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &3588428297571721241
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -463,40 +485,19 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04, y: 0.41593844}
+  m_Offset: {x: 0.05023718, y: 0.43641305}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.4375, y: 0.84375}
+    pivot: {x: 0.3, y: 0}
+    oldSize: {x: 1.5, y: 1.5}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.18076849, y: 0.8422953}
+  m_Size: {x: 0.36504078, y: 0.8832445}
   m_EdgeRadius: 0
---- !u!95 &734092812320474984
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4489354308647069862}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d45e4b1ce4a56904da11b07d0abc72d0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5512396654824214733
 MonoBehaviour:
   m_ObjectHideFlags: 0

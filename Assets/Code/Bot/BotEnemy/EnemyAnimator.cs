@@ -35,5 +35,9 @@ public class EnemyAnimator : MonoBehaviour
     {
       m_Animator.Play( "Attack" );
     }
+    else if ( evt.m_Type == BotEnemyEvent.Type.Die )
+    {
+      m_Animator.Play( "Death" );
+    }
   }
 }

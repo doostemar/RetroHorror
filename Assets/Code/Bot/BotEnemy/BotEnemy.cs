@@ -15,6 +15,7 @@ public class BotEnemy : MonoBehaviour
     HasAggro,
     MovingToAggroTarget,
     Attacking,
+    Dying,
   }
 
   private State           m_State;
@@ -25,12 +26,14 @@ public class BotEnemy : MonoBehaviour
   private bool            m_ArrivedAtTarget;
   private bool            m_AttackFinished;
   private GameObject      m_BloodParticleAsset;
+  private Animator        m_Animator;
 
   private void Start()
   {
     m_EnemyChannel    = GetComponent<BotEnemyChannel>();
     m_BotChannel      = GetComponent<BotChannel>();
     m_HealthChannel   = GetComponent<HealthChannel>();
+    m_Animator        = GetComponent<Animator>();
     m_ArrivedAtTarget = false;
     m_State           = State.Idle;
     m_BloodParticleAsset = Resources.Load<GameObject>( "Prefabs/Blood Particles" );
@@ -61,16 +64,21 @@ public class BotEnemy : MonoBehaviour
     {
       m_AttackFinished = true;
     }
+    else if ( evt.m_Type == BotEnemyEvent.Type.DeathAnimFinished )
+    {
+      Instantiate( m_CorpsePrefab, transform.position, Quaternion.identity );
+      Destroy( gameObject );
+    }
   }
 
   void OnHealthEvent( HealthEvent evt ) 
   {
     if (evt.m_Type == HealthEvent.Type.Dead)
     {
+      TransitionToDying();
+
       Quaternion direction = Quaternion.LookRotation( evt.m_Direction );
       Instantiate( m_BloodParticleAsset, transform.position, direction );
-      Instantiate( m_CorpsePrefab, transform.position, Quaternion.identity );
-      Destroy( gameObject );
     }
   }
 
@@ -90,12 +98,31 @@ public class BotEnemy : MonoBehaviour
       case State.Attacking:
         HandleAttacking();
         break;
+      case State.Dying:
+        break;
     }
   }
 
   void TransitionToIdle()
   {
     m_State = State.Idle;
+  }
+
+  void TransitionToDying()
+  {
+    m_State = State.Dying;
+
+    {
+      BotMoveEvent move_evt = ScriptableObject.CreateInstance<BotMoveEvent>();
+      move_evt.m_Type       = BotMoveEvent.Type.Stop;
+      m_BotChannel.RaiseMoveEvent( move_evt );
+    }
+
+    {
+      BotEnemyEvent enemy_evt = ScriptableObject.CreateInstance<BotEnemyEvent>();
+      enemy_evt.m_Type        = BotEnemyEvent.Type.Die;
+      m_EnemyChannel.RaiseEnemyEvent( enemy_evt );
+    }
   }
 
   void TransitionToAggro( GameObject target )

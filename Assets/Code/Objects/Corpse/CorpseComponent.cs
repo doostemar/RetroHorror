@@ -42,7 +42,7 @@ public class CorpseComponent : MonoBehaviour
   public void OnResCast( )
   {
     GameObject resed_obj = Instantiate( m_ResurrectionSpawn, transform.position, Quaternion.identity );
-    resed_obj.AddComponent<CreatedFromCorpseComponent>();
+    CreatedFromCorpseComponent cfcc = resed_obj.AddComponent<CreatedFromCorpseComponent>();
     Destroy( gameObject );
   }
 }

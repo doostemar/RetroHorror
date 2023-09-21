@@ -9,6 +9,14 @@ public class Bot : MonoBehaviour
   public float m_MoveSpeed;
   public bool  m_DebugDrawMovement;
 
+  public enum Direction
+  {
+    kLeft,
+    kRight
+  }
+
+  public Direction m_Direction;
+
   private BotChannel m_Channel;
 
   enum State
