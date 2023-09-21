@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class HeroResurrect : MonoBehaviour
 {
-  public float m_ResRadius     = 5f;
   public float m_CooldownTimeS = 1f;
 
   private HeroEventSystem          m_HeroEvents;
@@ -51,7 +50,6 @@ public class HeroResurrect : MonoBehaviour
       {
         ResurrectionEvent res_event = ScriptableObject.CreateInstance<ResurrectionEvent>();
         res_event.m_Type          = released_button ? ResurrectionEvent.Type.Cast : ResurrectionEvent.Type.Display;
-        res_event.m_Radius        = m_ResRadius;
         res_event.m_Position      = transform.position;
         res_event.m_TimeToDisplay = m_CooldownTimeS;
         m_ResEvents.RaiseEvent( res_event );

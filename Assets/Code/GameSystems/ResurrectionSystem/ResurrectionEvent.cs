@@ -11,7 +11,6 @@ public class ResurrectionEvent : ScriptableObject
   }
 
   public Vector2 m_Position;
-  public float   m_Radius;
   public float   m_TimeToDisplay;
   public Type    m_Type;
 }

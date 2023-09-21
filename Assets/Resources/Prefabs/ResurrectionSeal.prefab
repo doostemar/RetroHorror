@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1697751675520054457}
   - component: {fileID: 4766275962890967006}
   - component: {fileID: 4750347616496464413}
+  - component: {fileID: 2369283711428719006}
   m_Layer: 0
   m_Name: ResurrectionSeal
-  m_TagString: Untagged
+  m_TagString: ResSeal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,3 +125,38 @@ MonoBehaviour:
   m_WiggleHeight: 4
   m_WiggleSpeed: 0.06
   m_HighlightColor: {r: 0.8392157, g: 0.5254902, b: 0.6039216, a: 0}
+--- !u!70 &2369283711428719006
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6440994192493483235}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.00000065962575, y: -0.46665868}
+  m_Size: {x: 3.9878988, y: 2.9213083}
+  m_Direction: 1
