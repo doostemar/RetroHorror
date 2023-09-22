@@ -1,11 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+  [Serializable]
+  public struct ColorInfo
+  {
+    [SerializeField]
+    public float m_Threshold;
+
+    [SerializeField]
+    public Color m_Color;
+  };
+
+  public Color       m_FullColor;
+  public ColorInfo[] m_ColorThresholds;
 
   // Below this percentage, the health bar turns yellow 
   private static float MEDIUM_HEALTH_MODIFIER = 0.6f;
@@ -27,9 +41,13 @@ public class HealthBar : MonoBehaviour
   {
     slider.value = health;
 
-    if (health >= slider.maxValue * MEDIUM_HEALTH_MODIFIER) fill.color = Color.green;
-    else if (health > slider.maxValue * LOW_HEALTH_MODIFIER) fill.color = Color.yellow;
-    else fill.color = Color.red;
-
+    fill.color = m_FullColor;
+    foreach ( ColorInfo col in m_ColorThresholds )
+    {
+      if ( health <= col.m_Threshold * slider.maxValue )
+      {
+        fill.color = col.m_Color;
+      }
+    }
   }
 }

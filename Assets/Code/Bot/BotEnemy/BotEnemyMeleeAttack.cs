@@ -7,12 +7,12 @@ public class BotEnemyMeleeAttack : MonoBehaviour
   public float        m_AttackValue;
 
   BotEnemyChannel     m_Channel;
-  LayerMask           m_HeroUnitMask;
+  LayerMask           m_HeroAndHeroUnitMask;
   Collider2D          m_AlreadyHitCollider;
 
   void Start()
   {
-    m_HeroUnitMask = LayerMask.GetMask(new string[] { "HeroUnit" });
+    m_HeroAndHeroUnitMask = LayerMask.GetMask(new string[] { "HeroUnit", "Hero" });
 
     m_Channel = GetComponent<BotEnemyChannel>();
 
@@ -42,7 +42,7 @@ public class BotEnemyMeleeAttack : MonoBehaviour
 
     ContactFilter2D filter2D = new ContactFilter2D();
     filter2D.useLayerMask = true;
-    filter2D.layerMask    = m_HeroUnitMask;
+    filter2D.layerMask    = m_HeroAndHeroUnitMask;
     List<Collider2D> overlaps = new List<Collider2D>();
     m_Collider.OverlapCollider( filter2D, overlaps );
 
