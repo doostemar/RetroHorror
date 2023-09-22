@@ -385,7 +385,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveSpeed: 3
   m_DebugDrawMovement: 0
-  m_Direction: 0
 --- !u!114 &1249229235426112883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,6 +522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Collider: {fileID: 0}
+  m_UnitType: 1
 --- !u!114 &4105193675189857111
 MonoBehaviour:
   m_ObjectHideFlags: 0

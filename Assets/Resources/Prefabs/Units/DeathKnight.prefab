@@ -522,6 +522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Collider: {fileID: 0}
+  m_UnitType: 2
 --- !u!114 &4105193675189857111
 MonoBehaviour:
   m_ObjectHideFlags: 0

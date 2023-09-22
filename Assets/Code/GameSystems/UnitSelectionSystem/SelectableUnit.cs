@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class SelectableUnit : MonoBehaviour
 {
+  public enum UnitType
+  {
+    kSkelly,
+    kZombie,
+    kDeathKnight
+  }
 
   [HideInInspector]
   public  Collider2D    m_Collider;
+  public  UnitType      m_UnitType;
   private SelectionRing m_Ring;
 
   private bool m_Selected;

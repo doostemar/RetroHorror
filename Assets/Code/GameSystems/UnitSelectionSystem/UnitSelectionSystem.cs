@@ -11,11 +11,14 @@ public class UnitSelectionSystem : MonoBehaviour
   {
     None,
     PotentiallyClicking,
+    PotentiallyDoubleClickingDown,
+    PotentiallyDoubleClickingUp,
     Selecting
   }
 
   public float      m_ClickTimerSeconds;
   public float      m_ClickMousePositionDelta;
+  public float      m_DoubleClickInclusionRadius;
   public GameObject m_SelectionLineRendererPrefab;
   
   private List<SelectableUnit> m_SelectedUnits;
@@ -25,9 +28,10 @@ public class UnitSelectionSystem : MonoBehaviour
   }
 
   private List<SelectableUnit> m_SelectingUnits;
+  private SelectableUnit       m_ClickedUnit;
   private Vector2              m_DownMousePos;
   private State                m_State;
-  private float                m_TimeSinceDownSeconds;
+  private float                m_CooldownS;
   private int                  m_UnitsMask;
   private bool                 m_AddHeldForAction;
   private LineRenderer         m_LineRenderer;
@@ -64,6 +68,12 @@ public class UnitSelectionSystem : MonoBehaviour
       case State.PotentiallyClicking:
         HandlePotentiallyClicking( );
         break;
+      case State.PotentiallyDoubleClickingDown:
+        HandlePotentiallyDoubleClickingDown();
+        break;
+      case State.PotentiallyDoubleClickingUp:
+        HandlePotentiallyDoubleClickingUp();
+        break;
       case State.Selecting:
         HandleSelecting();
         break;
@@ -74,7 +84,7 @@ public class UnitSelectionSystem : MonoBehaviour
   {
     if ( Input.GetButtonDown( kSelectButtonName ) )
     {
-      m_TimeSinceDownSeconds = 0f;
+      m_CooldownS = 0f;
       m_DownMousePos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
       m_State = State.PotentiallyClicking;
       m_AddHeldForAction = add_held;
@@ -94,13 +104,13 @@ public class UnitSelectionSystem : MonoBehaviour
       return;
     }
 
-    m_TimeSinceDownSeconds += Time.deltaTime;
+    m_CooldownS += Time.deltaTime;
 
     Vector2 mouse_down_now                      = Camera.main.ScreenToWorldPoint( Input.mousePosition );
     bool    mouse_movement_over_click_threshold = (mouse_down_now - m_DownMousePos).sqrMagnitude 
                                                 > m_ClickMousePositionDelta * m_ClickMousePositionDelta;
 
-    if ( m_TimeSinceDownSeconds > m_ClickTimerSeconds || mouse_movement_over_click_threshold )
+    if ( m_CooldownS > m_ClickTimerSeconds || mouse_movement_over_click_threshold )
     {
       m_State = State.Selecting;
     }
@@ -113,7 +123,8 @@ public class UnitSelectionSystem : MonoBehaviour
       ClearUnits( m_SelectedUnits );
     }
 
-    m_State = State.None;
+    m_State     = State.None;
+    m_CooldownS = 0;
 
     RaycastHit2D cast_result = Physics2D.GetRayIntersection( Camera.main.ScreenPointToRay( Input.mousePosition ), 100f, m_UnitsMask );
     if ( cast_result.collider != null )
@@ -122,7 +133,9 @@ public class UnitSelectionSystem : MonoBehaviour
       SelectableUnit unit = hit_obj.GetComponent<SelectableUnit>();
       if ( unit != null )
       {
+        m_ClickedUnit = unit;
         m_SelectedUnits.Add( unit );
+        m_State = State.PotentiallyDoubleClickingDown;
         unit.Selected = true;
       }
       else
@@ -134,6 +147,90 @@ public class UnitSelectionSystem : MonoBehaviour
                         + ( parent == null ? "" : ", " + parent.name ) );
       }
     }
+  }
+
+  private void HandlePotentiallyDoubleClickingDown()
+  {
+    if ( Input.GetButtonDown( kSelectButtonName ) )
+    {
+      m_State     = State.PotentiallyDoubleClickingUp;
+      m_CooldownS = 0;
+      return;
+    }
+
+    m_CooldownS += Time.deltaTime;
+
+    Vector2 mouse_down_now                      = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+    bool    mouse_movement_over_click_threshold = (mouse_down_now - m_DownMousePos).sqrMagnitude 
+                                                > m_ClickMousePositionDelta * m_ClickMousePositionDelta;
+
+    if ( m_CooldownS > m_ClickTimerSeconds || mouse_movement_over_click_threshold )
+    {
+      m_State = State.None;
+    }
+  }
+
+  private void HandlePotentiallyDoubleClickingUp()
+  {
+    if ( Input.GetButtonUp( kSelectButtonName ) )
+    {
+      HandleDoubleClick();
+      return;
+    }
+
+    m_CooldownS += Time.deltaTime;
+
+    Vector2 mouse_down_now                      = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+    bool    mouse_movement_over_click_threshold = (mouse_down_now - m_DownMousePos).sqrMagnitude 
+                                                > m_ClickMousePositionDelta * m_ClickMousePositionDelta;
+
+    if ( m_CooldownS > m_ClickTimerSeconds || mouse_movement_over_click_threshold )
+    {
+      m_State = State.None;
+    }
+  }
+
+  private void HandleDoubleClick()
+  {
+    m_State = State.None;
+
+    GameObject[]            selectables                = GameObject.FindGameObjectsWithTag( "HeroUnit" );
+    HashSet<SelectableUnit> included_from_double_click = new HashSet<SelectableUnit>();
+    included_from_double_click.Add( m_ClickedUnit );
+
+    HashSet<SelectableUnit> remaining_units = new HashSet<SelectableUnit>();
+    foreach ( GameObject go in selectables )
+    {
+      SelectableUnit su = go.GetComponent<SelectableUnit>();
+      if ( su != null && su != m_ClickedUnit && su.m_UnitType == m_ClickedUnit.m_UnitType )
+      {
+        remaining_units.Add( su );
+      }
+    }
+
+    bool added_unit = true;
+    while ( added_unit )
+    {
+      added_unit = false;
+      HashSet<SelectableUnit> included_copy = new HashSet<SelectableUnit>( included_from_double_click );
+      foreach ( SelectableUnit rsu in remaining_units )
+      {
+        foreach ( SelectableUnit isu in included_copy )
+        {
+          float dist_sq = ( rsu.transform.position - isu.transform.position ).sqrMagnitude;
+          if ( dist_sq < m_DoubleClickInclusionRadius * m_DoubleClickInclusionRadius )
+          {
+            included_from_double_click.Add( rsu );
+            rsu.Selected = true;
+            added_unit = true;
+          }
+        }
+      }
+
+      remaining_units = remaining_units.Except( included_from_double_click ).ToHashSet();
+    }
+
+    m_SelectedUnits = m_SelectedUnits.Union( included_from_double_click ).ToList();
   }
 
   private void HandleSelecting()

@@ -875,6 +875,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ClickTimerSeconds: 0.25
   m_ClickMousePositionDelta: 0.001
+  m_DoubleClickInclusionRadius: 4
   m_SelectionLineRendererPrefab: {fileID: 3959675133706597523, guid: 6dd474882950111418432009247beb07, type: 3}
 --- !u!114 &1282185210
 MonoBehaviour:
