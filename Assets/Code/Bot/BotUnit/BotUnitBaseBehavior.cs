@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BotUnitBaseBehavior : MonoBehaviour
@@ -137,6 +138,18 @@ public class BotUnitBaseBehavior : MonoBehaviour
       evt.m_Type = BotUnitEvent.Type.Attack;
       m_UnitChannel.RaiseUnitEvent( evt );
     }
+
+    BotMoveEvent dir_evt = ScriptableObject.CreateInstance<BotMoveEvent>();
+    if ( m_AggroTarget.transform.position.x > transform.position.x )
+    {
+      dir_evt.m_Type = BotMoveEvent.Type.DirectionRight;
+    }
+    else
+    {
+      dir_evt.m_Type = BotMoveEvent.Type.DirectionLeft;
+    }
+    m_BotChannel.RaiseMoveEvent( dir_evt );
+
     m_AttackFinished = false;
     m_State = State.Attacking;
   }
@@ -179,10 +192,15 @@ public class BotUnitBaseBehavior : MonoBehaviour
 
   bool IsUnitInAttackRange( GameObject unit )
   {
-    Vector2 calc_center = GetAttackTargetCenter();
-    Vector2 closest_pt  = unit.GetComponent<Collider2D>().ClosestPoint( calc_center );
-    float dist_sqr = ( closest_pt - calc_center ).sqrMagnitude;
-    return dist_sqr < m_AttackRange * m_AttackRange;
+    Tuple<Vector3, Vector3> calc_centers = GetAttackTargetCenters();
+
+    Collider2D unit_col = unit.GetComponent<Collider2D>();
+    Vector3 pt1 = unit_col.ClosestPoint( calc_centers.Item1 );
+    Vector3 pt2 = unit_col.ClosestPoint( calc_centers.Item2 );
+
+    float dist_sqr1 = ( pt1 - calc_centers.Item1 ).sqrMagnitude;
+    float dist_sqr2 = ( pt2 - calc_centers.Item2 ).sqrMagnitude;
+    return dist_sqr1 < m_AttackRange * m_AttackRange || dist_sqr2 < m_AttackRange * m_AttackRange;
   }
 
   void HandleMovingToAggroTarget()
@@ -248,9 +266,11 @@ public class BotUnitBaseBehavior : MonoBehaviour
     return m_DirectedPosition + m_RangeCenterOffset;
   }
 
-  Vector3 GetAttackTargetCenter()
+  Tuple<Vector3, Vector3> GetAttackTargetCenters()
   {
-    return transform.position + new Vector3( m_AttackTargetPosition.x, m_AttackTargetPosition.y );
+    return Tuple.Create( transform.position + new Vector3(  m_AttackTargetPosition.x, m_AttackTargetPosition.y ),
+                         transform.position + new Vector3( -m_AttackTargetPosition.x, m_AttackTargetPosition.y )
+           );
   }
 
   private void OnDrawGizmosSelected()
@@ -259,6 +279,8 @@ public class BotUnitBaseBehavior : MonoBehaviour
     UnityEditor.Handles.DrawWireDisc( transform.position + new Vector3( m_RangeCenterOffset.x, m_RangeCenterOffset.y, 0f ), Vector3.forward, m_AggroRange );
 
     UnityEditor.Handles.color = Color.red;
-    UnityEditor.Handles.DrawWireDisc( GetAttackTargetCenter(), Vector3.forward, m_AttackRange );
+    Tuple<Vector3, Vector3> centers = GetAttackTargetCenters();
+    UnityEditor.Handles.DrawWireDisc( centers.Item1, Vector3.forward, m_AttackRange );
+    UnityEditor.Handles.DrawWireDisc( centers.Item2, Vector3.forward, m_AttackRange );
   }
 }
