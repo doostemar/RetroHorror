@@ -17,8 +17,8 @@ public class BotUnitAnimation : MonoBehaviour
 
   void Start()
   {
-    m_Animator = GetComponent<Animator>();
-    m_BotChannel = GetComponent<BotChannel>();
+    m_Animator    = GetComponent<Animator>();
+    m_BotChannel  = GetComponent<BotChannel>();
     m_UnitChannel = GetComponent<BotUnitChannel>();
 
     m_BotChannel.OnMoveEvent += OnBotEvent;
