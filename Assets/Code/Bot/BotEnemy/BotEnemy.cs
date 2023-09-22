@@ -169,6 +169,12 @@ public class BotEnemy : MonoBehaviour
         return;
       }
     }
+
+    GameObject hero_unit = GameObject.FindGameObjectWithTag( "Hero" );
+    if ( IsUnitInAggroRange( hero_unit ) )
+    {
+      TransitionToAggro( hero_unit );
+    }
   }
 
   Vector3 GetAggroCenter()
