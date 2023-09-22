@@ -50,6 +50,12 @@ public class UnitMovementSystem : MonoBehaviour
         move_event.m_TargetPosition = final_pos;
         move_event.m_Type           = BotMoveEvent.Type.Move;
         unit.RaiseMoveEvent( move_event );
+
+        BotUnitChannel unit_channel = unit.gameObject.GetComponent<BotUnitChannel>();
+        BotUnitEvent unit_evt = ScriptableObject.CreateInstance<BotUnitEvent>();
+        unit_evt.m_Type       = BotUnitEvent.Type.MovementDirect;
+        unit_evt.m_Position   = final_pos;
+        unit_channel.RaiseUnitEvent( unit_evt );
       }
     }
   }

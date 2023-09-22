@@ -9,10 +9,11 @@ public class BotUnitAnimation : MonoBehaviour
   Animator       m_Animator;
   bool           m_Attacking;
 
-  static int kIdleStateId      = Animator.StringToHash( "Idle" );
-  static int kResurrectStateId = Animator.StringToHash( "Resurrection" );
-  static int kAttackStateId    = Animator.StringToHash( "Attack" );
-  static int kMoveStateId      = Animator.StringToHash( "Move" );
+  static int    kIdleStateId      = Animator.StringToHash( "Idle" );
+  static int    kResurrectStateId = Animator.StringToHash( "Resurrection" );
+  static int    kAttackStateId    = Animator.StringToHash( "Attack" );
+  static int    kMoveStateId      = Animator.StringToHash( "Move" );
+  static string kHealthBarName    = "Health Bar Canvas";
 
   void Start()
   {
@@ -49,11 +50,18 @@ public class BotUnitAnimation : MonoBehaviour
     }
     else if ( evt.m_Type == BotMoveEvent.Type.DirectionLeft )
     {
-      transform.localScale = new Vector3( -1, 1, 1 );
+      Vector3 x_flip = new Vector3(-1, 1, 1);
+      transform.localScale  = x_flip;
+
+      Transform health_bar  = transform.Find( kHealthBarName );
+      health_bar.localScale = x_flip;
     }
     else if ( evt.m_Type == BotMoveEvent.Type.DirectionRight )
     {
       transform.localScale = Vector3.one;
+
+      Transform health_bar = transform.Find(kHealthBarName);
+      health_bar.localScale = Vector3.one;
     }
   }
 

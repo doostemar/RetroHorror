@@ -10,7 +10,7 @@ public class BotMoveEvent : ScriptableObject
     Resume,
     Arrived,
     DirectionLeft,
-    DirectionRight
+    DirectionRight,
   };
 
   public Type    m_Type;

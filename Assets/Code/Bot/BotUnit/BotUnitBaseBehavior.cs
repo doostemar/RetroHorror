@@ -14,6 +14,7 @@ public class BotUnitBaseBehavior : MonoBehaviour
   private enum State
   {
     Idle,
+    DirectedMoving,
     MovingToAggroTarget,
     Attacking,
     ReturningToPosition,
@@ -50,11 +51,7 @@ public class BotUnitBaseBehavior : MonoBehaviour
 
   void OnBotMoveEvent( BotMoveEvent evt )
   {
-    if ( evt.m_Type == BotMoveEvent.Type.Move )
-    {
-      m_DirectedPosition = evt.m_TargetPosition;
-    }
-    else if ( evt.m_Type == BotMoveEvent.Type.Arrived )
+    if ( evt.m_Type == BotMoveEvent.Type.Arrived )
     {
       m_ArrivedAtTarget = true;
     }
@@ -65,6 +62,10 @@ public class BotUnitBaseBehavior : MonoBehaviour
     if ( evt.m_Type == BotUnitEvent.Type.AttackFinished )
     {
       m_AttackFinished = true;
+    }
+    else if ( evt.m_Type == BotUnitEvent.Type.MovementDirect )
+    {
+      TransitionToDirectedMoving( evt.m_Position );
     }
   }
 
@@ -92,6 +93,9 @@ public class BotUnitBaseBehavior : MonoBehaviour
       case State.Idle:
         HandleIdle();
         break;
+      case State.DirectedMoving:
+        HandleDirectedMoving();
+        break;
       case State.MovingToAggroTarget:
         HandleMovingToAggroTarget();
         break;
@@ -107,6 +111,12 @@ public class BotUnitBaseBehavior : MonoBehaviour
   void TransitionToIdle()
   {
     m_State = State.Idle;
+  }
+
+  void TransitionToDirectedMoving( Vector2 directed_pos )
+  {
+    m_State            = State.DirectedMoving;
+    m_DirectedPosition = directed_pos;
   }
 
   void TransitionToMovingToTarget( GameObject target )
@@ -178,6 +188,14 @@ public class BotUnitBaseBehavior : MonoBehaviour
         TransitionToMovingToTarget( unit );
         return;
       }
+    }
+  }
+
+  void HandleDirectedMoving()
+  {
+    if ( m_ArrivedAtTarget )
+    {
+      TransitionToIdle();
     }
   }
 

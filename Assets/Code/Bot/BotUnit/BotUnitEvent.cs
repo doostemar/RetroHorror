@@ -8,8 +8,10 @@ public class BotUnitEvent : ScriptableObject
   {
     Attack,
     AttackFinished,
-    Resurrect
+    Resurrect,
+    MovementDirect
   }
 
-  public Type m_Type;
+  public Type    m_Type;
+  public Vector2 m_Position;
 }
