@@ -20,16 +20,9 @@ public class HealthBar : MonoBehaviour
 
   public Color       m_FullColor;
   public ColorInfo[] m_ColorThresholds;
-
-  // Below this percentage, the health bar turns yellow 
-  private static float MEDIUM_HEALTH_MODIFIER = 0.6f;
-
-  // Below this percentage, the health bar turns red
-  private static float LOW_HEALTH_MODIFIER = 0.3f;
-  
+ 
   public Slider slider;
-
-  public Image fill;
+  public Image  fill;
 
   public void SetMaxHealth(float max_health)
   {
