@@ -35,6 +35,11 @@ public class Game : MonoBehaviour
     return s_GameController;
   }
 
+  static public void Init()
+  {
+    s_Destroyed = false;
+  }
+
   static public void Shutdown()
   {
     s_Destroyed = true;
