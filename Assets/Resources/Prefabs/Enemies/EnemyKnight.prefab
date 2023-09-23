@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d615cf0acbd224842b3b62464d3c7f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MoveSpeed: 0.54
+  m_MoveSpeed: 1.2
   m_DebugDrawMovement: 0
 --- !u!114 &3234033575680075347
 MonoBehaviour:
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Collider: {fileID: 661500978085992318}
-  m_AttackValue: 20
+  m_AttackValue: 17
 --- !u!95 &593684032972900971
 Animator:
   serializedVersion: 5
@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cac4a2bdea33b849b98c34e2376b6da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 500
+  m_MaxHealth: 350
   m_HealthBarCanvas: {fileID: 7668681949138139925}
   m_HealthBar: {fileID: 314309416036871949}
   m_IsInvincible: 0

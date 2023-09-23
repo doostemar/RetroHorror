@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Collider: {fileID: 4439236300815780455}
-  m_AttackValue: 20
+  m_AttackValue: 9
 --- !u!114 &41512752960170883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cac4a2bdea33b849b98c34e2376b6da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 20
+  m_MaxHealth: 8
   m_HealthBarCanvas: {fileID: 6847907939081151361}
   m_HealthBar: {fileID: 2570353169543997297}
   m_IsInvincible: 0
