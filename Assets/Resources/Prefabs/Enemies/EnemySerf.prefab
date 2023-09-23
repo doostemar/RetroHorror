@@ -136,7 +136,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -780303479
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &4999542599888765194
@@ -435,6 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxHealth: 25
+  m_HealthBarCanvas: {fileID: 7668681949138139925}
   m_HealthBar: {fileID: 4335060221638697450}
   m_IsInvincible: 0
 --- !u!114 &6585171334202027675

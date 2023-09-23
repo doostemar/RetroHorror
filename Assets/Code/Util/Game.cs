@@ -6,6 +6,16 @@ public class Game : MonoBehaviour
 {
   static GameObject s_GameController;
   static bool       s_Destroyed = false;
+  static Camera     s_RenderCamera = null;
+
+  public static Camera GetRenderCamera()
+  {
+    if ( s_RenderCamera == null )
+    { 
+      s_RenderCamera = GetGameController().GetComponent<RenderCameraRef>().m_RenderCamera;
+    }
+    return s_RenderCamera;
+  }
 
   public static GameObject GetGameController()
   {

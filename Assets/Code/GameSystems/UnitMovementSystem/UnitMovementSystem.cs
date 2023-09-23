@@ -39,7 +39,7 @@ public class UnitMovementSystem : MonoBehaviour
       unit_centroid /= unit_count;
 
       // tell each unit to go to their offset from the click position
-      Vector2 target_position = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+      Vector2 target_position = Game.GetRenderCamera().ScreenToWorldPoint( Input.mousePosition );
       foreach ( BotChannel unit in moveable_units )
       {
         Vector2 unit_position             = unit.transform.position;

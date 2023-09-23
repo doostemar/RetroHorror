@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxHealth: 600
+  m_HealthBarCanvas: {fileID: 6847907939081151361}
   m_HealthBar: {fileID: 5746456308827184182}
   m_IsInvincible: 0
 --- !u!114 &1249229235426112883
@@ -453,7 +454,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -780303479
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &6995634067723252302

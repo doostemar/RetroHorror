@@ -3,6 +3,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
   public float          m_MaxHealth;
+  public Canvas         m_HealthBarCanvas;
   public HealthBar      m_HealthBar;
   public bool           m_IsInvincible;
 
@@ -11,6 +12,11 @@ public class Health : MonoBehaviour
 
   void Start()
   {
+    if ( m_HealthBarCanvas != null )
+    {
+      m_HealthBarCanvas.worldCamera = Game.GetRenderCamera();
+    }
+
     m_CurrentHealth = m_MaxHealth;
     m_HealthBar.SetMaxHealth(m_CurrentHealth);
 

@@ -85,7 +85,7 @@ public class UnitSelectionSystem : MonoBehaviour
     if ( Input.GetButtonDown( kSelectButtonName ) )
     {
       m_CooldownS = 0f;
-      m_DownMousePos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+      m_DownMousePos = Game.GetRenderCamera().ScreenToWorldPoint( Input.mousePosition );
       m_State = State.PotentiallyClicking;
       m_AddHeldForAction = add_held;
 
@@ -106,7 +106,7 @@ public class UnitSelectionSystem : MonoBehaviour
 
     m_CooldownS += Time.deltaTime;
 
-    Vector2 mouse_down_now                      = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+    Vector2 mouse_down_now                      = Game.GetRenderCamera().ScreenToWorldPoint( Input.mousePosition );
     bool    mouse_movement_over_click_threshold = (mouse_down_now - m_DownMousePos).sqrMagnitude 
                                                 > m_ClickMousePositionDelta * m_ClickMousePositionDelta;
 
@@ -126,7 +126,7 @@ public class UnitSelectionSystem : MonoBehaviour
     m_State     = State.None;
     m_CooldownS = 0;
 
-    RaycastHit2D cast_result = Physics2D.GetRayIntersection( Camera.main.ScreenPointToRay( Input.mousePosition ), 100f, m_UnitsMask );
+    RaycastHit2D cast_result = Physics2D.GetRayIntersection( Game.GetRenderCamera().ScreenPointToRay( Input.mousePosition ), 100f, m_UnitsMask );
     if ( cast_result.collider != null )
     {
       GameObject hit_obj = cast_result.transform.gameObject;
@@ -160,7 +160,7 @@ public class UnitSelectionSystem : MonoBehaviour
 
     m_CooldownS += Time.deltaTime;
 
-    Vector2 mouse_down_now                      = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+    Vector2 mouse_down_now                      = Game.GetRenderCamera().ScreenToWorldPoint( Input.mousePosition );
     bool    mouse_movement_over_click_threshold = (mouse_down_now - m_DownMousePos).sqrMagnitude 
                                                 > m_ClickMousePositionDelta * m_ClickMousePositionDelta;
 
@@ -180,7 +180,7 @@ public class UnitSelectionSystem : MonoBehaviour
 
     m_CooldownS += Time.deltaTime;
 
-    Vector2 mouse_down_now                      = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+    Vector2 mouse_down_now                      = Game.GetRenderCamera().ScreenToWorldPoint( Input.mousePosition );
     bool    mouse_movement_over_click_threshold = (mouse_down_now - m_DownMousePos).sqrMagnitude 
                                                 > m_ClickMousePositionDelta * m_ClickMousePositionDelta;
 
@@ -241,7 +241,7 @@ public class UnitSelectionSystem : MonoBehaviour
       return;
     }
 
-    Vector2 mouse_world_pos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+    Vector2 mouse_world_pos = Game.GetRenderCamera().ScreenToWorldPoint( Input.mousePosition );
 
     // do the actual operation of selection
     {
