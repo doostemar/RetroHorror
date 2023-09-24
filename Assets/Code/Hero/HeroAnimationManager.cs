@@ -12,6 +12,9 @@ public class HeroAnimationManager : MonoBehaviour
     HeroAnimator = GetComponent<Animator>();
     HeroEventSystem hero_events = GetComponent<HeroEventSystem>();
     hero_events.OnHeroEvent += OnHeroEvent;
+
+    HealthChannel health_channel = GetComponent<HealthChannel>();
+    health_channel.OnHealthEvent += OnHealthEvent;
   }
 
   void OnHeroEvent(HeroEvent hero_event)
@@ -33,6 +36,13 @@ public class HeroAnimationManager : MonoBehaviour
         HeroAnimator.Play("ShadowIdle");
       }
       break;
+    }
+  }
+  private void OnHealthEvent(HealthEvent health_evt)
+  {
+    if (health_evt.m_Type == HealthEvent.Type.Dead)
+    {
+      HeroAnimator.Play("Death");
     }
   }
 }
