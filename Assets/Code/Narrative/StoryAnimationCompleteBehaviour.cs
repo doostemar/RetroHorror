@@ -8,7 +8,7 @@ public class StoryAnimationCompleteBehaviour : StateMachineBehaviour
   {
     GameObject storyteller = GameObject.Find( "Storyteller" );
     StorySequence story = storyteller.GetComponent<StorySequence>();
-    story.NextScene();
+    story.AnimationFinished();
   }
 
 }
