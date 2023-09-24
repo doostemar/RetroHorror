@@ -226,6 +226,7 @@ public class CameraBasicHeroFollower : MonoBehaviour
   }
 
   //-------------------------------------------------------------------------------------
+#if UNITY_EDITOR
   private void OnDrawGizmosSelected()
   {
     Gizmos.color =  new Color( 177f / 255f, 52f / 255f, 63f / 255f );
@@ -240,4 +241,5 @@ public class CameraBasicHeroFollower : MonoBehaviour
 
     Gizmos.DrawLineStrip( list, true );
   }
+#endif
 }

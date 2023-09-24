@@ -291,6 +291,7 @@ public class BotUnitBaseBehavior : MonoBehaviour
            );
   }
 
+#if UNITY_EDITOR
   private void OnDrawGizmosSelected()
   {
     UnityEditor.Handles.color = Color.green;
@@ -301,4 +302,5 @@ public class BotUnitBaseBehavior : MonoBehaviour
     UnityEditor.Handles.DrawWireDisc( centers.Item1, Vector3.forward, m_AttackRange );
     UnityEditor.Handles.DrawWireDisc( centers.Item2, Vector3.forward, m_AttackRange );
   }
+#endif
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TitleController : MonoBehaviour
+public class LobbyController : MonoBehaviour
 {
   public void StartGame()
   {

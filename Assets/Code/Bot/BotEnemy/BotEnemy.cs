@@ -256,6 +256,7 @@ public class BotEnemy : MonoBehaviour
     }
   }
 
+#if UNITY_EDITOR
   private void OnDrawGizmosSelected()
   {
     UnityEditor.Handles.color = Color.green;
@@ -264,4 +265,5 @@ public class BotEnemy : MonoBehaviour
     UnityEditor.Handles.color = Color.red;
     UnityEditor.Handles.DrawWireDisc( GetAttackTargetCenter(), Vector3.forward, m_AttackRange );
   }
+#endif
 }

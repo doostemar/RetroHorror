@@ -20,6 +20,7 @@ public class CustomTile : Tile
     MultiTreeBaseRightPeriphery = 0x00000200,
   }
 
+  [SerializeField]
   public Type m_Type = Type.Unset;
 
   public Type GetTileType( ITilemap tilemap, Vector3Int position )
