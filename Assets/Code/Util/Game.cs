@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-  static GameObject s_GameController;
-  static bool       s_Destroyed = false;
-  static Camera     s_RenderCamera = null;
+  static GameObject    s_GameController;
+  static bool          s_Destroyed = false;
+  static Camera        s_RenderCamera = null;
+  static GlobalFadeout s_GlobalFadeout = null;
 
   public static Camera GetRenderCamera()
   {
@@ -43,6 +44,7 @@ public class Game : MonoBehaviour
   static public void Shutdown()
   {
     s_Destroyed = true;
+    s_GlobalFadeout = null;
   }
 
   public static bool IsRunning()
@@ -53,5 +55,15 @@ public class Game : MonoBehaviour
       return game_controllers.Length > 0;
     }
     return true;
+  }
+
+  public static void RegisterGlobalFadeout( GlobalFadeout gf )
+  {
+    s_GlobalFadeout = gf;
+  }
+
+  public static GlobalFadeout GetGlobalFadeout()
+  {
+    return s_GlobalFadeout;
   }
 }
