@@ -12,6 +12,7 @@ TagManager:
   - HealthBar
   - EnemyUnit
   - ResSeal
+  - MusicManager
   layers:
   - Default
   - TransparentFX

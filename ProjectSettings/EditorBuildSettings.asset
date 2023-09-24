@@ -6,11 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MikeScene.unity
-    guid: ec099ffb77fdc834f903f8ac93622f42
+    path: Assets/Scenes/LobbyMusicScene.unity
+    guid: 9d45b94acef06bc4c8dc47fa955d5e5e
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: d569e8548a3e8534cb3553ff8e46ed52
+  - enabled: 1
+    path: Assets/Scenes/MikeScene.unity
+    guid: ec099ffb77fdc834f903f8ac93622f42
   - enabled: 1
     path: Assets/Scenes/HowToPlayScene.unity
     guid: 1c0c324ae329dba48a8e2880698111b6
